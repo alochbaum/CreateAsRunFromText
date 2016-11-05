@@ -6,9 +6,9 @@ using System.Runtime.InteropServices;
 // set of attributes. Change these attribute values to modify the information
 // associated with an assembly.
 [assembly: AssemblyTitle("CreateAsRunFromTxt")]
-[assembly: AssemblyDescription("")]
+[assembly: AssemblyDescription("This creates a BXF As Run log from BXF Schedule and iTX native text logs")]
 [assembly: AssemblyConfiguration("")]
-[assembly: AssemblyCompany("")]
+[assembly: AssemblyCompany("Grassvalley.com iTX Support")]
 [assembly: AssemblyProduct("CreateAsRunFromTxt")]
 [assembly: AssemblyCopyright("Copyright ©  2016")]
 [assembly: AssemblyTrademark("")]
