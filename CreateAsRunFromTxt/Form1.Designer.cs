@@ -35,6 +35,10 @@
             this.folderBrowserDialog1 = new System.Windows.Forms.FolderBrowserDialog();
             this.btnBuildAll = new System.Windows.Forms.Button();
             this.rtbLogging = new System.Windows.Forms.RichTextBox();
+            this.tbSchedule = new System.Windows.Forms.TextBox();
+            this.label1 = new System.Windows.Forms.Label();
+            this.btnSelectSchedule = new System.Windows.Forms.Button();
+            this.openFileDialog1 = new System.Windows.Forms.OpenFileDialog();
             this.groupBox1.SuspendLayout();
             this.SuspendLayout();
             // 
@@ -71,7 +75,7 @@
             // 
             this.btnBuildAll.Location = new System.Drawing.Point(18, 110);
             this.btnBuildAll.Name = "btnBuildAll";
-            this.btnBuildAll.Size = new System.Drawing.Size(225, 39);
+            this.btnBuildAll.Size = new System.Drawing.Size(182, 39);
             this.btnBuildAll.TabIndex = 1;
             this.btnBuildAll.Text = "Build All As Run Logs";
             this.btnBuildAll.UseVisualStyleBackColor = true;
@@ -85,11 +89,44 @@
             this.rtbLogging.TabIndex = 2;
             this.rtbLogging.Text = "";
             // 
+            // tbSchedule
+            // 
+            this.tbSchedule.Location = new System.Drawing.Point(318, 114);
+            this.tbSchedule.Name = "tbSchedule";
+            this.tbSchedule.Size = new System.Drawing.Size(788, 31);
+            this.tbSchedule.TabIndex = 3;
+            // 
+            // label1
+            // 
+            this.label1.AutoSize = true;
+            this.label1.Location = new System.Drawing.Point(213, 117);
+            this.label1.Name = "label1";
+            this.label1.Size = new System.Drawing.Size(99, 25);
+            this.label1.TabIndex = 4;
+            this.label1.Text = "schedule";
+            // 
+            // btnSelectSchedule
+            // 
+            this.btnSelectSchedule.Location = new System.Drawing.Point(1125, 115);
+            this.btnSelectSchedule.Name = "btnSelectSchedule";
+            this.btnSelectSchedule.Size = new System.Drawing.Size(44, 33);
+            this.btnSelectSchedule.TabIndex = 5;
+            this.btnSelectSchedule.Text = "...";
+            this.btnSelectSchedule.UseVisualStyleBackColor = true;
+            this.btnSelectSchedule.Click += new System.EventHandler(this.btnSelectSchedule_Click);
+            // 
+            // openFileDialog1
+            // 
+            this.openFileDialog1.FileName = "openFileDialog1";
+            // 
             // Form1
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(12F, 25F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(1228, 527);
+            this.ClientSize = new System.Drawing.Size(1228, 540);
+            this.Controls.Add(this.btnSelectSchedule);
+            this.Controls.Add(this.label1);
+            this.Controls.Add(this.tbSchedule);
             this.Controls.Add(this.rtbLogging);
             this.Controls.Add(this.btnBuildAll);
             this.Controls.Add(this.groupBox1);
@@ -101,6 +138,7 @@
             this.groupBox1.ResumeLayout(false);
             this.groupBox1.PerformLayout();
             this.ResumeLayout(false);
+            this.PerformLayout();
 
         }
 
@@ -112,6 +150,10 @@
         private System.Windows.Forms.FolderBrowserDialog folderBrowserDialog1;
         private System.Windows.Forms.Button btnBuildAll;
         private System.Windows.Forms.RichTextBox rtbLogging;
+        private System.Windows.Forms.TextBox tbSchedule;
+        private System.Windows.Forms.Label label1;
+        private System.Windows.Forms.Button btnSelectSchedule;
+        private System.Windows.Forms.OpenFileDialog openFileDialog1;
     }
 }
 

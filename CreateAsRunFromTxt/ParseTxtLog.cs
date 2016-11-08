@@ -6,6 +6,7 @@ using System.IO;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
+using System.Xml;
 
 namespace CreateAsRunFromTxt
 {
@@ -45,7 +46,45 @@ namespace CreateAsRunFromTxt
             }
             return false;
         }
-        
+        public string WriteAsRunFile(string strFileName,string strSchedName)
+        {
+            string strWriteFile = Path.GetDirectoryName(strFileName) + "\\BXF_Automation_" +
+                Path.GetFileNameWithoutExtension(strFileName) + ".xml";
+            XmlWriterSettings myXMLsettings = new XmlWriterSettings();
+            myXMLsettings.Indent = true;
+            using (XmlWriter writer = XmlWriter.Create(strWriteFile,myXMLsettings))
+            {
+                ParseSched myPS = new ParseSched();
+                myPS.openSchedHeader(strSchedName);
+                writer.WriteStartDocument();
+                writer.WriteStartElement("BxfMessage"); // Start BXF Message
+                    writer.WriteAttributeString("id", "urn:uuid:"+Guid.NewGuid().ToString());
+                    writer.WriteAttributeString("origin", "Automation System");
+                writer.WriteStartElement("BxfData"); // Start BXF Data
+                    writer.WriteAttributeString("action", "add");
+                writer.WriteStartElement("Schedule"); // Start Schedule
+                    writer.WriteAttributeString("action", "add");
+                    writer.WriteAttributeString("type", "Primary");
+                    writer.WriteAttributeString("scheduleId", myPS.headerUUID);
+                writer.WriteStartElement("Channel"); // Start Channel
+                    writer.WriteAttributeString("type", "digital_television");
+                    writer.WriteAttributeString("status", myPS.headerStatus);
+                    writer.WriteAttributeString("network", "1");
+                    writer.WriteAttributeString("shortName", myPS.headerShortName);
+                    writer.WriteAttributeString("channelNumber", myPS.headerChannelNumber);
+                writer.WriteEndElement(); // End Channel
+                //This is looping section for each event
+                writer.WriteStartElement("AsRun"); // Start AsRun
+                writer.WriteStartElement("BasicAsRun"); // Start AsRun
+                writer.WriteEndElement(); // End BasicAsRun
+                writer.WriteEndElement(); // End AsRun
+                writer.WriteEndElement(); // End Schedule
+                writer.WriteEndElement(); // End BXF Data
+                writer.WriteEndElement(); // End BXF Message
+                writer.WriteEndDocument();
+            }
+            return "Finished As Run";
+        }
 
     }
 }

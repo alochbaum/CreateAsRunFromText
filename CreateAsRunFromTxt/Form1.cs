@@ -24,19 +24,21 @@ namespace CreateAsRunFromTxt
         private void Form1_Load(object sender, EventArgs e)
         {
             tbDirectory.Text = Properties.Settings.Default.strDir;
+            tbSchedule.Text = Properties.Settings.Default.strSched;
             log2screen("Program starting");
         }
 
         private void Form1_FormClosing(object sender, FormClosingEventArgs e)
         {
             Properties.Settings.Default.strDir = tbDirectory.Text;
+            Properties.Settings.Default.strSched = tbSchedule.Text;
             Properties.Settings.Default.Save();
         }
 
         private void btnBuildAll_Click(object sender, EventArgs e)
         {
             log2screen("Button Build All Clicked");
-            ParseTxtLog myParseText = new ParseTxtLog("5/4/2016");
+            ParseTxtLog myParseText = new ParseTxtLog("11/2/2016");
             //ParseTxtLog myParseText = new ParseTxtLog();
             log2screen("Started ParseTxtLog " + myParseText.strDateToFind);
             // get the files in the directory if exists
@@ -70,10 +72,17 @@ namespace CreateAsRunFromTxt
                         }
 
                     }
+                } // finished looping through txt files hopefully with a name
+                // checking for text file name, write log if there
+                if (strDayTxtFile.Length > 3 && File.Exists(tbSchedule.Text))
+                {
+                    log2screen("Writing As Run Returned: " + myParseText.WriteAsRunFile(strDayTxtFile,
+                        tbSchedule.Text));
                 }
 
-            }
-        }
+
+            }// End Directory exists
+        }// End funxtion btnBuildAll
 
         private void btnSelect_Click(object sender, EventArgs e)
         {
@@ -95,5 +104,16 @@ namespace CreateAsRunFromTxt
         }
 
 
+        private void btnSelectSchedule_Click(object sender, EventArgs e)
+        {
+            // load directory if exist
+            if(tbDirectory.Text.Length >3) openFileDialog1.InitialDirectory = tbDirectory.Text;
+            // Show the dialog and get result.
+            DialogResult result = openFileDialog1.ShowDialog();
+            if (result == DialogResult.OK) // Test result.
+            {
+                tbSchedule.Text = openFileDialog1.FileName;
+            }
+        }
     }
 }
