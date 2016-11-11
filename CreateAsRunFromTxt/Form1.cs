@@ -77,7 +77,7 @@ namespace CreateAsRunFromTxt
                 if (strDayTxtFile.Length > 3 && File.Exists(tbSchedule.Text))
                 {
                     log2screen("Writing As Run Returned: " + myParseText.WriteAsRunFile(strDayTxtFile,
-                        tbSchedule.Text));
+                        tbSchedule.Text,this));
                 }
 
 
@@ -101,6 +101,7 @@ namespace CreateAsRunFromTxt
         {
             rtbLogging.AppendText(DateTime.Now + " " +
                 strIn + "\r\n");
+            rtbLogging.ScrollToCaret();
         }
 
 

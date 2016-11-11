@@ -38,15 +38,15 @@ namespace CreateAsRunFromTxt
                 string strMessage = new string(block);
                 // could be short date like 5/4/2016-1 so finding - character
                 int i = strMessage.IndexOf('-');
-                if( i > 0)
+                if (i > 0)
                 {
                     strMessage = strMessage.Substring(0, i);
                 }
-                if (strMessage.CompareTo(strDateToFind)==0) return true;
+                if (strMessage.CompareTo(strDateToFind) == 0) return true;
             }
             return false;
         }
-        public string WriteAsRunFile(string strFileName,string strSchedName)
+        public bool WriteAsRunFile(string strFileName,string strSchedName,Form1 objF)
         {
             string strWriteFile = Path.GetDirectoryName(strFileName) + "\\BXF_Automation_" +
                 Path.GetFileNameWithoutExtension(strFileName) + ".xml";
@@ -55,17 +55,39 @@ namespace CreateAsRunFromTxt
             using (XmlWriter writer = XmlWriter.Create(strWriteFile,myXMLsettings))
             {
                 ParseSched myPS = new ParseSched();
-                myPS.openSchedHeader(strSchedName);
+                if (myPS.openSchedHeader(strSchedName)) objF.log2screen("Succesfully parsed header");
+                else {
+                    objF.log2screen("Error paring header of " + strSchedName);
+                    return false;
+                }
+                if (myPS.makeTableOfSched(strSchedName, objF)) objF.log2screen("Returned from parsing schedule");
                 writer.WriteStartDocument();
-                writer.WriteStartElement("BxfMessage"); // Start BXF Message
+                // Start BXF Message, need to add basic namespace here to have it as attribute
+                writer.WriteStartElement("BxfMessage", "http://smpte-ra.org/schemas/2021/2008/BXF"); // Start BXF Message
                     writer.WriteAttributeString("id", "urn:uuid:"+Guid.NewGuid().ToString());
                     writer.WriteAttributeString("origin", "Automation System");
+                    //need to update this with first event start for accuracy
+                    writer.WriteAttributeString("dateTime", myPS.headerScheduleStart);
+                    //this would be iTXadmin or user running As Run service
+                    writer.WriteAttributeString("userName", "BXFasRunCreator");
+                    // using namespace overload
+                    writer.WriteAttributeString("ext","usage","AsRun");
+                    writer.WriteAttributeString("originType", "Automation");
+                    writer.WriteAttributeString("destination", "Traffic System");
+                    writer.WriteAttributeString("messageType", "Information");
+                    // can't have colon in http name
+                    writer.WriteAttributeString("xmlns", null, null, "http://smpte-ra.org/schemas/2021/2008/BXF");
+                    writer.WriteAttributeString("xmlns","ext",null, "http://smpte-ra.org/schemas/2021/2008/BXF/Extension");
+                    writer.WriteAttributeString("xmlns","xsi",null, "http://www.w3.org/2001/XMLSchema-instance");
+                    writer.WriteAttributeString("xmlns","pmcp", null, "http://www.atsc.org/XMLSchemas/pmcp/2007/3.1");
                 writer.WriteStartElement("BxfData"); // Start BXF Data
                     writer.WriteAttributeString("action", "add");
                 writer.WriteStartElement("Schedule"); // Start Schedule
                     writer.WriteAttributeString("action", "add");
                     writer.WriteAttributeString("type", "Primary");
                     writer.WriteAttributeString("scheduleId", myPS.headerUUID);
+                    writer.WriteAttributeString("scheduleEnd", myPS.headerScheduleEnd);
+                    writer.WriteAttributeString("scheduleStart", myPS.headerScheduleStart);
                 writer.WriteStartElement("Channel"); // Start Channel
                     writer.WriteAttributeString("type", "digital_television");
                     writer.WriteAttributeString("status", myPS.headerStatus);
@@ -73,17 +95,90 @@ namespace CreateAsRunFromTxt
                     writer.WriteAttributeString("shortName", myPS.headerShortName);
                     writer.WriteAttributeString("channelNumber", myPS.headerChannelNumber);
                 writer.WriteEndElement(); // End Channel
-                //This is looping section for each event
-                writer.WriteStartElement("AsRun"); // Start AsRun
-                writer.WriteStartElement("BasicAsRun"); // Start AsRun
-                writer.WriteEndElement(); // End BasicAsRun
-                writer.WriteEndElement(); // End AsRun
+                //This is looping section for each event parse the schedule
+
+                // parsing the text log
+                ParseLines myTxtLog = new ParseLines(strFileName);
+                if (myTxtLog.iCount < 1) objF.log2screen("Error: Low parsing count on Txt file");
+                objF.log2screen("Number of lines with Video Clip or Live in Log: "+myTxtLog.iCount.ToString());
+                string strTemp = "";
+                for (int iloop = 0; iloop < myTxtLog.iCount; iloop++)
+                {
+                    writer.WriteStartElement("AsRun"); // Start AsRun
+                    writer.WriteStartElement("BasicAsRun"); // Start AsRun
+                    writer.WriteStartElement("AsRunEventId"); // Start AsRunEventId
+                    writer.WriteStartElement("EventId"); // Start EventId
+                     // [7] is first AsRunEventId/EventId
+                     // |4a31eba0-55ce-49f0-889b-2ccd5c857afd|
+                     // the recall adds urn:uuid: at top of string.
+                    strTemp = myTxtLog.getEventID(iloop);
+                        objF.log2screen("Writing out XML for: " + strTemp);
+                        writer.WriteString(strTemp);
+                    writer.WriteEndElement(); // End EventId
+                    // second AsRunEventId/BillingReferenceCode
+                    // this might not exist searching for value
+                    strTemp = myPS.getBillingFromID(strTemp);
+                    // testing value and writing if found
+                    if (strTemp.Length > 0)
+                    {
+                        writer.WriteStartElement("BillingReferenceCode"); // Start BillingReferenceCode
+                        writer.WriteString(strTemp);
+                        writer.WriteEndElement(); // End BillingReferenceCode
+                    }
+                    writer.WriteEndElement(); // End AsRunEventId
+                    writer.WriteStartElement("Content"); // Start Content
+                    // [2] is third Content/ContentId/HouseNumber
+                    writer.WriteStartElement("ContentId"); // Start ContentId
+                    writer.WriteStartElement("HouseNumber"); // Start HouseNumber
+                        writer.WriteString(myTxtLog.getHouseNumber(iloop));
+                    writer.WriteEndElement(); // End HouseNumber
+                    writer.WriteEndElement(); // End ContentId
+                    // [3] is fourth Content/Name
+                    // |SCRTYPY_136 -01|The Security Brief - 1
+                    //
+                    writer.WriteStartElement("Name"); // Start Name
+                    writer.WriteString(myTxtLog.getName(iloop));
+                    writer.WriteEndElement(); // End Name
+                    //
+                    // [5] is fifth Content/Media/MediaLocation/SOM/SmpteTimeCode
+                    // |00:00:20.00
+                    //
+                    // [6] is sixth Content/Media/MediaLocation/EOM/SmpteTimeCode  looks more like EOM than duration
+                    // |00:12:35.29
+                    // 
+                    // End Content
+                    writer.WriteEndElement();
+                    // seventh AsRunDetail/Status == Aired Without Discrepancy
+                    writer.WriteStartElement("AsRunDetail");
+                    writer.WriteStartElement("Status");
+                    writer.WriteString("Aired Without Discrepancy");
+                    // End Status
+                    writer.WriteEndElement();
+                    // eighth AsRunDetail/Type == Primary
+                    writer.WriteStartElement("Type");
+                    writer.WriteString("Primary");
+                    // End Type
+                    writer.WriteEndElement();
+                    // End AsRunDetail
+                    writer.WriteEndElement(); 
+                    
+                    // [4] ninth is AsRunDetail/StartDateTime/SmpteDateTime with date/SmpteTimeCode
+                    // |00:12:15.29
+
+                    // Other items needed are 
+
+
+
+                    writer.WriteEndElement(); // End BasicAsRun
+                    writer.WriteEndElement(); // End AsRun
+                }
+                // End looping section
                 writer.WriteEndElement(); // End Schedule
                 writer.WriteEndElement(); // End BXF Data
                 writer.WriteEndElement(); // End BXF Message
                 writer.WriteEndDocument();
             }
-            return "Finished As Run";
+            return true;
         }
 
     }

@@ -56,6 +56,7 @@
     <Compile Include="Form1.Designer.cs">
       <DependentUpon>Form1.cs</DependentUpon>
     </Compile>
+    <Compile Include="ParseLines.cs" />
     <Compile Include="ParseSched.cs" />
     <Compile Include="ParseTxtLog.cs" />
     <Compile Include="Program.cs" />
