@@ -46,7 +46,7 @@ namespace CreateAsRunFromTxt
             }
             return false;
         }
-        public bool WriteAsRunFile(string strFileName,string strSchedName,Form1 objF)
+        public bool WriteAsRunFile(string strFileName,string strSchedName,Form1 objF,bool blDoubleFrames)
         {
             string strWriteFile = Path.GetDirectoryName(strFileName) + "\\BXF_Automation_" +
                 Path.GetFileNameWithoutExtension(strFileName) + ".xml";
@@ -98,7 +98,7 @@ namespace CreateAsRunFromTxt
                 //This is looping section for each event parse the schedule
 
                 // parsing the text log
-                ParseLines myTxtLog = new ParseLines(strFileName);
+                ParseLines myTxtLog = new ParseLines(strFileName,blDoubleFrames);
                 if (myTxtLog.iCount < 1) objF.log2screen("Error: Low parsing count on Txt file");
                 objF.log2screen("Number of lines with Video Clip or Live in Log: "+myTxtLog.iCount.ToString());
                 string strTemp = "";
@@ -159,11 +159,23 @@ namespace CreateAsRunFromTxt
                     writer.WriteString("Primary");
                     // End Type
                     writer.WriteEndElement();
+                    // [4] ninth is AsRunDetail/StartDateTime/SmpteDateTime with date/SmpteTimeCode
+                    // |00:12:15.29
+                    writer.WriteStartElement("StartDateTime");
+                    writer.WriteStartElement("SmpteDateTime");
+                    writer.WriteAttributeString("broadcastDate", myTxtLog.getStartDate(iloop));
+                    writer.WriteStartElement("SmpteTimeCode");
+                    writer.WriteString(myTxtLog.getStartTime(iloop));
+                    // End SmpteTimeCode
+                    writer.WriteEndElement();
+                    // End SmpteDateTime
+                    writer.WriteEndElement();
+                    // End StartDateTime
+                    writer.WriteEndElement();
                     // End AsRunDetail
                     writer.WriteEndElement(); 
                     
-                    // [4] ninth is AsRunDetail/StartDateTime/SmpteDateTime with date/SmpteTimeCode
-                    // |00:12:15.29
+ 
 
                     // Other items needed are 
 
