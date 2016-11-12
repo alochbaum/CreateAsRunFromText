@@ -51,7 +51,7 @@
             this.groupBox1.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
             this.groupBox1.Name = "groupBox1";
             this.groupBox1.Padding = new System.Windows.Forms.Padding(2, 2, 2, 2);
-            this.groupBox1.Size = new System.Drawing.Size(895, 68);
+            this.groupBox1.Size = new System.Drawing.Size(1037, 68);
             this.groupBox1.TabIndex = 0;
             this.groupBox1.TabStop = false;
             this.groupBox1.Text = "Directory Containing BXF schedules ending with .XML and iTX logs ending with .txt" +
@@ -62,7 +62,7 @@
             this.tbDirectory.Location = new System.Drawing.Point(98, 30);
             this.tbDirectory.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
             this.tbDirectory.Name = "tbDirectory";
-            this.tbDirectory.Size = new System.Drawing.Size(760, 26);
+            this.tbDirectory.Size = new System.Drawing.Size(916, 26);
             this.tbDirectory.TabIndex = 1;
             // 
             // btnSelect
@@ -92,7 +92,7 @@
             this.rtbLogging.Location = new System.Drawing.Point(14, 141);
             this.rtbLogging.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
             this.rtbLogging.Name = "rtbLogging";
-            this.rtbLogging.Size = new System.Drawing.Size(891, 272);
+            this.rtbLogging.Size = new System.Drawing.Size(1041, 272);
             this.rtbLogging.TabIndex = 2;
             this.rtbLogging.Text = "";
             // 
@@ -101,7 +101,7 @@
             this.tbSchedule.Location = new System.Drawing.Point(327, 91);
             this.tbSchedule.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
             this.tbSchedule.Name = "tbSchedule";
-            this.tbSchedule.Size = new System.Drawing.Size(503, 26);
+            this.tbSchedule.Size = new System.Drawing.Size(669, 26);
             this.tbSchedule.TabIndex = 3;
             // 
             // label1
@@ -116,7 +116,7 @@
             // 
             // btnSelectSchedule
             // 
-            this.btnSelectSchedule.Location = new System.Drawing.Point(844, 92);
+            this.btnSelectSchedule.Location = new System.Drawing.Point(1013, 91);
             this.btnSelectSchedule.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
             this.btnSelectSchedule.Name = "btnSelectSchedule";
             this.btnSelectSchedule.Size = new System.Drawing.Size(33, 26);
@@ -143,7 +143,7 @@
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(9F, 20F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(921, 432);
+            this.ClientSize = new System.Drawing.Size(1066, 432);
             this.Controls.Add(this.cbDoubleFrames);
             this.Controls.Add(this.btnSelectSchedule);
             this.Controls.Add(this.label1);

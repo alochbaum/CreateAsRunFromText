@@ -112,7 +112,7 @@ namespace CreateAsRunFromTxt
                      // |4a31eba0-55ce-49f0-889b-2ccd5c857afd|
                      // the recall adds urn:uuid: at top of string.
                     strTemp = myTxtLog.getEventID(iloop);
-                        objF.log2screen("Writing out XML for: " + strTemp);
+                        objF.log2screen("Writing: " + strTemp + "\t"+myTxtLog.getStartDate(iloop)+"\t"+myTxtLog.getStartTime(iloop));
                         writer.WriteString(strTemp);
                     writer.WriteEndElement(); // End EventId
                     // second AsRunEventId/BillingReferenceCode
@@ -137,6 +137,8 @@ namespace CreateAsRunFromTxt
                     // |SCRTYPY_136 -01|The Security Brief - 1
                     //
                     writer.WriteStartElement("Name"); // Start Name
+                    // use XML safe name
+                    // if I can compute it
                     writer.WriteString(myTxtLog.getName(iloop));
                     writer.WriteEndElement(); // End Name
                     //

@@ -115,8 +115,8 @@ namespace CreateAsRunFromTxt
                                 if (eventID != null && eventID.Length > 3)
                                 {
                                     tblSched.Rows.Add(eventID, eventBilling, eventHouseNum);
-                                    objF.log2screen("Sched|" + eventBilling +
-                                        "|" + eventID + "|" + eventHouseNum);
+                                    objF.log2screen("Sched \t" + eventBilling +
+                                        "\t" + eventID + "\t" + eventHouseNum);
                                 }
                                 // reset all the varibles
                                 eventID = eventBilling = eventHouseNum = "";
@@ -131,7 +131,9 @@ namespace CreateAsRunFromTxt
                             // if inside the Event ID and not in BillingReference you have Event ID
                             if (blInsideEventID && !blBillingReferenceCode) eventID = reader.Value;
                             if (blBillingReferenceCode) eventBilling = reader.Value;
-                            if (blHouseNumber&&blInsideContent) eventHouseNum = reader.Value;
+                            // changed this after mike and molly had house number Content/ContentId/HouseNumber
+                            // if (blHouseNumber&&blInsideContent) eventHouseNum = reader.Value;
+                            if (blHouseNumber) eventHouseNum = reader.Value;
                             break;
                     }
                     

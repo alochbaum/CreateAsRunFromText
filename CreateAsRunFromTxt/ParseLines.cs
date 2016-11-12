@@ -67,16 +67,20 @@ namespace CreateAsRunFromTxt
                             if (Convert.ToInt16(strSubSubSplit[0]) > 23) { 
                                 if (blDateNotUpdated)
                                 {
-                                    dtStartLog.AddDays(1);
+                                    dtStartLog = dtStartLog.AddDays(1);
                                     blDateNotUpdated = false;
                                 }
                                 // day increament will take care of added hours, now make hours normal
                                 strSubSubSplit[0] = Convert.ToString(Convert.ToInt16(strSubSubSplit[0]) - 24);
+                                // if after conversion the hour is one digit add 0 at start
+                                if (strSubSubSplit[0].Length < 2) strSubSubSplit[0] = "0" + strSubSubSplit[0];
                             }
                             // if frames have to be doubled; double them
                             if(blDoubleFrames)
                             {
                                 strSubSubSplit[3]=Convert.ToString(Convert.ToInt16(strSubSubSplit[3])*2);
+                                // if after conversion the frames are one digit add 0 at start
+                                if (strSubSubSplit[3].Length < 2) strSubSubSplit[3] = "0" + strSubSubSplit[3];
                             }
 
                             tblLog.Rows.Add(strArray[7], strArray[2], strArray[3], strArray[5], strArray[6], 
