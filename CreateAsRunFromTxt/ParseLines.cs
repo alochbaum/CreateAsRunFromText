@@ -28,6 +28,7 @@ namespace CreateAsRunFromTxt
             tblLog.Columns.Add("EOM", typeof(string)); //sixth [6]
             tblLog.Columns.Add("StartDate", typeof(string)); //ninth A [0]* Needs split
             tblLog.Columns.Add("StartTime", typeof(string)); //ninth B [0]* Needs split and convert
+            tblLog.Columns.Add("Type", typeof(string)); //added for comments
             using (TextReader reader = File.OpenText(strFileName))
             {
                 string strLine = "";
@@ -56,6 +57,7 @@ namespace CreateAsRunFromTxt
                             
                         }
                         // continue only if type is "Video Clip" or "Live"
+                        // "Comment will have old time format so process it later.
                         if (strArray[1] == "Video Clip" || strArray[1] == "Live")
                         {
                             // Need to process the hour and first time hour is greater than 24 need to add to date
@@ -85,8 +87,9 @@ namespace CreateAsRunFromTxt
 
                             tblLog.Rows.Add(strArray[7], strArray[2], strArray[3], strArray[5], strArray[6], 
                                 dtStartLog.ToString("yyyy-MM-dd"),
-                                strSubSubSplit[0]+":"+ strSubSubSplit[1] + ":" + strSubSubSplit[2] + ":" + strSubSubSplit[3]);
-                        }
+                                strSubSubSplit[0]+":"+ strSubSubSplit[1] + ":" + strSubSubSplit[2] + ":" + strSubSubSplit[3]
+                                ,"Primary");
+                        } // end of "Video Clip" and live processing
                     }
                 }
                 iCount = tblLog.Rows.Count;
