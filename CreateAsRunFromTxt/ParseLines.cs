@@ -53,7 +53,11 @@ namespace CreateAsRunFromTxt
                                 // failure to read date break the loop
                                 break;
                             }
-                            blFirstLine = false;
+                            // Also check if time is in old format .000 1/100 of second when not a comment
+                            if (strArray[1] != "Comment")
+                            {
+                                blFirstLine = false;
+                            }
                             
                         }
                         // continue only if type is "Video Clip" or "Live"
