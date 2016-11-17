@@ -46,5 +46,17 @@ namespace CreateAsRunFromTxt.Properties {
                 this["strSched"] = value;
             }
         }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("")]
+        public string strTextFile {
+            get {
+                return ((string)(this["strTextFile"]));
+            }
+            set {
+                this["strTextFile"] = value;
+            }
+        }
     }
 }

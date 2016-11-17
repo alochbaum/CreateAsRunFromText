@@ -25,6 +25,7 @@ namespace CreateAsRunFromTxt
         {
             tbDirectory.Text = Properties.Settings.Default.strDir;
             tbSchedule.Text = Properties.Settings.Default.strSched;
+            tbTextFile.Text = Properties.Settings.Default.strTextFile;
             log2screen("Program starting");
         }
 
@@ -32,56 +33,60 @@ namespace CreateAsRunFromTxt
         {
             Properties.Settings.Default.strDir = tbDirectory.Text;
             Properties.Settings.Default.strSched = tbSchedule.Text;
+            Properties.Settings.Default.strTextFile = tbTextFile.Text;
             Properties.Settings.Default.Save();
         }
 
         private void btnBuildAll_Click(object sender, EventArgs e)
         {
+            rtbLogging.Clear();
             log2screen("Button Build All Clicked");
             ParseTxtLog myParseText = new ParseTxtLog("11/2/2016");
             //ParseTxtLog myParseText = new ParseTxtLog();
             log2screen("Started ParseTxtLog " + myParseText.strDateToFind);
             // get the files in the directory if exists
-            if (Directory.Exists(tbDirectory.Text))
-            {
-                string strDayTxtFile = "";
-                string[] files = Directory.GetFiles(tbDirectory.Text);
-                foreach(string strfile in files)
-                {
-                    if(Path.GetExtension(strfile)==".txt")
-                    {
-                        // check if matching date I'm seeking
-                        if(myParseText.CompareTxtFile(strfile))
-                        {
-                            // check if already found 1 text file with date
-                            if(strDayTxtFile.Length>2)
-                            {
-                                log2screen("Error: second day matched text file ending "
-                                    + strfile);
-                                return;
-                            } else
-                            {
-                                // loading first found txt file
-                                strDayTxtFile = strfile;
-                                log2screen("Matched day in file " + strfile);
-                            }
-                        }
-                        else
-                        {
-                            log2screen("Text File didn't start with date " + strfile);
-                        }
+            //if (Directory.Exists(tbDirectory.Text))
+            //{
+            //    string strDayTxtFile = "";
+            //    string[] files = Directory.GetFiles(tbDirectory.Text);
+            //    foreach(string strfile in files)
+            //    {
+            //        if(Path.GetExtension(strfile)==".txt")
+            //        {
+            //            // check if matching date I'm seeking
+            //            if(myParseText.CompareTxtFile(strfile))
+            //            {
+            //                // check if already found 1 text file with date
+            //                if(strDayTxtFile.Length>2)
+            //                {
+            //                    log2screen("Error: second day matched text file ending "
+            //                        + strfile);
+            //                    return;
+            //                } else
+            //                {
+            //                    // loading first found txt file
+            //                    strDayTxtFile = strfile;
+            //                    log2screen("Matched day in file " + strfile);
+            //                }
+            //            }
+            //            else
+            //            {
+            //                log2screen("Text File didn't start with date " + strfile);
+            //            }
 
-                    }
-                } // finished looping through txt files hopefully with a name
-                // checking for text file name, write log if there
-                if (strDayTxtFile.Length > 3 && File.Exists(tbSchedule.Text))
-                {
-                    log2screen("Writing As Run Returned: " + myParseText.WriteAsRunFile(strDayTxtFile,
-                        tbSchedule.Text,this,cbDoubleFrames.Checked));
-                }
+            //        }
+            //    } // finished looping through txt files hopefully with a name
+            //    // checking for text file name, write log if there
+            //    if (strDayTxtFile.Length > 3 && File.Exists(tbSchedule.Text))
+            //    {
+            //        log2screen("Writing As Run Returned: " + myParseText.WriteAsRunFile(strDayTxtFile,
+            //            tbSchedule.Text,this,cbDoubleFrames.Checked));
+            //    }
 
 
-            }// End Directory exists
+            //}// End Directory exists
+            log2screen("Writing As Run Returned: " + myParseText.WriteAsRunFile(tbTextFile.Text, tbSchedule.Text, this, cbDoubleFrames.Checked));
+
         }// End funxtion btnBuildAll
 
         private void btnSelect_Click(object sender, EventArgs e)
@@ -114,6 +119,18 @@ namespace CreateAsRunFromTxt
             if (result == DialogResult.OK) // Test result.
             {
                 tbSchedule.Text = openFileDialog1.FileName;
+            }
+        }
+
+        private void btnSelectTextFile_Click(object sender, EventArgs e)
+        {
+            // load directory if exist
+            if (tbDirectory.Text.Length > 3) openFileDialog1.InitialDirectory = tbDirectory.Text;
+            // Show the dialog and get result.
+            DialogResult result = openFileDialog1.ShowDialog();
+            if (result == DialogResult.OK) // Test result.
+            {
+                tbTextFile.Text = openFileDialog1.FileName;
             }
         }
     }

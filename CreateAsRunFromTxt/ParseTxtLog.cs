@@ -49,7 +49,7 @@ namespace CreateAsRunFromTxt
         public bool WriteAsRunFile(string strFileName,string strSchedName,Form1 objF,bool blDoubleFrames)
         {
             string strWriteFile = Path.GetDirectoryName(strFileName) + "\\BXF_Automation_" +
-                Path.GetFileNameWithoutExtension(strFileName) + ".xml";
+                Path.GetFileNameWithoutExtension(strSchedName) + ".xml";
             XmlWriterSettings myXMLsettings = new XmlWriterSettings();
             myXMLsettings.Indent = true;
             using (XmlWriter writer = XmlWriter.Create(strWriteFile,myXMLsettings))
@@ -102,29 +102,31 @@ namespace CreateAsRunFromTxt
                 if (myTxtLog.iCount < 1) objF.log2screen("Error: Low parsing count on Txt file");
                 objF.log2screen("Number of lines with Video Clip or Live in Log: "+myTxtLog.iCount.ToString());
                 string strTemp = "";
+                string strUUIDHold = "";
                 for (int iloop = 0; iloop < myTxtLog.iCount; iloop++)
                 {
                     writer.WriteStartElement("AsRun"); // Start AsRun
                     writer.WriteStartElement("BasicAsRun"); // Start AsRun
                     writer.WriteStartElement("AsRunEventId"); // Start AsRunEventId
                     writer.WriteStartElement("EventId"); // Start EventId
-                     // [7] is first AsRunEventId/EventId
-                     // |4a31eba0-55ce-49f0-889b-2ccd5c857afd|
-                     // the recall adds urn:uuid: at top of string.
-                    strTemp = myTxtLog.getEventID(iloop);
-                        objF.log2screen("Writing: " + strTemp + "\t"+myTxtLog.getStartDate(iloop)+"\t"+myTxtLog.getStartTime(iloop));
-                        writer.WriteString(strTemp);
+                                                         // [7] is first AsRunEventId/EventId
+                                                         // |4a31eba0-55ce-49f0-889b-2ccd5c857afd|
+                                                         // the recall adds urn:uuid: at top of string.
+                    strUUIDHold = myTxtLog.getEventID(iloop);
+                        objF.log2screen("Writing: " + strUUIDHold + "\t"+myTxtLog.getStartDate(iloop)+"\t"+myTxtLog.getStartTime(iloop));
+                        writer.WriteString(strUUIDHold);
                     writer.WriteEndElement(); // End EventId
                     // second AsRunEventId/BillingReferenceCode
                     // this might not exist searching for value
-                    strTemp = myPS.getBillingFromID(strTemp);
+                    strTemp = myPS.getBillingFromID(strUUIDHold);
                     // testing value and writing if found
-                    if (strTemp.Length > 0)
+                    if (strTemp != null && strTemp.Length > 0)
                     {
                         writer.WriteStartElement("BillingReferenceCode"); // Start BillingReferenceCode
                         writer.WriteString(strTemp);
                         writer.WriteEndElement(); // End BillingReferenceCode
                     }
+
                     writer.WriteEndElement(); // End AsRunEventId
                     writer.WriteStartElement("Content"); // Start Content
                     // [2] is third Content/ContentId/HouseNumber
@@ -132,6 +134,18 @@ namespace CreateAsRunFromTxt
                     writer.WriteStartElement("HouseNumber"); // Start HouseNumber
                         writer.WriteString(myTxtLog.getHouseNumber(iloop));
                     writer.WriteEndElement(); // End HouseNumber
+                    //  AsRunEventId
+                    // this might not exist searching for value
+                    strTemp = myPS.getAlternateIdFromID(strUUIDHold);
+                    // testing value and writing if found
+                    if (strTemp!=null && strTemp.Length > 0)
+                    {
+                        writer.WriteStartElement("AlternateId"); // Start AlternateId
+                        writer.WriteAttributeString("idType", "ISCI");
+                        writer.WriteString(strTemp);
+                        writer.WriteEndElement(); // End AlternateId
+                    }
+
                     writer.WriteEndElement(); // End ContentId
                     // [3] is fourth Content/Name
                     // |SCRTYPY_136 -01|The Security Brief - 1
@@ -153,12 +167,14 @@ namespace CreateAsRunFromTxt
                     // seventh AsRunDetail/Status == Aired Without Discrepancy
                     writer.WriteStartElement("AsRunDetail");
                     writer.WriteStartElement("Status");
-                    writer.WriteString("Aired Without Discrepancy");
+                    if(myTxtLog.getType(iloop)!="Comment")
+                        writer.WriteString("Aired Without Discrepancy");
+                    else writer.WriteString("Did not air");
                     // End Status
                     writer.WriteEndElement();
                     // eighth AsRunDetail/Type == Primary
                     writer.WriteStartElement("Type");
-                    writer.WriteString("Primary");
+                    writer.WriteString(myTxtLog.getType(iloop));
                     // End Type
                     writer.WriteEndElement();
                     // [4] ninth is AsRunDetail/StartDateTime/SmpteDateTime with date/SmpteTimeCode
@@ -174,15 +190,18 @@ namespace CreateAsRunFromTxt
                     writer.WriteEndElement();
                     // End StartDateTime
                     writer.WriteEndElement();
+                    writer.WriteStartElement("Duration");
+                    writer.WriteStartElement("SmpteDuration");
+                    writer.WriteStartElement("SmpteTimeCode");
+                    writer.WriteString(myTxtLog.getDuration(iloop));
+                    // End SmpteTimeCode
+                    writer.WriteEndElement();
+                    // End SmpteDuration
+                    writer.WriteEndElement();
+                    // End Duration
+                    writer.WriteEndElement();
                     // End AsRunDetail
                     writer.WriteEndElement(); 
-                    
- 
-
-                    // Other items needed are 
-
-
-
                     writer.WriteEndElement(); // End BasicAsRun
                     writer.WriteEndElement(); // End AsRun
                 }
