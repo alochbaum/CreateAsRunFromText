@@ -114,6 +114,8 @@ namespace CreateAsRunFromTxt
         {
             // load directory if exist
             if(tbDirectory.Text.Length >3) openFileDialog1.InitialDirectory = tbDirectory.Text;
+            // set file filter
+            openFileDialog1.Filter = "xml files (*.xml)|*.xml|All files (*.*)|*.*";
             // Show the dialog and get result.
             DialogResult result = openFileDialog1.ShowDialog();
             if (result == DialogResult.OK) // Test result.
@@ -126,6 +128,8 @@ namespace CreateAsRunFromTxt
         {
             // load directory if exist
             if (tbDirectory.Text.Length > 3) openFileDialog1.InitialDirectory = tbDirectory.Text;
+            // set file filter
+            openFileDialog1.Filter = "txt files (*.txt)|*.txt|All files (*.*)|*.*";
             // Show the dialog and get result.
             DialogResult result = openFileDialog1.ShowDialog();
             if (result == DialogResult.OK) // Test result.
