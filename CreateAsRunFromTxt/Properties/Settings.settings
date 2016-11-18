@@ -11,5 +11,8 @@
     <Setting Name="strTextFile" Type="System.String" Scope="User">
       <Value Profile="(Default)" />
     </Setting>
+    <Setting Name="dUpDown" Type="System.Decimal" Scope="User">
+      <Value Profile="(Default)">-5</Value>
+    </Setting>
   </Settings>
 </SettingsFile>

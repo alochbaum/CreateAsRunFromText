@@ -58,5 +58,17 @@ namespace CreateAsRunFromTxt.Properties {
                 this["strTextFile"] = value;
             }
         }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("-5")]
+        public decimal dUpDown {
+            get {
+                return ((decimal)(this["dUpDown"]));
+            }
+            set {
+                this["dUpDown"] = value;
+            }
+        }
     }
 }

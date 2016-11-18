@@ -26,6 +26,7 @@ namespace CreateAsRunFromTxt
             tbDirectory.Text = Properties.Settings.Default.strDir;
             tbSchedule.Text = Properties.Settings.Default.strSched;
             tbTextFile.Text = Properties.Settings.Default.strTextFile;
+            nUpDnOffset.Value = Properties.Settings.Default.dUpDown;
             log2screen("Program starting");
         }
 
@@ -34,6 +35,7 @@ namespace CreateAsRunFromTxt
             Properties.Settings.Default.strDir = tbDirectory.Text;
             Properties.Settings.Default.strSched = tbSchedule.Text;
             Properties.Settings.Default.strTextFile = tbTextFile.Text;
+            Properties.Settings.Default.dUpDown = nUpDnOffset.Value;
             Properties.Settings.Default.Save();
         }
 
