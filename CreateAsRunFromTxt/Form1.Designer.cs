@@ -47,6 +47,7 @@
             this.nUpDnOffset = new System.Windows.Forms.NumericUpDown();
             this.cbHTMLPage = new System.Windows.Forms.CheckBox();
             this.cbOpenHTML = new System.Windows.Forms.CheckBox();
+            this.cbSaveLog = new System.Windows.Forms.Button();
             this.groupBox1.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.nUpDnOffset)).BeginInit();
             this.SuspendLayout();
@@ -62,8 +63,8 @@
             this.groupBox1.Size = new System.Drawing.Size(1383, 85);
             this.groupBox1.TabIndex = 0;
             this.groupBox1.TabStop = false;
-            this.groupBox1.Text = "Directory Containing BXF schedules ending with .XML and iTX logs ending with .txt" +
-    "";
+            this.groupBox1.Text = "Default Directory to use for selection buttons next to Schedule and Text Files, B" +
+    "XF schedules from traffic system ending with .XML";
             // 
             // tbDirectory
             // 
@@ -123,7 +124,7 @@
             // 
             // btnSelectSchedule
             // 
-            this.btnSelectSchedule.Location = new System.Drawing.Point(1351, 114);
+            this.btnSelectSchedule.Location = new System.Drawing.Point(1348, 112);
             this.btnSelectSchedule.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
             this.btnSelectSchedule.Name = "btnSelectSchedule";
             this.btnSelectSchedule.Size = new System.Drawing.Size(44, 32);
@@ -140,7 +141,7 @@
             // 
             this.cbDoubleFrames.AutoSize = true;
             this.cbDoubleFrames.Location = new System.Drawing.Point(19, 165);
-            this.cbDoubleFrames.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
+            this.cbDoubleFrames.Margin = new System.Windows.Forms.Padding(4);
             this.cbDoubleFrames.Name = "cbDoubleFrames";
             this.cbDoubleFrames.Size = new System.Drawing.Size(288, 29);
             this.cbDoubleFrames.TabIndex = 6;
@@ -166,7 +167,7 @@
             // 
             // btnSelectTextFile
             // 
-            this.btnSelectTextFile.Location = new System.Drawing.Point(1351, 165);
+            this.btnSelectTextFile.Location = new System.Drawing.Point(1348, 161);
             this.btnSelectTextFile.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
             this.btnSelectTextFile.Name = "btnSelectTextFile";
             this.btnSelectTextFile.Size = new System.Drawing.Size(44, 32);
@@ -178,7 +179,7 @@
             // label3
             // 
             this.label3.AutoSize = true;
-            this.label3.Location = new System.Drawing.Point(19, 213);
+            this.label3.Location = new System.Drawing.Point(14, 215);
             this.label3.Name = "label3";
             this.label3.Size = new System.Drawing.Size(616, 25);
             this.label3.TabIndex = 7;
@@ -186,7 +187,7 @@
             // 
             // nUpDnOffset
             // 
-            this.nUpDnOffset.Location = new System.Drawing.Point(670, 213);
+            this.nUpDnOffset.Location = new System.Drawing.Point(636, 213);
             this.nUpDnOffset.Maximum = new decimal(new int[] {
             24,
             0,
@@ -198,7 +199,7 @@
             0,
             -2147483648});
             this.nUpDnOffset.Name = "nUpDnOffset";
-            this.nUpDnOffset.Size = new System.Drawing.Size(88, 31);
+            this.nUpDnOffset.Size = new System.Drawing.Size(74, 31);
             this.nUpDnOffset.TabIndex = 8;
             this.nUpDnOffset.Value = new decimal(new int[] {
             5,
@@ -211,7 +212,7 @@
             this.cbHTMLPage.AutoSize = true;
             this.cbHTMLPage.Checked = true;
             this.cbHTMLPage.CheckState = System.Windows.Forms.CheckState.Checked;
-            this.cbHTMLPage.Location = new System.Drawing.Point(791, 215);
+            this.cbHTMLPage.Location = new System.Drawing.Point(741, 211);
             this.cbHTMLPage.Name = "cbHTMLPage";
             this.cbHTMLPage.Size = new System.Drawing.Size(228, 29);
             this.cbHTMLPage.TabIndex = 9;
@@ -223,12 +224,22 @@
             this.cbOpenHTML.AutoSize = true;
             this.cbOpenHTML.Checked = true;
             this.cbOpenHTML.CheckState = System.Windows.Forms.CheckState.Checked;
-            this.cbOpenHTML.Location = new System.Drawing.Point(1039, 215);
+            this.cbOpenHTML.Location = new System.Drawing.Point(992, 211);
             this.cbOpenHTML.Name = "cbOpenHTML";
             this.cbOpenHTML.Size = new System.Drawing.Size(267, 29);
             this.cbOpenHTML.TabIndex = 9;
             this.cbOpenHTML.Text = "Open HTML in Browser";
             this.cbOpenHTML.UseVisualStyleBackColor = true;
+            // 
+            // cbSaveLog
+            // 
+            this.cbSaveLog.Location = new System.Drawing.Point(1279, 209);
+            this.cbSaveLog.Name = "cbSaveLog";
+            this.cbSaveLog.Size = new System.Drawing.Size(113, 47);
+            this.cbSaveLog.TabIndex = 10;
+            this.cbSaveLog.Text = "save log";
+            this.cbSaveLog.UseVisualStyleBackColor = true;
+            this.cbSaveLog.Click += new System.EventHandler(this.cbSaveLog_Click);
             // 
             // Form1
             // 
@@ -236,6 +247,7 @@
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.AutoSize = true;
             this.ClientSize = new System.Drawing.Size(1412, 664);
+            this.Controls.Add(this.cbSaveLog);
             this.Controls.Add(this.cbOpenHTML);
             this.Controls.Add(this.cbHTMLPage);
             this.Controls.Add(this.nUpDnOffset);
@@ -285,6 +297,7 @@
         private System.Windows.Forms.NumericUpDown nUpDnOffset;
         private System.Windows.Forms.CheckBox cbHTMLPage;
         private System.Windows.Forms.CheckBox cbOpenHTML;
+        private System.Windows.Forms.Button cbSaveLog;
     }
 }
 

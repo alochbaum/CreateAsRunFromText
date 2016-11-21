@@ -87,7 +87,24 @@ namespace CreateAsRunFromTxt
 
 
             //}// End Directory exists
-            log2screen("Writing As Run Returned: " + myParseText.WriteAsRunFile(tbTextFile.Text, tbSchedule.Text, this, cbDoubleFrames.Checked));
+
+            if (myParseText.WriteAsRunFile(tbTextFile.Text, tbSchedule.Text, this, cbDoubleFrames.Checked))
+            {
+                log2screen("Writing As Run Returned: True");
+                if (cbHTMLPage.Checked)
+                {
+                    cTransformXML myXLS = new cTransformXML();
+                    string strWriteFile = Path.GetDirectoryName(tbTextFile.Text) + "\\BXF_Automation_" +
+                     Path.GetFileNameWithoutExtension(tbSchedule.Text) + ".xml";
+                    string strTemp = myXLS.doTransform(strWriteFile, nUpDnOffset.Value);
+                    log2screen("Transfor returned: " + strTemp);
+                    if (strTemp.Contains("No error writing ") && cbOpenHTML.Checked)
+                    {
+                        System.Diagnostics.Process.Start(strTemp.Substring(17));
+                    }
+                }
+            }
+            else log2screen("Error Creating As Run");
 
         }// End funxtion btnBuildAll
 
@@ -106,8 +123,10 @@ namespace CreateAsRunFromTxt
 
         public void log2screen (string strIn)
         {
-            rtbLogging.AppendText(DateTime.Now + " " +
-                strIn + "\r\n");
+            rtbLogging.SelectionColor = Color.DarkBlue;
+            rtbLogging.AppendText(DateTime.Now + " ");
+            rtbLogging.SelectionColor = Color.Black;
+            rtbLogging.AppendText(strIn + "\r\n");
             rtbLogging.ScrollToCaret();
         }
 
@@ -137,6 +156,24 @@ namespace CreateAsRunFromTxt
             if (result == DialogResult.OK) // Test result.
             {
                 tbTextFile.Text = openFileDialog1.FileName;
+            }
+        }
+
+        private void cbSaveLog_Click(object sender, EventArgs e)
+        {
+            // Create a SaveFileDialog to request a path and file name to save to.
+            SaveFileDialog saveFile1 = new SaveFileDialog();
+
+            // Initialize the SaveFileDialog to specify the RTF extension for the file.
+            saveFile1.DefaultExt = "*.rtf";
+            saveFile1.Filter = "RTF Files|*.rtf";
+
+            // Determine if the user selected a file name from the saveFileDialog.
+            if (saveFile1.ShowDialog() == System.Windows.Forms.DialogResult.OK &&
+               saveFile1.FileName.Length > 0)
+            {
+                // Save the contents of the RichTextBox into the file.
+                rtbLogging.SaveFile(saveFile1.FileName, RichTextBoxStreamType.RichNoOleObjs);
             }
         }
     }
