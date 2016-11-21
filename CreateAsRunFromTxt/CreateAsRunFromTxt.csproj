@@ -120,6 +120,9 @@
   <ItemGroup>
     <Content Include="BXF.ico" />
     <Content Include="BXF.png" />
+    <Resource Include="ProcessBXFAsRun2HTML.xsl">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Resource>
   </ItemGroup>
   <ItemGroup>
     <BootstrapperPackage Include=".NETFramework,Version=v4.5.2">

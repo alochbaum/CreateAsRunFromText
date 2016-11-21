@@ -38,9 +38,12 @@ namespace CreateAsRunFromTxt
             XsltArgumentList argsList = new XsltArgumentList();
             argsList.AddParam("utcOffset", "", dOffset);
 
-            transform.Load("C:\\Spog Import\\ProcessBXFAsRun2HTML.xsl", settings, null);
+
             try
             {
+                // The named transform should be in the same folder as application
+                string strTemp = System.IO.Directory.GetCurrentDirectory() + "\\ProcessBXFAsRun2HTML.xsl";
+                transform.Load("C:\\Spog Import\\ProcessBXFAsRun2HTML.xsl", settings, null);
                 // Execute the transformation.
                 transform.Transform(doc, argsList, writer);
             }
