@@ -24,8 +24,8 @@
     <UpdatePeriodically>false</UpdatePeriodically>
     <UpdateRequired>false</UpdateRequired>
     <MapFileExtensions>true</MapFileExtensions>
-    <ApplicationRevision>1</ApplicationRevision>
-    <ApplicationVersion>1.0.0.%2a</ApplicationVersion>
+    <ApplicationRevision>3</ApplicationRevision>
+    <ApplicationVersion>1.0.2.%2a</ApplicationVersion>
     <UseApplicationTrust>false</UseApplicationTrust>
     <PublishWizardCompleted>true</PublishWizardCompleted>
     <BootstrapperEnabled>true</BootstrapperEnabled>
@@ -120,9 +120,9 @@
   <ItemGroup>
     <Content Include="BXF.ico" />
     <Content Include="BXF.png" />
-    <Resource Include="ProcessBXFAsRun2HTML.xsl">
+    <EmbeddedResource Include="ProcessBXFAsRun2HTML.xsl">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </Resource>
+    </EmbeddedResource>
   </ItemGroup>
   <ItemGroup>
     <BootstrapperPackage Include=".NETFramework,Version=v4.5.2">

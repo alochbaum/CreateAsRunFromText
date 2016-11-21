@@ -43,7 +43,7 @@ namespace CreateAsRunFromTxt
             {
                 // The named transform should be in the same folder as application
                 string strTemp = System.IO.Directory.GetCurrentDirectory() + "\\ProcessBXFAsRun2HTML.xsl";
-                transform.Load("C:\\Spog Import\\ProcessBXFAsRun2HTML.xsl", settings, null);
+                transform.Load(strTemp, settings, null);
                 // Execute the transformation.
                 transform.Transform(doc, argsList, writer);
             }
