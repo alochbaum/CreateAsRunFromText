@@ -15,14 +15,14 @@
       {
        string strJustTime = strInDate+" "+strInTime.Substring(0,8);
        DateTime myFirstTime = DateTime.ParseExact(strJustTime,"yyyy-MM-dd HH:mm:ss", null);
-       DateTime mySecondTime = myFirstTime.AddHours(-4);
+       DateTime mySecondTime = myFirstTime.AddHours(offset);
        return String.Format("{0:yyyy-MM-dd}",mySecondTime);
       }
       public string GetTime(string strInDate,string strInTime, int offset)
       {
        string strJustTime = strInTime.Substring(0,8);
        DateTime myFirstTime = DateTime.ParseExact(strJustTime,"HH:mm:ss", null);
-       DateTime mySecondTime = myFirstTime.AddHours(-4);
+       DateTime mySecondTime = myFirstTime.AddHours(offset);
        return String.Format("{0:HH:mm:ss}",mySecondTime) + strInTime.Substring(8,3);
       // return strInTime.Substring(8,3);
       }
