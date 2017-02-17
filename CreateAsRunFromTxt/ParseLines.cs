@@ -102,6 +102,8 @@ namespace CreateAsRunFromTxt
         public string getEventID(int iRow)
         {
             dRow = (DataRow)tblLog.Rows[iRow];
+            // added this to prevent problem with missing uuids
+            if (dRow["EventID"].ToString().Length < 5) return "";
             return "urn:uuid:"+ dRow["EventID"].ToString();
         }
         public string getHouseNumber(int iRow)
@@ -191,9 +193,14 @@ namespace CreateAsRunFromTxt
         //
         private bool blIsOldTime(string strIn)
         {
-            string[] strConvert = strIn.Split('.');
-            if (strConvert[1].Length > 2) return true;
-            else return false;
+            // added this code for Dan Myers TXT file with frames
+            if (strIn.IndexOf('.') > 0)
+            {
+                string[] strConvert = strIn.Split('.');
+                if (strConvert[1].Length > 2) return true;
+                else return false;
+            }
+            return false;
         }
         //
         // function replaces . with : in sent string
