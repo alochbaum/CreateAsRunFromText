@@ -13,7 +13,7 @@ namespace CreateAsRunFromTxt
     class cTransformXML
     {
         private string strOutFile = "";
-        private string strXLSFile = "";
+
         //
         // This function takes the input xml file and runs a
         // named .xls transform from the program directory and

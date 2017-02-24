@@ -108,7 +108,16 @@ namespace CreateAsRunFromTxt
                             if(reader.LocalName.Equals("Content"))
                                 if (!blInsideContent) blInsideContent = true;
                             if (reader.LocalName.Equals("HouseNumber")) blHouseNumber = true;
-                            if (reader.LocalName.Equals("AlternateId")) blAlternateId = true;
+                            // Version 1.0.1 Adding a check for the correct attribute value of "ISCI" after Corus traffic sent <AlternateId idType="SUB"/>
+                            if (reader.LocalName.Equals("AlternateId"))
+                            {
+                                if (reader.HasAttributes)
+                                {
+                                    reader.MoveToAttribute(0);
+                                    if(reader.Value.Equals("ISCI"))
+                                    blAlternateId = true;
+                                }
+                            }
                             break;
                         case XmlNodeType.EndElement:
                             if (reader.LocalName.Equals("EventData"))

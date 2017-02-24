@@ -98,7 +98,7 @@ namespace CreateAsRunFromTxt
                 //This is looping section for each event parse the schedule
 
                 // parsing the text log
-                ParseLines myTxtLog = new ParseLines(strFileName,blDoubleFrames);
+                ParseLines myTxtLog = new ParseLines(strFileName,blDoubleFrames,objF);
                 if (myTxtLog.iCount < 1) objF.log2screen("Error: Low parsing count on Txt file");
                 objF.log2screen("Number of lines with Video Clip or Live in Log: "+myTxtLog.iCount.ToString());
                 string strTemp = "";
@@ -107,6 +107,8 @@ namespace CreateAsRunFromTxt
                 {
                     writer.WriteStartElement("AsRun"); // Start AsRun
                     writer.WriteStartElement("BasicAsRun"); // Start AsRun
+                    // Version 1.0.1 made BasicAsRun more complete
+                    writer.WriteAttributeString("xmlns", null, null, "http://smpte-ra.org/schemas/2021/2008/BXF");
                     writer.WriteStartElement("AsRunEventId"); // Start AsRunEventId
                     writer.WriteStartElement("EventId"); // Start EventId
                                                          // [7] is first AsRunEventId/EventId

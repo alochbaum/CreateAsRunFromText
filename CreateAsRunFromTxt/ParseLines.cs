@@ -21,7 +21,7 @@ namespace CreateAsRunFromTxt
         private bool blDateNotUpdated = true;  // this is set to false after midnight
         public string strDateToFind { get; set; }
         public int iCount { get; set; }
-        public ParseLines(string strFileName, bool blDoubleFrames)
+        public ParseLines(string strFileName, bool blDoubleFrames, Form1 objF)
         {
             tblLog.Columns.Add("EventID", typeof(string)); // first [7]
             tblLog.Columns.Add("HouseNumber", typeof(string)); //third [2]
@@ -81,17 +81,18 @@ namespace CreateAsRunFromTxt
                         {
                             if (strArray[1] == "Comment")
                             {
-                                // if not converted by the style of technical as run, convert the file.
-                                if (!blDoingOldTime) strArray[0] = ConvertOldTime2New(strArray[0]);
+                                // comments seem to always be written in old format
                                 strArray[0] = ConvertNewTime(strArray[0], blDoubleFrames);
                                 // uuid [7] has comment with ' characters or "
                                 strArray[7] = strArray[7].Replace('\'', '`');
                                 strArray[7] = strArray[7].Replace('"', '`');
-                                // So I using date for time
-                                tblLog.Rows.Add(strArray[0], strArray[2], strArray[7], fixDot(strArray[4]), fixDot(strArray[5]),
+                                // Version 1.1.5 EventID, House number, Name,Duration,SOM,EOM,StartDate,StartTime,Type
+                                tblLog.Rows.Add("", "NULL", strArray[7], fixDot(strArray[4]), fixDot(strArray[5]),
                                 fixDot(strArray[6]),
                                  dtStartLog.ToString("yyyy-MM-dd"), strArray[0], "Comment");
                             }
+                            else
+                                objF.log2screen("Text file has non-processed type of: " + strArray[1] + " @ "+strArray[0]);
                         }
                     }
                 }

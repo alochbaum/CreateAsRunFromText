@@ -43,9 +43,10 @@ namespace CreateAsRunFromTxt
         {
             rtbLogging.Clear();
             log2screen("Button Build All Clicked");
-            ParseTxtLog myParseText = new ParseTxtLog("11/2/2016");
-            //ParseTxtLog myParseText = new ParseTxtLog();
-            log2screen("Started ParseTxtLog " + myParseText.strDateToFind);
+            //ParseTxtLog myParseText = new ParseTxtLog("11/2/2016");
+            ParseTxtLog myParseText = new ParseTxtLog();
+            log2screen("Started Building BXF Log: " + tbSchedule.Text + " with version " +
+                Application.ProductVersion.ToString());
             //
             // currently this isn't work WMTV 2 folder test files
             //
