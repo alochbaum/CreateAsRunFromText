@@ -48,6 +48,8 @@
             this.cbHTMLPage = new System.Windows.Forms.CheckBox();
             this.cbOpenHTML = new System.Windows.Forms.CheckBox();
             this.cbSaveLog = new System.Windows.Forms.Button();
+            this.cbSub = new System.Windows.Forms.CheckBox();
+            this.label4 = new System.Windows.Forms.Label();
             this.groupBox1.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.nUpDnOffset)).BeginInit();
             this.SuspendLayout();
@@ -56,11 +58,11 @@
             // 
             this.groupBox1.Controls.Add(this.tbDirectory);
             this.groupBox1.Controls.Add(this.btnSelect);
-            this.groupBox1.Location = new System.Drawing.Point(12, 12);
-            this.groupBox1.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
+            this.groupBox1.Location = new System.Drawing.Point(6, 6);
+            this.groupBox1.Margin = new System.Windows.Forms.Padding(2, 1, 2, 1);
             this.groupBox1.Name = "groupBox1";
-            this.groupBox1.Padding = new System.Windows.Forms.Padding(3, 2, 3, 2);
-            this.groupBox1.Size = new System.Drawing.Size(1383, 85);
+            this.groupBox1.Padding = new System.Windows.Forms.Padding(2, 1, 2, 1);
+            this.groupBox1.Size = new System.Drawing.Size(692, 44);
             this.groupBox1.TabIndex = 0;
             this.groupBox1.TabStop = false;
             this.groupBox1.Text = "Default Directory to use for selection buttons next to Schedule and Text Files, B" +
@@ -68,18 +70,18 @@
             // 
             // tbDirectory
             // 
-            this.tbDirectory.Location = new System.Drawing.Point(131, 38);
-            this.tbDirectory.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
+            this.tbDirectory.Location = new System.Drawing.Point(66, 20);
+            this.tbDirectory.Margin = new System.Windows.Forms.Padding(2, 1, 2, 1);
             this.tbDirectory.Name = "tbDirectory";
-            this.tbDirectory.Size = new System.Drawing.Size(1220, 31);
+            this.tbDirectory.Size = new System.Drawing.Size(612, 20);
             this.tbDirectory.TabIndex = 1;
             // 
             // btnSelect
             // 
-            this.btnSelect.Location = new System.Drawing.Point(5, 30);
-            this.btnSelect.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
+            this.btnSelect.Location = new System.Drawing.Point(2, 16);
+            this.btnSelect.Margin = new System.Windows.Forms.Padding(2, 1, 2, 1);
             this.btnSelect.Name = "btnSelect";
-            this.btnSelect.Size = new System.Drawing.Size(93, 40);
+            this.btnSelect.Size = new System.Drawing.Size(46, 21);
             this.btnSelect.TabIndex = 0;
             this.btnSelect.Text = "select";
             this.btnSelect.UseVisualStyleBackColor = true;
@@ -87,10 +89,10 @@
             // 
             // btnBuildAll
             // 
-            this.btnBuildAll.Location = new System.Drawing.Point(19, 110);
-            this.btnBuildAll.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
+            this.btnBuildAll.Location = new System.Drawing.Point(10, 57);
+            this.btnBuildAll.Margin = new System.Windows.Forms.Padding(2, 1, 2, 1);
             this.btnBuildAll.Name = "btnBuildAll";
-            this.btnBuildAll.Size = new System.Drawing.Size(288, 39);
+            this.btnBuildAll.Size = new System.Drawing.Size(144, 20);
             this.btnBuildAll.TabIndex = 1;
             this.btnBuildAll.Text = "Build BXF As Run Log";
             this.btnBuildAll.UseVisualStyleBackColor = true;
@@ -98,36 +100,37 @@
             // 
             // rtbLogging
             // 
-            this.rtbLogging.Location = new System.Drawing.Point(17, 261);
-            this.rtbLogging.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
+            this.rtbLogging.Location = new System.Drawing.Point(11, 147);
+            this.rtbLogging.Margin = new System.Windows.Forms.Padding(2, 1, 2, 1);
             this.rtbLogging.Name = "rtbLogging";
-            this.rtbLogging.Size = new System.Drawing.Size(1375, 380);
+            this.rtbLogging.Size = new System.Drawing.Size(690, 209);
             this.rtbLogging.TabIndex = 2;
             this.rtbLogging.Text = "";
             // 
             // tbSchedule
             // 
-            this.tbSchedule.Location = new System.Drawing.Point(436, 114);
-            this.tbSchedule.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
+            this.tbSchedule.Location = new System.Drawing.Point(218, 59);
+            this.tbSchedule.Margin = new System.Windows.Forms.Padding(2, 1, 2, 1);
             this.tbSchedule.Name = "tbSchedule";
-            this.tbSchedule.Size = new System.Drawing.Size(891, 31);
+            this.tbSchedule.Size = new System.Drawing.Size(448, 20);
             this.tbSchedule.TabIndex = 3;
             // 
             // label1
             // 
             this.label1.AutoSize = true;
-            this.label1.Location = new System.Drawing.Point(321, 116);
+            this.label1.Location = new System.Drawing.Point(160, 60);
+            this.label1.Margin = new System.Windows.Forms.Padding(2, 0, 2, 0);
             this.label1.Name = "label1";
-            this.label1.Size = new System.Drawing.Size(99, 25);
+            this.label1.Size = new System.Drawing.Size(50, 13);
             this.label1.TabIndex = 4;
             this.label1.Text = "schedule";
             // 
             // btnSelectSchedule
             // 
-            this.btnSelectSchedule.Location = new System.Drawing.Point(1348, 112);
-            this.btnSelectSchedule.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
+            this.btnSelectSchedule.Location = new System.Drawing.Point(674, 58);
+            this.btnSelectSchedule.Margin = new System.Windows.Forms.Padding(2, 1, 2, 1);
             this.btnSelectSchedule.Name = "btnSelectSchedule";
-            this.btnSelectSchedule.Size = new System.Drawing.Size(44, 32);
+            this.btnSelectSchedule.Size = new System.Drawing.Size(22, 17);
             this.btnSelectSchedule.TabIndex = 5;
             this.btnSelectSchedule.Text = "...";
             this.btnSelectSchedule.UseVisualStyleBackColor = true;
@@ -140,37 +143,38 @@
             // cbDoubleFrames
             // 
             this.cbDoubleFrames.AutoSize = true;
-            this.cbDoubleFrames.Location = new System.Drawing.Point(19, 165);
-            this.cbDoubleFrames.Margin = new System.Windows.Forms.Padding(4);
+            this.cbDoubleFrames.Location = new System.Drawing.Point(10, 86);
+            this.cbDoubleFrames.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
             this.cbDoubleFrames.Name = "cbDoubleFrames";
-            this.cbDoubleFrames.Size = new System.Drawing.Size(288, 29);
+            this.cbDoubleFrames.Size = new System.Drawing.Size(143, 17);
             this.cbDoubleFrames.TabIndex = 6;
             this.cbDoubleFrames.Text = "x2 Frames (posible 720p)";
             this.cbDoubleFrames.UseVisualStyleBackColor = true;
             // 
             // tbTextFile
             // 
-            this.tbTextFile.Location = new System.Drawing.Point(436, 165);
-            this.tbTextFile.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
+            this.tbTextFile.Location = new System.Drawing.Point(218, 86);
+            this.tbTextFile.Margin = new System.Windows.Forms.Padding(2, 1, 2, 1);
             this.tbTextFile.Name = "tbTextFile";
-            this.tbTextFile.Size = new System.Drawing.Size(891, 31);
+            this.tbTextFile.Size = new System.Drawing.Size(448, 20);
             this.tbTextFile.TabIndex = 3;
             // 
             // label2
             // 
             this.label2.AutoSize = true;
-            this.label2.Location = new System.Drawing.Point(321, 168);
+            this.label2.Location = new System.Drawing.Point(160, 87);
+            this.label2.Margin = new System.Windows.Forms.Padding(2, 0, 2, 0);
             this.label2.Name = "label2";
-            this.label2.Size = new System.Drawing.Size(81, 25);
+            this.label2.Size = new System.Drawing.Size(40, 13);
             this.label2.TabIndex = 4;
             this.label2.Text = "text file";
             // 
             // btnSelectTextFile
             // 
-            this.btnSelectTextFile.Location = new System.Drawing.Point(1348, 161);
-            this.btnSelectTextFile.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
+            this.btnSelectTextFile.Location = new System.Drawing.Point(674, 84);
+            this.btnSelectTextFile.Margin = new System.Windows.Forms.Padding(2, 1, 2, 1);
             this.btnSelectTextFile.Name = "btnSelectTextFile";
-            this.btnSelectTextFile.Size = new System.Drawing.Size(44, 32);
+            this.btnSelectTextFile.Size = new System.Drawing.Size(22, 17);
             this.btnSelectTextFile.TabIndex = 5;
             this.btnSelectTextFile.Text = "...";
             this.btnSelectTextFile.UseVisualStyleBackColor = true;
@@ -179,15 +183,17 @@
             // label3
             // 
             this.label3.AutoSize = true;
-            this.label3.Location = new System.Drawing.Point(14, 215);
+            this.label3.Location = new System.Drawing.Point(5, 128);
+            this.label3.Margin = new System.Windows.Forms.Padding(2, 0, 2, 0);
             this.label3.Name = "label3";
-            this.label3.Size = new System.Drawing.Size(616, 25);
+            this.label3.Size = new System.Drawing.Size(146, 13);
             this.label3.TabIndex = 7;
-            this.label3.Text = "UTC offset as a number -5 (for EST) -4 (EDT) -8 (PST) -7 (PDT)";
+            this.label3.Text = "used in created HTML Pages";
             // 
             // nUpDnOffset
             // 
-            this.nUpDnOffset.Location = new System.Drawing.Point(636, 213);
+            this.nUpDnOffset.Location = new System.Drawing.Point(318, 116);
+            this.nUpDnOffset.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
             this.nUpDnOffset.Maximum = new decimal(new int[] {
             24,
             0,
@@ -199,7 +205,7 @@
             0,
             -2147483648});
             this.nUpDnOffset.Name = "nUpDnOffset";
-            this.nUpDnOffset.Size = new System.Drawing.Size(74, 31);
+            this.nUpDnOffset.Size = new System.Drawing.Size(37, 20);
             this.nUpDnOffset.TabIndex = 8;
             this.nUpDnOffset.Value = new decimal(new int[] {
             5,
@@ -212,9 +218,10 @@
             this.cbHTMLPage.AutoSize = true;
             this.cbHTMLPage.Checked = true;
             this.cbHTMLPage.CheckState = System.Windows.Forms.CheckState.Checked;
-            this.cbHTMLPage.Location = new System.Drawing.Point(741, 211);
+            this.cbHTMLPage.Location = new System.Drawing.Point(370, 110);
+            this.cbHTMLPage.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
             this.cbHTMLPage.Name = "cbHTMLPage";
-            this.cbHTMLPage.Size = new System.Drawing.Size(228, 29);
+            this.cbHTMLPage.Size = new System.Drawing.Size(118, 17);
             this.cbHTMLPage.TabIndex = 9;
             this.cbHTMLPage.Text = "Create HMTL Page";
             this.cbHTMLPage.UseVisualStyleBackColor = true;
@@ -224,33 +231,60 @@
             this.cbOpenHTML.AutoSize = true;
             this.cbOpenHTML.Checked = true;
             this.cbOpenHTML.CheckState = System.Windows.Forms.CheckState.Checked;
-            this.cbOpenHTML.Location = new System.Drawing.Point(992, 211);
+            this.cbOpenHTML.Location = new System.Drawing.Point(496, 110);
+            this.cbOpenHTML.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
             this.cbOpenHTML.Name = "cbOpenHTML";
-            this.cbOpenHTML.Size = new System.Drawing.Size(267, 29);
+            this.cbOpenHTML.Size = new System.Drawing.Size(137, 17);
             this.cbOpenHTML.TabIndex = 9;
             this.cbOpenHTML.Text = "Open HTML in Browser";
             this.cbOpenHTML.UseVisualStyleBackColor = true;
             // 
             // cbSaveLog
             // 
-            this.cbSaveLog.Location = new System.Drawing.Point(1279, 209);
+            this.cbSaveLog.Location = new System.Drawing.Point(637, 107);
+            this.cbSaveLog.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
             this.cbSaveLog.Name = "cbSaveLog";
-            this.cbSaveLog.Size = new System.Drawing.Size(113, 47);
+            this.cbSaveLog.Size = new System.Drawing.Size(59, 37);
             this.cbSaveLog.TabIndex = 10;
-            this.cbSaveLog.Text = "save log";
+            this.cbSaveLog.Text = "save log (optional)";
             this.cbSaveLog.UseVisualStyleBackColor = true;
             this.cbSaveLog.Click += new System.EventHandler(this.cbSaveLog_Click);
             // 
+            // cbSub
+            // 
+            this.cbSub.AutoSize = true;
+            this.cbSub.Checked = true;
+            this.cbSub.CheckState = System.Windows.Forms.CheckState.Checked;
+            this.cbSub.Location = new System.Drawing.Point(370, 129);
+            this.cbSub.Margin = new System.Windows.Forms.Padding(2);
+            this.cbSub.Name = "cbSub";
+            this.cbSub.Size = new System.Drawing.Size(268, 17);
+            this.cbSub.TabIndex = 9;
+            this.cbSub.Text = "Subsitute when UUID doesn\'t match house number";
+            this.cbSub.UseVisualStyleBackColor = true;
+            // 
+            // label4
+            // 
+            this.label4.AutoSize = true;
+            this.label4.Location = new System.Drawing.Point(3, 113);
+            this.label4.Margin = new System.Windows.Forms.Padding(2, 0, 2, 0);
+            this.label4.Name = "label4";
+            this.label4.Size = new System.Drawing.Size(304, 13);
+            this.label4.TabIndex = 7;
+            this.label4.Text = "UTC offset as a number -5 (for EST) -4 (EDT) -8 (PST) -7 (PDT)";
+            // 
             // Form1
             // 
-            this.AutoScaleDimensions = new System.Drawing.SizeF(12F, 25F);
+            this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.AutoSize = true;
-            this.ClientSize = new System.Drawing.Size(1412, 664);
+            this.ClientSize = new System.Drawing.Size(706, 366);
             this.Controls.Add(this.cbSaveLog);
             this.Controls.Add(this.cbOpenHTML);
+            this.Controls.Add(this.cbSub);
             this.Controls.Add(this.cbHTMLPage);
             this.Controls.Add(this.nUpDnOffset);
+            this.Controls.Add(this.label4);
             this.Controls.Add(this.label3);
             this.Controls.Add(this.cbDoubleFrames);
             this.Controls.Add(this.btnSelectTextFile);
@@ -263,7 +297,7 @@
             this.Controls.Add(this.btnBuildAll);
             this.Controls.Add(this.groupBox1);
             this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
-            this.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
+            this.Margin = new System.Windows.Forms.Padding(2, 1, 2, 1);
             this.MaximizeBox = false;
             this.Name = "Form1";
             this.Text = "Create BXF As Run";
@@ -298,6 +332,8 @@
         private System.Windows.Forms.CheckBox cbHTMLPage;
         private System.Windows.Forms.CheckBox cbOpenHTML;
         private System.Windows.Forms.Button cbSaveLog;
+        private System.Windows.Forms.CheckBox cbSub;
+        private System.Windows.Forms.Label label4;
     }
 }
 

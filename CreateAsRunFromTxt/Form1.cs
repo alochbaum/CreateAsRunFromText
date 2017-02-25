@@ -47,51 +47,6 @@ namespace CreateAsRunFromTxt
             ParseTxtLog myParseText = new ParseTxtLog();
             log2screen("Started Building BXF Log: " + tbSchedule.Text + " with version " +
                 Application.ProductVersion.ToString());
-            //
-            // currently this isn't work WMTV 2 folder test files
-            //
-            // get the files in the directory if exists
-            //if (Directory.Exists(tbDirectory.Text))
-            //{
-            //    string strDayTxtFile = "";
-            //    string[] files = Directory.GetFiles(tbDirectory.Text);
-            //    foreach(string strfile in files)
-            //    {
-            //        if(Path.GetExtension(strfile)==".txt")
-            //        {
-            //            // check if matching date I'm seeking
-            //            if(myParseText.CompareTxtFile(strfile))
-            //            {
-            //                // check if already found 1 text file with date
-            //                if(strDayTxtFile.Length>2)
-            //                {
-            //                    log2screen("Error: second day matched text file ending "
-            //                        + strfile);
-            //                    return;
-            //                } else
-            //                {
-            //                    // loading first found txt file
-            //                    strDayTxtFile = strfile;
-            //                    log2screen("Matched day in file " + strfile);
-            //                }
-            //            }
-            //            else
-            //            {
-            //                log2screen("Text File didn't start with date " + strfile);
-            //            }
-
-            //        }
-            //    } // finished looping through txt files hopefully with a name
-            //    // checking for text file name, write log if there
-            //    if (strDayTxtFile.Length > 3 && File.Exists(tbSchedule.Text))
-            //    {
-            //        log2screen("Writing As Run Returned: " + myParseText.WriteAsRunFile(strDayTxtFile,
-            //            tbSchedule.Text,this,cbDoubleFrames.Checked));
-            //    }
-
-
-            //}// End Directory exists
-
             if (myParseText.WriteAsRunFile(tbTextFile.Text, tbSchedule.Text, this, cbDoubleFrames.Checked))
             {
                 log2screen("Writing As Run Returned: True");
@@ -125,13 +80,23 @@ namespace CreateAsRunFromTxt
             }
         }
 
-        public void log2screen (string strIn)
+        public void log2screen (string strIn,int ierror = 0)
         {
-            rtbLogging.SelectionColor = Color.DarkBlue;
-            rtbLogging.AppendText(DateTime.Now + " ");
-            rtbLogging.SelectionColor = Color.Black;
-            rtbLogging.AppendText(strIn + "\r\n");
-            rtbLogging.ScrollToCaret();
+            if (ierror==0)
+            {
+                rtbLogging.SelectionColor = Color.DarkBlue;
+                rtbLogging.AppendText(DateTime.Now + " ");
+                rtbLogging.SelectionColor = Color.Black;
+                rtbLogging.AppendText(strIn + "\r\n");
+                rtbLogging.ScrollToCaret();
+            } else
+            {
+                rtbLogging.SelectionColor = Color.DarkBlue;
+                rtbLogging.AppendText(DateTime.Now + " ");
+                rtbLogging.SelectionColor = Color.DarkRed;
+                rtbLogging.AppendText(strIn + "\r\n");
+                rtbLogging.ScrollToCaret();
+            }
         }
 
 
