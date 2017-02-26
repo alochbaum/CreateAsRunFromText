@@ -145,5 +145,10 @@ namespace CreateAsRunFromTxt
                 rtbLogging.SaveFile(saveFile1.FileName, RichTextBoxStreamType.RichNoOleObjs);
             }
         }
+        // added for 2.0 ParseTxtLog check for wiping out UUIDs
+        public bool getCBSub()
+        {
+            return cbSub.Checked;
+        }
     }
 }

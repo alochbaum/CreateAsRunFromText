@@ -81,6 +81,8 @@ namespace CreateAsRunFromTxt
                 bool blHouseNumber = false;
                 bool blAlternateId = false;
                 bool blInsideContent = false;
+                // for 2.0 need to add non-primary
+                
                 // start are reading loop
                 while (reader.Read())
                 {
@@ -154,14 +156,7 @@ namespace CreateAsRunFromTxt
             }
             return true;
         }
-        public string getBillingFromID(string strEventID)
-        {
-            string strReturn = "";
-            DataRow[] dr = tblSched.Select(string.Format("EventID ='{0}' ", strEventID));
-            // return the value only if there is one row selected
-            if (dr.Length == 1) strReturn = dr[0].Field<string>("BillingReference");
-            return strReturn;
-        }
+
         public string getAlternateIdFromID(string strEventID)
         {
             string strReturn = "";
@@ -170,5 +165,24 @@ namespace CreateAsRunFromTxt
             if (dr.Length == 1) strReturn = dr[0].Field<string>("AlternateId");
             return strReturn;
         }
+
+        public string getBillingFromID(string strEventID)
+        {
+            string strReturn = "";
+            DataRow[] dr = tblSched.Select(string.Format("EventID ='{0}' ", strEventID));
+            // return the value only if there is one row selected
+            if (dr.Length == 1) strReturn = dr[0].Field<string>("BillingReference");
+            return strReturn;
+        }
+
+        public string getHouseNumberFromID(string strEventID)
+        {
+            string strReturn = "";
+            DataRow[] dr = tblSched.Select(string.Format("EventID ='{0}' ", strEventID));
+            // return the value only if there is one row selected
+            if (dr.Length == 1) strReturn = dr[0].Field<string>("HouseNumber");
+            return strReturn;
+        }
+
     }
 }

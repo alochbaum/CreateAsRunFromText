@@ -103,6 +103,7 @@ namespace CreateAsRunFromTxt
                 objF.log2screen("Number of lines with Video Clip or Live in Log: "+myTxtLog.iCount.ToString());
                 string strTemp = "";
                 string strUUIDHold = "";
+                bool blGoodUUIDMatch = false;
                 for (int iloop = 0; iloop < myTxtLog.iCount; iloop++)
                 {
                     writer.WriteStartElement("AsRun"); // Start AsRun
@@ -114,9 +115,27 @@ namespace CreateAsRunFromTxt
                                                          // [7] is first AsRunEventId/EventId
                                                          // |4a31eba0-55ce-49f0-889b-2ccd5c857afd|
                                                          // the recall adds urn:uuid: at top of string.
+
+                    // Getting line from parsed text file table
                     strUUIDHold = myTxtLog.getEventID(iloop);
-                        objF.log2screen("Writing: " + strUUIDHold + "\t"+myTxtLog.getStartDate(iloop)+"\t"+myTxtLog.getStartTime(iloop));
+
+                    // Checking the House Number for UUID match added for 2.0.7
+                    strTemp = myTxtLog.getHouseNumber(iloop);
+                    if (strTemp.Equals(myPS.getHouseNumberFromID(strUUIDHold)))
+                    {
+                        // Reporting back to screen UUID, Start Date, Start Time if good
+                        objF.log2screen("Writing: " + strUUIDHold + "\t" + myTxtLog.getStartDate(iloop) + "\t" + myTxtLog.getStartTime(iloop));
+                        // Writing String if good
                         writer.WriteString(strUUIDHold);
+                    }
+                    else
+                    {
+                        // Report error back to screen
+                        objF.log2screen("Error Non-Equal House Numbers:" + strUUIDHold + "\t" + strTemp + " doesn't equal " + myPS.getHouseNumberFromID(strUUIDHold), 1);
+                        // Set for subsitution and if set wipe out UUID
+                        if (objF.getCBSub()) strUUIDHold = "Bad";
+                    }
+
                     writer.WriteEndElement(); // End EventId
                     // second AsRunEventId/BillingReferenceCode
                     // this might not exist searching for value

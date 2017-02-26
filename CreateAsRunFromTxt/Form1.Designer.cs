@@ -103,7 +103,7 @@
             this.rtbLogging.Location = new System.Drawing.Point(11, 147);
             this.rtbLogging.Margin = new System.Windows.Forms.Padding(2, 1, 2, 1);
             this.rtbLogging.Name = "rtbLogging";
-            this.rtbLogging.Size = new System.Drawing.Size(690, 209);
+            this.rtbLogging.Size = new System.Drawing.Size(684, 244);
             this.rtbLogging.TabIndex = 2;
             this.rtbLogging.Text = "";
             // 
@@ -144,7 +144,7 @@
             // 
             this.cbDoubleFrames.AutoSize = true;
             this.cbDoubleFrames.Location = new System.Drawing.Point(10, 86);
-            this.cbDoubleFrames.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
+            this.cbDoubleFrames.Margin = new System.Windows.Forms.Padding(2);
             this.cbDoubleFrames.Name = "cbDoubleFrames";
             this.cbDoubleFrames.Size = new System.Drawing.Size(143, 17);
             this.cbDoubleFrames.TabIndex = 6;
@@ -193,7 +193,7 @@
             // nUpDnOffset
             // 
             this.nUpDnOffset.Location = new System.Drawing.Point(318, 116);
-            this.nUpDnOffset.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
+            this.nUpDnOffset.Margin = new System.Windows.Forms.Padding(2);
             this.nUpDnOffset.Maximum = new decimal(new int[] {
             24,
             0,
@@ -219,7 +219,7 @@
             this.cbHTMLPage.Checked = true;
             this.cbHTMLPage.CheckState = System.Windows.Forms.CheckState.Checked;
             this.cbHTMLPage.Location = new System.Drawing.Point(370, 110);
-            this.cbHTMLPage.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
+            this.cbHTMLPage.Margin = new System.Windows.Forms.Padding(2);
             this.cbHTMLPage.Name = "cbHTMLPage";
             this.cbHTMLPage.Size = new System.Drawing.Size(118, 17);
             this.cbHTMLPage.TabIndex = 9;
@@ -232,7 +232,7 @@
             this.cbOpenHTML.Checked = true;
             this.cbOpenHTML.CheckState = System.Windows.Forms.CheckState.Checked;
             this.cbOpenHTML.Location = new System.Drawing.Point(496, 110);
-            this.cbOpenHTML.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
+            this.cbOpenHTML.Margin = new System.Windows.Forms.Padding(2);
             this.cbOpenHTML.Name = "cbOpenHTML";
             this.cbOpenHTML.Size = new System.Drawing.Size(137, 17);
             this.cbOpenHTML.TabIndex = 9;
@@ -242,7 +242,7 @@
             // cbSaveLog
             // 
             this.cbSaveLog.Location = new System.Drawing.Point(637, 107);
-            this.cbSaveLog.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
+            this.cbSaveLog.Margin = new System.Windows.Forms.Padding(2);
             this.cbSaveLog.Name = "cbSaveLog";
             this.cbSaveLog.Size = new System.Drawing.Size(59, 37);
             this.cbSaveLog.TabIndex = 10;
@@ -278,7 +278,7 @@
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.AutoSize = true;
-            this.ClientSize = new System.Drawing.Size(706, 366);
+            this.ClientSize = new System.Drawing.Size(706, 401);
             this.Controls.Add(this.cbSaveLog);
             this.Controls.Add(this.cbOpenHTML);
             this.Controls.Add(this.cbSub);

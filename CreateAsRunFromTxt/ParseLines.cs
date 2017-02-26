@@ -67,15 +67,15 @@ namespace CreateAsRunFromTxt
                         // Fix the time if blDoingOldTime
                         if (blDoingOldTime) strArray[0] = ConvertOldTime2New(strArray[0]);
                         // continue only if type is "Video Clip" or "Live"
-                        // "Comment will have old time format so process it later.
+                        // "Comment has new time format so process it later.
                         if (strArray[1] == "Video Clip" || strArray[1] == "Live")
                         {
 
                             strArray[0] = ConvertNewTime(strArray[0],blDoubleFrames);
-
                             tblLog.Rows.Add(strArray[7], strArray[2], strArray[3], fixDot(strArray[4]), fixDot(strArray[5]),
                                 fixDot(strArray[6]), 
                                 dtStartLog.ToString("yyyy-MM-dd"),strArray[0], "Primary");
+
                         } // end of "Video Clip" or "live"  processing
                         else
                         {
