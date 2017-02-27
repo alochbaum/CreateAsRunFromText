@@ -87,6 +87,7 @@
     </Compile>
     <Compile Include="ParseLines.cs" />
     <Compile Include="ParseSched.cs" />
+    <Compile Include="ParseTxtInterface.cs" />
     <Compile Include="ParseTxtLog.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />

@@ -75,7 +75,7 @@ namespace CreateAsRunFromTxt
             using (XmlReader reader = XmlReader.Create(strSchedName))
             {
                 // set these before the reading loop
-                bool blInsideElement = false;
+                bool blInsideElement = false;  // This is set if inside EventData with attribute of "Primary"
                 bool blInsideEventID = false;
                 bool blBillingReferenceCode = false;
                 bool blHouseNumber = false;
@@ -122,24 +122,26 @@ namespace CreateAsRunFromTxt
                             }
                             break;
                         case XmlNodeType.EndElement:
-                            if (reader.LocalName.Equals("EventData"))
-                            {
-                                blInsideElement = false;
-                                // we get some false rows, don't save them
-                                if (eventID != null && eventID.Length > 3)
-                                {
-                                    tblSched.Rows.Add(eventID, eventBilling, eventHouseNum,eventAlternateId);
-                                    objF.log2screen("Sched \t" + eventBilling +
-                                        "\t" + eventHouseNum + "\t" + eventAlternateId);
-                                }
-                                // reset all the varibles
-                                eventID = eventBilling = eventHouseNum = "";
-                            }
+                            if (reader.LocalName.Equals("EventData")) blInsideElement = false;
                             if (reader.LocalName.Equals("EventId")) blInsideEventID = false;
                             if (reader.LocalName.Equals("BillingReferenceCode")) blBillingReferenceCode = false;
                             if (reader.LocalName.Equals("HouseNumber")) blHouseNumber = false;
                             if (reader.LocalName.Equals("Content")) blInsideContent = false;
                             if (reader.LocalName.Equals("AlternateId")) blAlternateId = false;
+                            // The House number can be outside of EventData so write out row on ScheduledEvent
+                            if (reader.LocalName.Equals("ScheduledEvent"))
+                            {
+
+                                // we get some false rows, don't save them
+                                if (eventID != null && eventID.Length > 3)
+                                {
+                                    tblSched.Rows.Add(eventID, eventBilling, eventHouseNum, eventAlternateId);
+                                    objF.log2screen("Sched \t" + eventID +
+                                        "\t" + eventBilling + "\t" + eventHouseNum);
+                                }
+                                // reset all the varibles
+                                eventID = eventBilling = eventHouseNum = eventAlternateId = "";
+                            }
                             break;
                         case XmlNodeType.Text:
                             // if inside the Event ID and not in BillingReference you have Event ID

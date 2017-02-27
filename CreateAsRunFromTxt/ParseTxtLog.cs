@@ -101,7 +101,7 @@ namespace CreateAsRunFromTxt
                 ParseLines myTxtLog = new ParseLines(strFileName,blDoubleFrames,objF);
                 if (myTxtLog.iCount < 1) objF.log2screen("Error: Low parsing count on Txt file");
                 objF.log2screen("Number of lines with Video Clip or Live in Log: "+myTxtLog.iCount.ToString());
-                string strTemp = "";
+                string strTemp = "", strTemp2 = "";
                 string strUUIDHold = "";
                 bool blGoodUUIDMatch = false;
                 for (int iloop = 0; iloop < myTxtLog.iCount; iloop++)
@@ -121,7 +121,8 @@ namespace CreateAsRunFromTxt
 
                     // Checking the House Number for UUID match added for 2.0.7
                     strTemp = myTxtLog.getHouseNumber(iloop);
-                    if (strTemp.Equals(myPS.getHouseNumberFromID(strUUIDHold)))
+                    strTemp2 = myPS.getHouseNumberFromID(strUUIDHold);
+                    if (strTemp.Equals(strTemp2))
                     {
                         // Reporting back to screen UUID, Start Date, Start Time if good
                         objF.log2screen("Writing: " + strUUIDHold + "\t" + myTxtLog.getStartDate(iloop) + "\t" + myTxtLog.getStartTime(iloop));
