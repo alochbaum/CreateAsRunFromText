@@ -9,11 +9,23 @@ namespace CreateAsRunFromTxt
     public enum EventType
     {
         None,
-        Clip,
-        Live,
-        Logo,
-        ChannelLogo,
+        Primary,
+        NonPrimary,
+        Unknown
+    }
+    public enum NonPrimaryEventName
+    {
+        None,
+        CG,
+        DVE,
+        EXSUB, // External Subtitler
         GPI,
+        LOGO,
+        ROUTE, // Router Event
+        SUB, // Internal Subtitler 
+        VO, // Voice Over/Secondary Audio
+        VANC, // SCTE-104
+        VCHIP,
         Unknown
     }
 }

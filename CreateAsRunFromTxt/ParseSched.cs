@@ -23,6 +23,8 @@ namespace CreateAsRunFromTxt
         public string eventBilling { get; set; }
         public string eventHouseNum { get; set; }
         public string eventAlternateId { get; set; }
+        public EventType tblEventType = EventType.None;
+        public NonPrimaryEventName tbNonPri = NonPrimaryEventName.None;
         // Here we create a DataTable with four columns to store parsed sechedule
         private DataTable tblSched = new DataTable();
         // When starting up set columns in DataTable
@@ -32,6 +34,8 @@ namespace CreateAsRunFromTxt
             tblSched.Columns.Add("BillingReference", typeof(string));
             tblSched.Columns.Add("HouseNumber", typeof(string));
             tblSched.Columns.Add("AlternateId", typeof(string));
+            tblSched.Columns.Add("EventType", typeof(EventType));
+            tblSched.Columns.Add("NonPrimaryEventName", typeof(NonPrimaryEventName));
         }
         public bool openSchedHeader(string strSchedName)
         {
@@ -81,6 +85,7 @@ namespace CreateAsRunFromTxt
                 bool blHouseNumber = false;
                 bool blAlternateId = false;
                 bool blInsideContent = false;
+                bool blNonPrimaryEvent = false;
                 // for 2.0 need to add non-primary
                 
                 // start are reading loop
@@ -95,7 +100,8 @@ namespace CreateAsRunFromTxt
                             if (reader.LocalName.Equals("EventData") && 
                                 reader["eventType"] == "Primary" )
                             {
-                                blInsideElement = true;
+                                if (reader["eventType"].Length > 3) Enum.TryParse(reader["eventType"].ToString(), out tblEventType);
+                                 blInsideElement = true;
                             }
                             if(blInsideElement)
                             {
@@ -110,6 +116,8 @@ namespace CreateAsRunFromTxt
                             if(reader.LocalName.Equals("Content"))
                                 if (!blInsideContent) blInsideContent = true;
                             if (reader.LocalName.Equals("HouseNumber")) blHouseNumber = true;
+                            if (reader.LocalName.Equals("NonPrimaryEventName")) blNonPrimaryEvent = true;
+
                             // Version 1.0.1 Adding a check for the correct attribute value of "ISCI" after Corus traffic sent <AlternateId idType="SUB"/>
                             if (reader.LocalName.Equals("AlternateId"))
                             {
@@ -126,6 +134,7 @@ namespace CreateAsRunFromTxt
                             if (reader.LocalName.Equals("EventId")) blInsideEventID = false;
                             if (reader.LocalName.Equals("BillingReferenceCode")) blBillingReferenceCode = false;
                             if (reader.LocalName.Equals("HouseNumber")) blHouseNumber = false;
+                            if (reader.LocalName.Equals("NonPrimaryEventName")) blNonPrimaryEvent = false;
                             if (reader.LocalName.Equals("Content")) blInsideContent = false;
                             if (reader.LocalName.Equals("AlternateId")) blAlternateId = false;
                             // The House number can be outside of EventData so write out row on ScheduledEvent
@@ -135,12 +144,15 @@ namespace CreateAsRunFromTxt
                                 // we get some false rows, don't save them
                                 if (eventID != null && eventID.Length > 3)
                                 {
-                                    tblSched.Rows.Add(eventID, eventBilling, eventHouseNum, eventAlternateId);
+                                    tblSched.Rows.Add(eventID, eventBilling, eventHouseNum, eventAlternateId, tblEventType, tbNonPri);
                                     objF.log2screen("Sched \t" + eventID +
-                                        "\t" + eventBilling + "\t" + eventHouseNum);
+                                        "\t" + eventBilling + "\t" + eventHouseNum + "\t" + tblEventType.ToString() + "\t" + tbNonPri.ToString());
                                 }
-                                // reset all the varibles
+                                // resetting all the varibles
                                 eventID = eventBilling = eventHouseNum = eventAlternateId = "";
+                                // resetting Enums
+                                tblEventType = EventType.None;
+                                tbNonPri = NonPrimaryEventName.None;
                             }
                             break;
                         case XmlNodeType.Text:
@@ -150,6 +162,7 @@ namespace CreateAsRunFromTxt
                             // changed this after mike and molly had house number Content/ContentId/HouseNumber
                             // if (blHouseNumber&&blInsideContent) eventHouseNum = reader.Value;
                             if (blHouseNumber) eventHouseNum = reader.Value;
+                            if (blNonPrimaryEvent) Enum.TryParse(reader.Value, out tbNonPri);
                             if (blAlternateId) eventAlternateId = reader.Value;
                             break;
                     }
