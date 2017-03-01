@@ -101,9 +101,9 @@ namespace CreateAsRunFromTxt
                 ParseLines myTxtLog = new ParseLines(strFileName,blDoubleFrames,objF);
                 if (myTxtLog.iCount < 1) objF.log2screen("Error: Low parsing count on Txt file");
                 objF.log2screen("Number of lines with Video Clip or Live in Log: "+myTxtLog.iCount.ToString());
-                string strTemp = "", strTemp2 = "";
+                string strTemp = "";
                 string strUUIDHold = "";
-                bool blGoodUUIDMatch = false;
+                EventType tmpEventType = EventType.None;
                 for (int iloop = 0; iloop < myTxtLog.iCount; iloop++)
                 {
                     writer.WriteStartElement("AsRun"); // Start AsRun
@@ -119,22 +119,29 @@ namespace CreateAsRunFromTxt
                     // Getting line from parsed text file table
                     strUUIDHold = myTxtLog.getEventID(iloop);
 
-                    // Checking the House Number for UUID match added for 2.0.7
+                    // Checking the House Number for UUID match added for 2.x if it is a primary event
                     strTemp = myTxtLog.getHouseNumber(iloop);
-                    strTemp2 = myPS.getHouseNumberFromID(strUUIDHold);
-                    if (strTemp.Equals(strTemp2))
+                    tmpEventType = myPS.getEventType(strUUIDHold);
+                    if (tmpEventType == EventType.Primary)
+                    {
+                        if (strTemp.Equals(myPS.getHouseNumberFromID(strUUIDHold)))
+                        {
+                            // Reporting back to screen UUID, Start Date, Start Time if good
+                            objF.log2screen("Writing: " + strUUIDHold + "\t" + myTxtLog.getStartDate(iloop) + "\t" + myTxtLog.getStartTime(iloop));
+                            // Writing String if good
+                            writer.WriteString(strUUIDHold);
+                        }
+                        else
+                        {
+                            // Report error back to screen
+                            objF.log2screen("Error Non-Equal House Numbers:" + strUUIDHold + "\t" + strTemp + " doesn't equal " + myPS.getHouseNumberFromID(strUUIDHold), 1);
+                            // Set for subsitution and if set wipe out UUID
+                            if (objF.getCBSub()) strUUIDHold = "Bad";
+                        }
+                    } else
                     {
                         // Reporting back to screen UUID, Start Date, Start Time if good
                         objF.log2screen("Writing: " + strUUIDHold + "\t" + myTxtLog.getStartDate(iloop) + "\t" + myTxtLog.getStartTime(iloop));
-                        // Writing String if good
-                        writer.WriteString(strUUIDHold);
-                    }
-                    else
-                    {
-                        // Report error back to screen
-                        objF.log2screen("Error Non-Equal House Numbers:" + strUUIDHold + "\t" + strTemp + " doesn't equal " + myPS.getHouseNumberFromID(strUUIDHold), 1);
-                        // Set for subsitution and if set wipe out UUID
-                        if (objF.getCBSub()) strUUIDHold = "Bad";
                     }
 
                     writer.WriteEndElement(); // End EventId
@@ -174,7 +181,12 @@ namespace CreateAsRunFromTxt
                     //
                     writer.WriteStartElement("Name"); // Start Name
                     // use XML safe name
-                    // if I can compute it
+                    // for non primary get the Event name in 2.x currently that is Logo or GPI
+                    if(tmpEventType==EventType.NonPrimary)
+                    {
+                        writer.WriteString(myPS.getNonPrimaryEventName(strUUIDHold).ToString());
+                    }
+                    else
                     writer.WriteString(myTxtLog.getName(iloop));
                     writer.WriteEndElement(); // End Name
                     //

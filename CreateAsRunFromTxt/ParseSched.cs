@@ -97,10 +97,10 @@ namespace CreateAsRunFromTxt
                     {
                         case XmlNodeType.Element:
                             // starting Element, set blInsideElement if EventData and Primary
-                            if (reader.LocalName.Equals("EventData") && 
-                                reader["eventType"] == "Primary" )
+                           // if (reader.LocalName.Equals("EventData") &&  reader["eventType"] == "Primary" )
+                            if (reader.LocalName.Equals("EventData"))
                             {
-                                if (reader["eventType"].Length > 3) Enum.TryParse(reader["eventType"].ToString(), out tblEventType);
+                                    if (reader["eventType"].Length > 3) Enum.TryParse(reader["eventType"].ToString(), out tblEventType);
                                  blInsideElement = true;
                             }
                             if(blInsideElement)
@@ -146,7 +146,7 @@ namespace CreateAsRunFromTxt
                                 {
                                     tblSched.Rows.Add(eventID, eventBilling, eventHouseNum, eventAlternateId, tblEventType, tbNonPri);
                                     objF.log2screen("Sched \t" + eventID +
-                                        "\t" + eventBilling + "\t" + eventHouseNum + "\t" + tblEventType.ToString() + "\t" + tbNonPri.ToString());
+                                        "\t" + eventBilling + "\t" + eventHouseNum + " - " + tblEventType.ToString() + " " + tbNonPri.ToString());
                                 }
                                 // resetting all the varibles
                                 eventID = eventBilling = eventHouseNum = eventAlternateId = "";
@@ -190,6 +190,14 @@ namespace CreateAsRunFromTxt
             return strReturn;
         }
 
+        public EventType getEventType(string strEventID)
+        {
+            DataRow[] dr = tblSched.Select(string.Format("EventID ='{0}' ", strEventID));
+            // return the value only if there is one row selected
+            if(dr.Length == 1)return dr[0].Field<EventType>("EventType");
+            return EventType.None;
+        }
+
         public string getHouseNumberFromID(string strEventID)
         {
             string strReturn = "";
@@ -197,6 +205,14 @@ namespace CreateAsRunFromTxt
             // return the value only if there is one row selected
             if (dr.Length == 1) strReturn = dr[0].Field<string>("HouseNumber");
             return strReturn;
+        }
+
+        public NonPrimaryEventName getNonPrimaryEventName(string strEventID)
+        {
+            DataRow[] dr = tblSched.Select(string.Format("EventID ='{0}' ", strEventID));
+            // return the value only if there is one row selected
+            if (dr.Length == 1) return dr[0].Field<NonPrimaryEventName>("NonPrimaryEventName");
+            return NonPrimaryEventName.None;
         }
 
     }
