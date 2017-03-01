@@ -50,6 +50,7 @@
             this.cbSaveLog = new System.Windows.Forms.Button();
             this.cbSub = new System.Windows.Forms.CheckBox();
             this.label4 = new System.Windows.Forms.Label();
+            this.cbDontCheckLive = new System.Windows.Forms.CheckBox();
             this.groupBox1.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.nUpDnOffset)).BeginInit();
             this.SuspendLayout();
@@ -70,20 +71,20 @@
             // 
             // tbDirectory
             // 
-            this.tbDirectory.Location = new System.Drawing.Point(66, 20);
+            this.tbDirectory.Location = new System.Drawing.Point(168, 18);
             this.tbDirectory.Margin = new System.Windows.Forms.Padding(2, 1, 2, 1);
             this.tbDirectory.Name = "tbDirectory";
-            this.tbDirectory.Size = new System.Drawing.Size(612, 20);
+            this.tbDirectory.Size = new System.Drawing.Size(510, 20);
             this.tbDirectory.TabIndex = 1;
             // 
             // btnSelect
             // 
-            this.btnSelect.Location = new System.Drawing.Point(2, 16);
+            this.btnSelect.Location = new System.Drawing.Point(5, 17);
             this.btnSelect.Margin = new System.Windows.Forms.Padding(2, 1, 2, 1);
             this.btnSelect.Name = "btnSelect";
-            this.btnSelect.Size = new System.Drawing.Size(46, 21);
+            this.btnSelect.Size = new System.Drawing.Size(138, 21);
             this.btnSelect.TabIndex = 0;
-            this.btnSelect.Text = "select";
+            this.btnSelect.Text = "select folder -->";
             this.btnSelect.UseVisualStyleBackColor = true;
             this.btnSelect.Click += new System.EventHandler(this.btnSelect_Click);
             // 
@@ -92,24 +93,24 @@
             this.btnBuildAll.Location = new System.Drawing.Point(10, 57);
             this.btnBuildAll.Margin = new System.Windows.Forms.Padding(2, 1, 2, 1);
             this.btnBuildAll.Name = "btnBuildAll";
-            this.btnBuildAll.Size = new System.Drawing.Size(144, 20);
+            this.btnBuildAll.Size = new System.Drawing.Size(144, 43);
             this.btnBuildAll.TabIndex = 1;
-            this.btnBuildAll.Text = "Build BXF As Run Log";
+            this.btnBuildAll.Text = "Build BXF As Run Log (Please set files-> first)";
             this.btnBuildAll.UseVisualStyleBackColor = true;
             this.btnBuildAll.Click += new System.EventHandler(this.btnBuildAll_Click);
             // 
             // rtbLogging
             // 
-            this.rtbLogging.Location = new System.Drawing.Point(11, 147);
+            this.rtbLogging.Location = new System.Drawing.Point(8, 170);
             this.rtbLogging.Margin = new System.Windows.Forms.Padding(2, 1, 2, 1);
             this.rtbLogging.Name = "rtbLogging";
-            this.rtbLogging.Size = new System.Drawing.Size(684, 244);
+            this.rtbLogging.Size = new System.Drawing.Size(690, 244);
             this.rtbLogging.TabIndex = 2;
             this.rtbLogging.Text = "";
             // 
             // tbSchedule
             // 
-            this.tbSchedule.Location = new System.Drawing.Point(218, 59);
+            this.tbSchedule.Location = new System.Drawing.Point(213, 56);
             this.tbSchedule.Margin = new System.Windows.Forms.Padding(2, 1, 2, 1);
             this.tbSchedule.Name = "tbSchedule";
             this.tbSchedule.Size = new System.Drawing.Size(448, 20);
@@ -118,7 +119,7 @@
             // label1
             // 
             this.label1.AutoSize = true;
-            this.label1.Location = new System.Drawing.Point(160, 60);
+            this.label1.Location = new System.Drawing.Point(158, 59);
             this.label1.Margin = new System.Windows.Forms.Padding(2, 0, 2, 0);
             this.label1.Name = "label1";
             this.label1.Size = new System.Drawing.Size(50, 13);
@@ -127,10 +128,10 @@
             // 
             // btnSelectSchedule
             // 
-            this.btnSelectSchedule.Location = new System.Drawing.Point(674, 58);
+            this.btnSelectSchedule.Location = new System.Drawing.Point(665, 55);
             this.btnSelectSchedule.Margin = new System.Windows.Forms.Padding(2, 1, 2, 1);
             this.btnSelectSchedule.Name = "btnSelectSchedule";
-            this.btnSelectSchedule.Size = new System.Drawing.Size(22, 17);
+            this.btnSelectSchedule.Size = new System.Drawing.Size(31, 20);
             this.btnSelectSchedule.TabIndex = 5;
             this.btnSelectSchedule.Text = "...";
             this.btnSelectSchedule.UseVisualStyleBackColor = true;
@@ -143,7 +144,7 @@
             // cbDoubleFrames
             // 
             this.cbDoubleFrames.AutoSize = true;
-            this.cbDoubleFrames.Location = new System.Drawing.Point(10, 86);
+            this.cbDoubleFrames.Location = new System.Drawing.Point(10, 147);
             this.cbDoubleFrames.Margin = new System.Windows.Forms.Padding(2);
             this.cbDoubleFrames.Name = "cbDoubleFrames";
             this.cbDoubleFrames.Size = new System.Drawing.Size(143, 17);
@@ -153,7 +154,7 @@
             // 
             // tbTextFile
             // 
-            this.tbTextFile.Location = new System.Drawing.Point(218, 86);
+            this.tbTextFile.Location = new System.Drawing.Point(213, 81);
             this.tbTextFile.Margin = new System.Windows.Forms.Padding(2, 1, 2, 1);
             this.tbTextFile.Name = "tbTextFile";
             this.tbTextFile.Size = new System.Drawing.Size(448, 20);
@@ -162,7 +163,7 @@
             // label2
             // 
             this.label2.AutoSize = true;
-            this.label2.Location = new System.Drawing.Point(160, 87);
+            this.label2.Location = new System.Drawing.Point(160, 85);
             this.label2.Margin = new System.Windows.Forms.Padding(2, 0, 2, 0);
             this.label2.Name = "label2";
             this.label2.Size = new System.Drawing.Size(40, 13);
@@ -171,10 +172,10 @@
             // 
             // btnSelectTextFile
             // 
-            this.btnSelectTextFile.Location = new System.Drawing.Point(674, 84);
+            this.btnSelectTextFile.Location = new System.Drawing.Point(665, 80);
             this.btnSelectTextFile.Margin = new System.Windows.Forms.Padding(2, 1, 2, 1);
             this.btnSelectTextFile.Name = "btnSelectTextFile";
-            this.btnSelectTextFile.Size = new System.Drawing.Size(22, 17);
+            this.btnSelectTextFile.Size = new System.Drawing.Size(31, 23);
             this.btnSelectTextFile.TabIndex = 5;
             this.btnSelectTextFile.Text = "...";
             this.btnSelectTextFile.UseVisualStyleBackColor = true;
@@ -183,7 +184,7 @@
             // label3
             // 
             this.label3.AutoSize = true;
-            this.label3.Location = new System.Drawing.Point(5, 128);
+            this.label3.Location = new System.Drawing.Point(9, 126);
             this.label3.Margin = new System.Windows.Forms.Padding(2, 0, 2, 0);
             this.label3.Name = "label3";
             this.label3.Size = new System.Drawing.Size(146, 13);
@@ -192,7 +193,7 @@
             // 
             // nUpDnOffset
             // 
-            this.nUpDnOffset.Location = new System.Drawing.Point(318, 116);
+            this.nUpDnOffset.Location = new System.Drawing.Point(320, 110);
             this.nUpDnOffset.Margin = new System.Windows.Forms.Padding(2);
             this.nUpDnOffset.Maximum = new decimal(new int[] {
             24,
@@ -218,7 +219,7 @@
             this.cbHTMLPage.AutoSize = true;
             this.cbHTMLPage.Checked = true;
             this.cbHTMLPage.CheckState = System.Windows.Forms.CheckState.Checked;
-            this.cbHTMLPage.Location = new System.Drawing.Point(370, 110);
+            this.cbHTMLPage.Location = new System.Drawing.Point(385, 107);
             this.cbHTMLPage.Margin = new System.Windows.Forms.Padding(2);
             this.cbHTMLPage.Name = "cbHTMLPage";
             this.cbHTMLPage.Size = new System.Drawing.Size(118, 17);
@@ -231,7 +232,7 @@
             this.cbOpenHTML.AutoSize = true;
             this.cbOpenHTML.Checked = true;
             this.cbOpenHTML.CheckState = System.Windows.Forms.CheckState.Checked;
-            this.cbOpenHTML.Location = new System.Drawing.Point(496, 110);
+            this.cbOpenHTML.Location = new System.Drawing.Point(516, 107);
             this.cbOpenHTML.Margin = new System.Windows.Forms.Padding(2);
             this.cbOpenHTML.Name = "cbOpenHTML";
             this.cbOpenHTML.Size = new System.Drawing.Size(137, 17);
@@ -241,10 +242,10 @@
             // 
             // cbSaveLog
             // 
-            this.cbSaveLog.Location = new System.Drawing.Point(637, 107);
+            this.cbSaveLog.Location = new System.Drawing.Point(239, 139);
             this.cbSaveLog.Margin = new System.Windows.Forms.Padding(2);
             this.cbSaveLog.Name = "cbSaveLog";
-            this.cbSaveLog.Size = new System.Drawing.Size(59, 37);
+            this.cbSaveLog.Size = new System.Drawing.Size(120, 27);
             this.cbSaveLog.TabIndex = 10;
             this.cbSaveLog.Text = "save log (optional)";
             this.cbSaveLog.UseVisualStyleBackColor = true;
@@ -255,32 +256,46 @@
             this.cbSub.AutoSize = true;
             this.cbSub.Checked = true;
             this.cbSub.CheckState = System.Windows.Forms.CheckState.Checked;
-            this.cbSub.Location = new System.Drawing.Point(370, 129);
+            this.cbSub.Location = new System.Drawing.Point(385, 128);
             this.cbSub.Margin = new System.Windows.Forms.Padding(2);
             this.cbSub.Name = "cbSub";
-            this.cbSub.Size = new System.Drawing.Size(268, 17);
+            this.cbSub.Size = new System.Drawing.Size(271, 17);
             this.cbSub.TabIndex = 9;
-            this.cbSub.Text = "Subsitute when UUID doesn\'t match house number";
+            this.cbSub.Text = "Substitute when UUID doesn\'t match house number";
             this.cbSub.UseVisualStyleBackColor = true;
             // 
             // label4
             // 
             this.label4.AutoSize = true;
-            this.label4.Location = new System.Drawing.Point(3, 113);
+            this.label4.Location = new System.Drawing.Point(9, 109);
             this.label4.Margin = new System.Windows.Forms.Padding(2, 0, 2, 0);
             this.label4.Name = "label4";
             this.label4.Size = new System.Drawing.Size(304, 13);
             this.label4.TabIndex = 7;
             this.label4.Text = "UTC offset as a number -5 (for EST) -4 (EDT) -8 (PST) -7 (PDT)";
             // 
+            // cbDontCheckLive
+            // 
+            this.cbDontCheckLive.AutoSize = true;
+            this.cbDontCheckLive.Checked = true;
+            this.cbDontCheckLive.CheckState = System.Windows.Forms.CheckState.Checked;
+            this.cbDontCheckLive.Location = new System.Drawing.Point(385, 149);
+            this.cbDontCheckLive.Margin = new System.Windows.Forms.Padding(2);
+            this.cbDontCheckLive.Name = "cbDontCheckLive";
+            this.cbDontCheckLive.Size = new System.Drawing.Size(308, 17);
+            this.cbDontCheckLive.TabIndex = 9;
+            this.cbDontCheckLive.Text = "Don\'t check UUID matching house numbers on Live events";
+            this.cbDontCheckLive.UseVisualStyleBackColor = true;
+            // 
             // Form1
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.AutoSize = true;
-            this.ClientSize = new System.Drawing.Size(706, 401);
+            this.ClientSize = new System.Drawing.Size(706, 424);
             this.Controls.Add(this.cbSaveLog);
             this.Controls.Add(this.cbOpenHTML);
+            this.Controls.Add(this.cbDontCheckLive);
             this.Controls.Add(this.cbSub);
             this.Controls.Add(this.cbHTMLPage);
             this.Controls.Add(this.nUpDnOffset);
@@ -334,6 +349,7 @@
         private System.Windows.Forms.Button cbSaveLog;
         private System.Windows.Forms.CheckBox cbSub;
         private System.Windows.Forms.Label label4;
+        private System.Windows.Forms.CheckBox cbDontCheckLive;
     }
 }
 

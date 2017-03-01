@@ -122,7 +122,8 @@ namespace CreateAsRunFromTxt
                     // Checking the House Number for UUID match added for 2.x if it is a primary event
                     strTemp = myTxtLog.getHouseNumber(iloop);
                     tmpEventType = myPS.getEventType(strUUIDHold);
-                    if (tmpEventType == EventType.Primary)
+                    // Added skip UUID check if getCBDont finds Live
+                    if (tmpEventType == EventType.Primary && (!(myTxtLog.getType(iloop) == "Live" && objF.getCBDont())))
                     {
                         if (strTemp.Equals(myPS.getHouseNumberFromID(strUUIDHold)))
                         {
@@ -208,7 +209,9 @@ namespace CreateAsRunFromTxt
                     writer.WriteEndElement();
                     // eighth AsRunDetail/Type == Primary
                     writer.WriteStartElement("Type");
-                    writer.WriteString(myTxtLog.getType(iloop));
+                    // Corrected for 2.x series so I can get live value for not checking UUID
+                    if(myTxtLog.getType(iloop) == "Video Clip" || myTxtLog.getType(iloop) == "Live") writer.WriteString("Primary");
+                    else writer.WriteString(myTxtLog.getType(iloop));
                     // End Type
                     writer.WriteEndElement();
                     // [4] ninth is AsRunDetail/StartDateTime/SmpteDateTime with date/SmpteTimeCode

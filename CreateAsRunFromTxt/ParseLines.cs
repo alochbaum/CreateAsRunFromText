@@ -72,9 +72,11 @@ namespace CreateAsRunFromTxt
                         {
 
                             strArray[0] = ConvertNewTime(strArray[0],blDoubleFrames);
+                            // The final passed type is corrected to "Primary" in the ParseTxtLogs class 2.x series 
                             tblLog.Rows.Add(strArray[7], strArray[2], strArray[3], fixDot(strArray[4]), fixDot(strArray[5]),
                                 fixDot(strArray[6]), 
-                                dtStartLog.ToString("yyyy-MM-dd"),strArray[0], "Primary");
+                                dtStartLog.ToString("yyyy-MM-dd"),strArray[0], strArray[1]);
+                                
                         } // end of "Video Clip" or "live"  processing
                         // for 2.x added Logo and GPI
                         else if (strArray[1] == "Logo" || strArray[1] == "GPI")

@@ -150,5 +150,11 @@ namespace CreateAsRunFromTxt
         {
             return cbSub.Checked;
         }
+        // added for 2.0 ParseTxtLog check for wiping out UUIDs
+        public bool getCBDont()
+        {
+            return cbDontCheckLive.Checked;
+        }
+
     }
 }
