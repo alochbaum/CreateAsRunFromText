@@ -19,10 +19,12 @@ namespace CreateAsRunFromTxt
         //private int iStartHour;
         private bool blDoingOldTime = false;  // holds the type of time in native As Run
         private bool blDateNotUpdated = true;  // this is set to false after midnight
+        private bool blDoubleFrames = false;
         public string strDateToFind { get; set; }
         public int iCount { get; set; }
-        public ParseLines(string strFileName, bool blDoubleFrames, Form1 objF)
+        public ParseLines(string strFileName, string strOptFileName,  Form1 objF)
         {
+            blDoubleFrames = objF.getCBDouble();
             tblLog.Columns.Add("EventID", typeof(string)); // first [7]
             tblLog.Columns.Add("HouseNumber", typeof(string)); //third [2]
             tblLog.Columns.Add("Name", typeof(string)); //fourth [3]
@@ -35,11 +37,10 @@ namespace CreateAsRunFromTxt
             using (TextReader reader = File.OpenText(strFileName))
             {
                 string strLine = "";
-                bool blFirstLine = true;
-
                 // Read line by line
                 while ((strLine = reader.ReadLine()) != null)
                 {
+                    bool blFirstLine = true;
                     string[] strArray = strLine.Split('|');
                     if (strArray.Count() == 9)
                     {

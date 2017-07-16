@@ -62,7 +62,7 @@
     <GenerateManifests>true</GenerateManifests>
   </PropertyGroup>
   <PropertyGroup>
-    <SignManifests>true</SignManifests>
+    <SignManifests>false</SignManifests>
   </PropertyGroup>
   <ItemGroup>
     <Reference Include="System" />
@@ -88,7 +88,7 @@
     <Compile Include="ParseLines.cs" />
     <Compile Include="ParseSched.cs" />
     <Compile Include="ParseTxtInterface.cs" />
-    <Compile Include="ParseTxtLog.cs" />
+    <Compile Include="CreateAsRun.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <EmbeddedResource Include="Form1.resx">

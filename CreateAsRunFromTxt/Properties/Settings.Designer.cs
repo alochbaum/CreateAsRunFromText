@@ -70,5 +70,65 @@ namespace CreateAsRunFromTxt.Properties {
                 this["dUpDown"] = value;
             }
         }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("True")]
+        public bool blConfirm {
+            get {
+                return ((bool)(this["blConfirm"]));
+            }
+            set {
+                this["blConfirm"] = value;
+            }
+        }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("True")]
+        public bool blDouble {
+            get {
+                return ((bool)(this["blDouble"]));
+            }
+            set {
+                this["blDouble"] = value;
+            }
+        }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("True")]
+        public bool blHTML {
+            get {
+                return ((bool)(this["blHTML"]));
+            }
+            set {
+                this["blHTML"] = value;
+            }
+        }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("True")]
+        public bool blDontLIve {
+            get {
+                return ((bool)(this["blDontLIve"]));
+            }
+            set {
+                this["blDontLIve"] = value;
+            }
+        }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("False")]
+        public bool blDontComment {
+            get {
+                return ((bool)(this["blDontComment"]));
+            }
+            set {
+                this["blDontComment"] = value;
+            }
+        }
     }
 }

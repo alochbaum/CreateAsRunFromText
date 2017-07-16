@@ -27,6 +27,11 @@ namespace CreateAsRunFromTxt
             tbSchedule.Text = Properties.Settings.Default.strSched;
             tbTextFile.Text = Properties.Settings.Default.strTextFile;
             nUpDnOffset.Value = Properties.Settings.Default.dUpDown;
+            cbConfirm.Checked = Properties.Settings.Default.blConfirm;
+            cbDoubleFrames.Checked = Properties.Settings.Default.blDouble;
+            cbHTMLPage.Checked = Properties.Settings.Default.blHTML;
+            cbDontCheckLive.Checked = Properties.Settings.Default.blDontLIve;
+            cbDontComment.Checked = Properties.Settings.Default.blDontComment;
             log2screen("Program starting");
         }
 
@@ -36,6 +41,11 @@ namespace CreateAsRunFromTxt
             Properties.Settings.Default.strSched = tbSchedule.Text;
             Properties.Settings.Default.strTextFile = tbTextFile.Text;
             Properties.Settings.Default.dUpDown = nUpDnOffset.Value;
+            Properties.Settings.Default.blConfirm = cbConfirm.Checked;
+            Properties.Settings.Default.blDouble = cbDoubleFrames.Checked;
+            Properties.Settings.Default.blHTML = cbHTMLPage.Checked;
+            Properties.Settings.Default.blDontLIve = cbDontCheckLive.Checked;
+            Properties.Settings.Default.blDontComment = cbDontComment.Checked;
             Properties.Settings.Default.Save();
         }
 
@@ -43,11 +53,10 @@ namespace CreateAsRunFromTxt
         {
             rtbLogging.Clear();
             log2screen("Button Build All Clicked");
-            //ParseTxtLog myParseText = new ParseTxtLog("11/2/2016");
-            ParseTxtLog myParseText = new ParseTxtLog();
+            CreateAsRun myParseText = new CreateAsRun();
             log2screen("Started Building BXF Log: " + tbSchedule.Text + " with version " +
                 Application.ProductVersion.ToString());
-            if (myParseText.WriteAsRunFile(tbTextFile.Text, tbSchedule.Text, this, cbDoubleFrames.Checked))
+            if (myParseText.WriteAsRunFile(tbTextFile.Text, tbSchedule.Text, tbOptTextFile.Text, this))
             {
                 log2screen("Writing As Run Returned: True");
                 if (cbHTMLPage.Checked)
@@ -66,19 +75,6 @@ namespace CreateAsRunFromTxt
             else log2screen("Error Creating As Run");
 
         }// End funxtion btnBuildAll
-
-        private void btnSelect_Click(object sender, EventArgs e)
-        {
-            folderBrowserDialog1.SelectedPath = tbDirectory.Text;
-            DialogResult result = folderBrowserDialog1.ShowDialog();
-            if (result == DialogResult.OK)
-            {
-                tbDirectory.Text = folderBrowserDialog1.SelectedPath;
-                log2screen("Set directory " + tbDirectory.Text);
-                string[] files = Directory.GetFiles(folderBrowserDialog1.SelectedPath);
-                log2screen("Files found: " + files.Length.ToString());
-            }
-        }
 
         public void log2screen (string strIn,int ierror = 0)
         {
@@ -99,6 +95,23 @@ namespace CreateAsRunFromTxt
             }
         }
 
+        private void btnSelect_Click(object sender, EventArgs e)
+        {
+            folderBrowserDialog1.SelectedPath = tbDirectory.Text;
+            DialogResult result = folderBrowserDialog1.ShowDialog();
+            if (result == DialogResult.OK)
+            {
+                tbDirectory.Text = folderBrowserDialog1.SelectedPath;
+                log2screen("Set directory " + tbDirectory.Text);
+                string[] files = Directory.GetFiles(folderBrowserDialog1.SelectedPath);
+                log2screen("Files found: " + files.Length.ToString());
+            }
+        }
+
+        private void btnClearOpt_Click(object sender, EventArgs e)
+        {
+            tbOptTextFile.Text = "";
+        }
 
         private void btnSelectSchedule_Click(object sender, EventArgs e)
         {
@@ -128,6 +141,20 @@ namespace CreateAsRunFromTxt
             }
         }
 
+        private void btnSelectOptTextFile_Click(object sender, EventArgs e)
+        {
+            // load directory if exist
+            if (tbDirectory.Text.Length > 3) openFileDialog1.InitialDirectory = tbDirectory.Text;
+            // set file filter
+            openFileDialog1.Filter = "txt files (*.txt)|*.txt|All files (*.*)|*.*";
+            // Show the dialog and get result.
+            DialogResult result = openFileDialog1.ShowDialog();
+            if (result == DialogResult.OK) // Test result.
+            {
+                tbOptTextFile.Text = openFileDialog1.FileName;
+            }
+        }
+
         private void cbSaveLog_Click(object sender, EventArgs e)
         {
             // Create a SaveFileDialog to request a path and file name to save to.
@@ -146,15 +173,10 @@ namespace CreateAsRunFromTxt
             }
         }
         // added for 2.0 ParseTxtLog check for wiping out UUIDs
-        public bool getCBSub()
-        {
-            return cbSub.Checked;
-        }
+        public bool getCBSub(){ return cbSub.Checked; }
         // added for 2.0 ParseTxtLog check for wiping out UUIDs
-        public bool getCBDont()
-        {
-            return cbDontCheckLive.Checked;
-        }
-
+        public bool getCBDont() { return cbDontCheckLive.Checked; }
+        // added for parse lines
+        public bool getCBDouble() { return cbDoubleFrames.Checked; }
     }
 }

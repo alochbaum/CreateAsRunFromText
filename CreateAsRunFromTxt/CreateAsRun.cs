@@ -10,43 +10,19 @@ using System.Xml;
 
 namespace CreateAsRunFromTxt
 {
-    class ParseTxtLog
+    class CreateAsRun
     {
         // Create new table
         DataTable myTextTable = new DataTable();
         public string strDateToFind { get; set; }
         public string strLogTxt { get; set; }
         // Create class with no parameters
-        public ParseTxtLog()
+        public CreateAsRun()
         {
             strDateToFind = DateTime.Now.ToString("M/d/yyy");
         }
-        // made shortcut to set the date at starting up class
-        public ParseTxtLog(string strDate)
-        {
-            strDateToFind = strDate;
-        }
-        public bool CompareTxtFile(string strFileName)
-        {
-            //
-            // Read first 10 text characters with TextReader. 12/45/7890
-            //
-            using (TextReader reader = File.OpenText(strFileName))
-            {
-                char[] block = new char[10];
-                reader.ReadBlock(block, 0, 10);
-                string strMessage = new string(block);
-                // could be short date like 5/4/2016-1 so finding - character
-                int i = strMessage.IndexOf('-');
-                if (i > 0)
-                {
-                    strMessage = strMessage.Substring(0, i);
-                }
-                if (strMessage.CompareTo(strDateToFind) == 0) return true;
-            }
-            return false;
-        }
-        public bool WriteAsRunFile(string strFileName,string strSchedName,Form1 objF,bool blDoubleFrames)
+
+        public bool WriteAsRunFile(string strFileName,string strSchedName,string strOptFile,Form1 objF)
         {
             string strWriteFile = Path.GetDirectoryName(strFileName) + "\\BXF_Automation_" +
                 Path.GetFileNameWithoutExtension(strSchedName) + ".xml";
@@ -98,7 +74,7 @@ namespace CreateAsRunFromTxt
                 //This is looping section for each event parse the schedule
 
                 // parsing the text log
-                ParseLines myTxtLog = new ParseLines(strFileName,blDoubleFrames,objF);
+                ParseLines myTxtLog = new ParseLines(strFileName, strOptFile,objF);
                 if (myTxtLog.iCount < 1) objF.log2screen("Error: Low parsing count on Txt file");
                 objF.log2screen("Number of lines with Video Clip or Live in Log: "+myTxtLog.iCount.ToString());
                 string strTemp = "";
