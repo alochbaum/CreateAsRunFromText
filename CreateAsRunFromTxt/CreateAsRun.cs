@@ -101,7 +101,7 @@ namespace CreateAsRunFromTxt
                     // Added skip UUID check if getCBDont finds Live
                     if (tmpEventType == EventType.Primary && (!(myTxtLog.getType(iloop) == "Live" && objF.getCBDont())))
                     {
-                        if (strTemp.Equals(myPS.getHouseNumberFromID(strUUIDHold)))
+                        if (strTemp.Equals(myPS.getHouseNumberFromID(strUUIDHold), StringComparison.OrdinalIgnoreCase))  // adding the ignore case for bug
                         {
                             // Reporting back to screen UUID, Start Date, Start Time if good
                             objF.log2screen("Writing: " + strUUIDHold + "\t" + myTxtLog.getStartDate(iloop) + "\t" + myTxtLog.getStartTime(iloop));
