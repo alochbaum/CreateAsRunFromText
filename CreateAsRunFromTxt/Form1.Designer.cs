@@ -189,7 +189,7 @@
             // 
             // nUpDnOffset
             // 
-            this.nUpDnOffset.Location = new System.Drawing.Point(449, 21);
+            this.nUpDnOffset.Location = new System.Drawing.Point(449, 25);
             this.nUpDnOffset.Maximum = new decimal(new int[] {
             24,
             0,

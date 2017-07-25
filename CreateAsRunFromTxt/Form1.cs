@@ -13,6 +13,7 @@ namespace CreateAsRunFromTxt
 {
     public partial class Form1 : Form
     {
+        private bool blFirstTimeRun = true;
         public Form1()
         {
             InitializeComponent();
@@ -51,6 +52,14 @@ namespace CreateAsRunFromTxt
 
         private void btnBuildAll_Click(object sender, EventArgs e)
         {
+            if(blFirstTimeRun&& cbConfirm.Checked)
+            {
+                blFirstTimeRun = false;
+                DialogResult result1 = MessageBox.Show("Time offset is set at " + nUpDnOffset.Value.ToString() + " (No will escape to change)"
+                    , "First Time Question (it will not repeat)",
+                    MessageBoxButtons.YesNo);
+                if (result1 == DialogResult.No) return;
+            };
             rtbLogging.Clear();
             log2screen("Button Build All Clicked");
             CreateAsRun myParseText = new CreateAsRun();
