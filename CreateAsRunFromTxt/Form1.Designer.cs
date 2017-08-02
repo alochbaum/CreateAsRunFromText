@@ -80,11 +80,14 @@
             // 
             // tbDirectory
             // 
+            this.tbDirectory.AllowDrop = true;
             this.tbDirectory.Location = new System.Drawing.Point(252, 28);
             this.tbDirectory.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
             this.tbDirectory.Name = "tbDirectory";
             this.tbDirectory.Size = new System.Drawing.Size(763, 26);
             this.tbDirectory.TabIndex = 1;
+            this.tbDirectory.DragDrop += new System.Windows.Forms.DragEventHandler(this.tbDirectory_DragDrop);
+            this.tbDirectory.DragOver += new System.Windows.Forms.DragEventHandler(this.tbDirectory_DragOver);
             // 
             // btnSelect
             // 

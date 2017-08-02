@@ -187,5 +187,26 @@ namespace CreateAsRunFromTxt
         public bool getCBDont() { return cbDontCheckLive.Checked; }
         // added for parse lines
         public bool getCBDouble() { return cbDoubleFrames.Checked; }
+
+        // this function and DragOver function must be enabled to make this work
+        private void tbDirectory_DragDrop(object sender, DragEventArgs e)
+        {
+            string[] files = (string[])e.Data.GetData(DataFormats.FileDrop);
+            if (files != null && files.Length != 0)
+            {
+                string strTemp = files[0];
+                tbDirectory.Text = System.IO.Path.GetDirectoryName(strTemp);
+                MessageBox.Show(strTemp);
+            }
+        }
+
+        // this function and DragDrop function must be enabled to make this work
+        private void tbDirectory_DragOver(object sender, DragEventArgs e)
+        {
+            if (e.Data.GetDataPresent(DataFormats.FileDrop))
+                e.Effect = DragDropEffects.Copy;
+            else
+                e.Effect = DragDropEffects.None;
+        }
     }
 }
