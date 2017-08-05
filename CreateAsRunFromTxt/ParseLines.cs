@@ -39,17 +39,32 @@ namespace CreateAsRunFromTxt
             tblLog.Columns.Add("StartDate", typeof(string)); //ninth A [0]* Needs split
             tblLog.Columns.Add("StartTime", typeof(string)); //ninth B [0]* Needs split and convert
             tblLog.Columns.Add("Type", typeof(string)); //added for comments
-            using (TextReader reader = File.OpenText(strFileName))
+
+            try
             {
-                string strLine = "";
-                blFirstLine = true;
-                // Read line by line primary text file
-                while ((strLine = reader.ReadLine()) != null)
+                using (TextReader reader = File.OpenText(strFileName))
                 {
-                    addrow2table(strLine);
+                    string strLine = "";
+                    blFirstLine = true;
+                    // Read line by line primary text file
+                    while ((strLine = reader.ReadLine()) != null)
+                    {
+                        addrow2table(strLine);
+                    }
+                    iCount = tblLog.Rows.Count;
                 }
-                iCount = tblLog.Rows.Count;
             }
+            catch (IOException e)
+            {
+                objF.log2screen("Error: parsing non-optional text file " + e.ToString(), 1);
+            }
+
+            if(File.Exists(strOptFileName))
+            {
+                objF.log2screen("Found optional 2nd text file " +strOptFileName);
+                // Pickup here
+            }
+
         }
         private void addrow2table(string strInLine)
         {
