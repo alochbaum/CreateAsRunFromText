@@ -14,6 +14,7 @@ namespace CreateAsRunFromTxt
     {
         // Here we create a DataTable with four columns to store parsed sechedule
         private DataTable tblLog = new DataTable();
+        private DataTable sortedDT = new DataTable();
         private DataRow dRow;
         private DateTime dtStartLog = Convert.ToDateTime("09/25/1991 00:00:50.42");
         private Form1 myForm1;  // moving around the different functions
@@ -51,7 +52,6 @@ namespace CreateAsRunFromTxt
                     {
                         addrow2table(strLine);
                     }
-                    iCount = tblLog.Rows.Count;
                 }
             }
             catch (IOException e)
@@ -62,9 +62,28 @@ namespace CreateAsRunFromTxt
             if(File.Exists(strOptFileName))
             {
                 objF.log2screen("Found optional 2nd text file " +strOptFileName);
-                // Pickup here
+                try
+                {
+                    using (TextReader reader2 = File.OpenText(strOptFileName))
+                    {
+                        string strLine = "";
+                        blFirstLine = true;
+                        // Read line by line primary text file
+                        while ((strLine = reader2.ReadLine()) != null)
+                        {
+                            addrow2table(strLine);
+                        }
+                    }
+                }
+                catch (IOException e)
+                {
+                    objF.log2screen("Error: parsing optional text file " + e.ToString(), 1);
+                }
             }
-
+            DataView dv = tblLog.DefaultView;
+            if(!(objF.getCBDontSort())) dv.Sort = "StartDate, StartTime ASC";
+            sortedDT = dv.ToTable();
+            iCount = sortedDT.Rows.Count;
         }
         private void addrow2table(string strInLine)
         {
@@ -136,49 +155,49 @@ namespace CreateAsRunFromTxt
         // this is first function called which loads the row data for all the rest of the calls
         public string getEventID(int iRow)
         {
-            dRow = (DataRow)tblLog.Rows[iRow];
+            dRow = (DataRow)sortedDT.Rows[iRow];
             // added this to prevent problem with missing uuids
             if (dRow["EventID"].ToString().Length < 5) return "";
             return "urn:uuid:"+ dRow["EventID"].ToString();
         }
         public string getHouseNumber(int iRow)
         {
-            dRow = (DataRow)tblLog.Rows[iRow];
+            dRow = (DataRow)sortedDT.Rows[iRow];
             return dRow["HouseNumber"].ToString();
         }
         public string getName(int iRow)
         {
-            dRow = (DataRow)tblLog.Rows[iRow];
+            dRow = (DataRow)sortedDT.Rows[iRow];
             return dRow["Name"].ToString();
         }
         public string getDuration(int iRow)
         {
-            dRow = (DataRow)tblLog.Rows[iRow];
+            dRow = (DataRow)sortedDT.Rows[iRow];
             return dRow["Duration"].ToString();
         }
         public string getSOM(int iRow)
         {
-            dRow = (DataRow)tblLog.Rows[iRow];
+            dRow = (DataRow)sortedDT.Rows[iRow];
             return dRow["SOM"].ToString();
         }
         public string getEOM(int iRow)
         {
-            dRow = (DataRow)tblLog.Rows[iRow];
+            dRow = (DataRow)sortedDT.Rows[iRow];
             return dRow["EOM"].ToString();
         }
         public string getStartDate(int iRow)
         {
-            dRow = (DataRow)tblLog.Rows[iRow];
+            dRow = (DataRow)sortedDT.Rows[iRow];
             return dRow["StartDate"].ToString();
         }
         public string getStartTime(int iRow)
         {
-            dRow = (DataRow)tblLog.Rows[iRow];
+            dRow = (DataRow)sortedDT.Rows[iRow];
             return dRow["StartTime"].ToString();
         }
         public string getType(int iRow)
         {
-            dRow = (DataRow)tblLog.Rows[iRow];
+            dRow = (DataRow)sortedDT.Rows[iRow];
             return dRow["Type"].ToString();
         }
         //

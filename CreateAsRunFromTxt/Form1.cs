@@ -33,6 +33,7 @@ namespace CreateAsRunFromTxt
             cbHTMLPage.Checked = Properties.Settings.Default.blHTML;
             cbDontCheckLive.Checked = Properties.Settings.Default.blDontLIve;
             cbDontComment.Checked = Properties.Settings.Default.blDontComment;
+            cbDontSort.Checked = Properties.Settings.Default.blDontSort;
             log2screen("Program starting");
         }
 
@@ -47,6 +48,7 @@ namespace CreateAsRunFromTxt
             Properties.Settings.Default.blHTML = cbHTMLPage.Checked;
             Properties.Settings.Default.blDontLIve = cbDontCheckLive.Checked;
             Properties.Settings.Default.blDontComment = cbDontComment.Checked;
+            Properties.Settings.Default.blDontSort = cbDontSort.Checked;
             Properties.Settings.Default.Save();
         }
 
@@ -187,6 +189,8 @@ namespace CreateAsRunFromTxt
         public bool getCBDont() { return cbDontCheckLive.Checked; }
         // added for parse lines
         public bool getCBDouble() { return cbDoubleFrames.Checked; }
+        // added for sorting
+        public bool getCBDontSort() { return cbDontSort.Checked; }
 
         #region dragdrop for textboxes
         // this function and DragOver function must be enabled to make this work
@@ -236,5 +240,10 @@ namespace CreateAsRunFromTxt
             }
         }
         #endregion
+
+        private void cbDontComment_CheckedChanged(object sender, EventArgs e)
+        {
+
+        }
     }
 }

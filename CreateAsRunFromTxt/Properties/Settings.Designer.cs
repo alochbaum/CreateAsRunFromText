@@ -130,5 +130,17 @@ namespace CreateAsRunFromTxt.Properties {
                 this["blDontComment"] = value;
             }
         }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("False")]
+        public bool blDontSort {
+            get {
+                return ((bool)(this["blDontSort"]));
+            }
+            set {
+                this["blDontSort"] = value;
+            }
+        }
     }
 }
