@@ -93,7 +93,7 @@ namespace CreateAsRunFromTxt
             {
                 rtbLogging.SelectionColor = Color.DarkBlue;
                 rtbLogging.AppendText(DateTime.Now + " ");
-                rtbLogging.SelectionColor = Color.Black;
+                rtbLogging.SelectionColor = Color.DarkGray;
                 rtbLogging.AppendText(strIn + "\r\n");
                 rtbLogging.ScrollToCaret();
             } else

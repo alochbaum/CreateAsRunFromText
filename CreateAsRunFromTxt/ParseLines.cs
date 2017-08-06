@@ -20,7 +20,6 @@ namespace CreateAsRunFromTxt
         private Form1 myForm1;  // moving around the different functions
         private bool blDontMakeComment = false;  // I'm thinking saving this local will save some speed
         private bool blDoingOldTime = false;  // holds the type of time in native As Run
-        private bool blDateNotUpdated = true;  // this is set to false after midnight
         private bool blDoubleFrames = false;  // moved this out of parameter string pass
         private bool blFirstLine = true;  // moved this out of subroutine
         public string strDateToFind { get; set; }
@@ -90,35 +89,31 @@ namespace CreateAsRunFromTxt
             string[] strArray = strInLine.Split('|');
             if (strArray.Count() == 9)
             {
-                if (blFirstLine)
+                // parse the first sub string to get starting date, then hour. 12/45/7890-hh
+                string[] strSubSplit = strArray[0].Split('-');
+                // Not sure if this will work internationally
+                if (!DateTime.TryParseExact(strSubSplit[0], "M/d/yyyy",
+                    CultureInfo.CurrentCulture, DateTimeStyles.None, out dtStartLog))
                 {
-                    //
-                    // parse the first sub string to get starting date, then hour. 12/45/7890-hh
-                    //
-                    string[] strSubSplit = strArray[0].Split('-');
-                    // Not sure if this will work internationally
-                    if (!DateTime.TryParseExact(strSubSplit[0], "M/d/yyyy",
-                        CultureInfo.CurrentCulture, DateTimeStyles.None, out dtStartLog))
-                    {
-                        // failure to read date break the loop
-                        return;
-                    }
-                    // Also check if time is in old format .000 1/100 of second when not a comment
-                    if (strArray[1] != "Comment")
-                    {
+                    // failure to read date break the loop
+                    return;
+                }
+
+                // Need to set type of time in text file, but only need to do it once for non-comments
+                if (blFirstLine && strArray[1] != "Comment")
+                {
                         blFirstLine = false;
                         blDoingOldTime = blIsOldTime(strArray[0]);
-                    }
-
                 }
-                // Fix the time if blDoingOldTime
-                if (blDoingOldTime) strArray[0] = ConvertOldTime2New(strArray[0]);
+
+                // Fix the time this will also fix computed date if over 24 hours
+                if (blDoingOldTime) strArray[0] = ConvertOldTime2New(strSubSplit[1]);
+                else strArray[0] = ConvertNewTime(strSubSplit[1]);
+
                 // continue only if type is "Video Clip" or "Live" 1.x series, 
                 // "Comment has new time format so process it later.
                 if (strArray[1] == "Video Clip" || strArray[1] == "Live")
                 {
-
-                    strArray[0] = ConvertNewTime(strArray[0], blDoubleFrames);
                     // The final passed type is corrected to "Primary" in the ParseTxtLogs class 2.x series 
                     tblLog.Rows.Add(strArray[7], strArray[2], strArray[3], fixDot(strArray[4]), fixDot(strArray[5]),
                         fixDot(strArray[6]),
@@ -128,7 +123,6 @@ namespace CreateAsRunFromTxt
                   // for 2.x added Logo and GPI
                 else if (strArray[1] == "Logo" || strArray[1] == "GPI")
                 {
-                    strArray[0] = ConvertNewTime(strArray[0], blDoubleFrames);
                     tblLog.Rows.Add(strArray[7], strArray[2], strArray[3], fixDot(strArray[4]), fixDot(strArray[5]),
                         fixDot(strArray[6]),
                         dtStartLog.ToString("yyyy-MM-dd"), strArray[0], "NonPrimary");
@@ -137,8 +131,6 @@ namespace CreateAsRunFromTxt
                 {
                     if (strArray[1] == "Comment" && !blDontMakeComment)
                     {
-                        // comments seem to always be written in old format
-                        strArray[0] = ConvertNewTime(strArray[0], blDoubleFrames);
                         // uuid [7] has comment with ' characters or "
                         strArray[7] = strArray[7].Replace('\'', '`');
                         strArray[7] = strArray[7].Replace('"', '`');
@@ -203,6 +195,7 @@ namespace CreateAsRunFromTxt
         //
         // This function takes in old time format hh:MM:ss.uuu and converts 
         // to new time format of hh:MM:ss.ff where ff is 30 frames per second
+        // Then it calls the convert hour function
         //
         private string ConvertOldTime2New(string strIn)
         {
@@ -211,37 +204,39 @@ namespace CreateAsRunFromTxt
             if (strConvert[1].Length > 2)
             {
                 Int64 iTemp = Convert.ToInt64(strConvert[1]);
-                if (iTemp > 0) iTemp = iTemp / (Int64)33;
-                return strConvert[0] + ":" + iTemp.ToString("00");
+                if(blDoubleFrames) iTemp = iTemp / (Int64)66;
+                else iTemp = iTemp / (Int64)33;
+                strIn = strConvert[0] + ":" + iTemp.ToString("00");
             }
-            else return strIn;
+            return ConvertOver24Time(strIn);
         }
         //
+        // This function takes hh:MM:ss.ff converts to hh:MM:ss:ff and calls hour function
         //
-        //
-        private string ConvertNewTime(string strIn, bool blDoubleFrames)
+        private string ConvertNewTime(string strIn)
         {
-            // Need to process the hour and first time hour is greater than 24 need to add to date
-            string[] strSplit = strIn.Split('-');
             // converting time from hh:MM:ss.frame to hh:MM:ss:frame for SMPTE time in XML
-            strSplit[1] = strSplit[1].Replace('.', ':');
+            strIn = strIn.Replace('.', ':');
+            return ConvertOver24Time(strIn);
+        }
+        //
+        // This function checks for hours over 24 and if it finds that value, it increments date and subtracts 24
+        //
+        private string ConvertOver24Time(string strIn)
+        {
             // splitting time after replace for frame doubling calc on frames
-            string[] strSubSubSplit = strSplit[1].Split(':');
+            string[] strSubSubSplit = strIn.Split(':');
             if (Convert.ToInt16(strSubSubSplit[0]) > 23)
             {
-                if (blDateNotUpdated)
-                {
-                    dtStartLog = dtStartLog.AddDays(1);
-                    blDateNotUpdated = false;
-                }
                 // day increament will take care of added hours, now make hours normal
-                strSubSubSplit[0] = Convert.ToString(Convert.ToInt16(strSubSubSplit[0]) - 24);
-                // if after conversion the hour is one digit add 0 at start
-                if (strSubSubSplit[0].Length < 2) strSubSubSplit[0] = "0" + strSubSubSplit[0];
+                dtStartLog = dtStartLog.AddDays(1);
+                Int64 iTemp = Convert.ToInt64(strSubSubSplit[0]);
+                iTemp -= 24;
+                strSubSubSplit[0] = iTemp.ToString("00");
             }
             return strSubSubSplit[0] + ":" + strSubSubSplit[1] + ":" + strSubSubSplit[2] + ":" + strSubSubSplit[3];
+
         }
-        //
         // This function checks for old time format hh:MM:ss.uuu by counting
         // the uuu substring length
         //
