@@ -28,7 +28,7 @@ namespace CreateAsRunFromTxt
         {
             // setting pointer for other functions
             myForm1 = objF;
-            blDontMakeComment = myForm1.getCBDont();
+            blDontMakeComment = myForm1.getCBDontComm();
             blDoubleFrames = myForm1.getCBDouble();
             tblLog.Columns.Add("EventID", typeof(string)); // first [7]
             tblLog.Columns.Add("HouseNumber", typeof(string)); //third [2]

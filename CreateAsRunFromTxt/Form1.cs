@@ -187,6 +187,8 @@ namespace CreateAsRunFromTxt
         public bool getCBSub(){ return cbSub.Checked; }
         // added for 2.0 ParseTxtLog check for wiping out UUIDs
         public bool getCBDont() { return cbDontCheckLive.Checked; }
+        // added for dont comment
+        public bool getCBDontComm() { return cbDontComment.Checked; }
         // added for parse lines
         public bool getCBDouble() { return cbDoubleFrames.Checked; }
         // added for sorting
