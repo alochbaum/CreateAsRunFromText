@@ -59,11 +59,16 @@
             this.groupBox2 = new System.Windows.Forms.GroupBox();
             this.groupBox3 = new System.Windows.Forms.GroupBox();
             this.cbDontSort = new System.Windows.Forms.CheckBox();
-            this.button1 = new System.Windows.Forms.Button();
+            this.btnPackAndShip = new System.Windows.Forms.Button();
+            this.groupBox4 = new System.Windows.Forms.GroupBox();
+            this.cbCorrectDate = new System.Windows.Forms.CheckBox();
+            this.rbCorrectSource = new System.Windows.Forms.RadioButton();
+            this.rbTimeInSchedule = new System.Windows.Forms.RadioButton();
             this.groupBox1.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.nUpDnOffset)).BeginInit();
             this.groupBox2.SuspendLayout();
             this.groupBox3.SuspendLayout();
+            this.groupBox4.SuspendLayout();
             this.SuspendLayout();
             // 
             // groupBox1
@@ -74,7 +79,7 @@
             this.groupBox1.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
             this.groupBox1.Name = "groupBox1";
             this.groupBox1.Padding = new System.Windows.Forms.Padding(3, 2, 3, 2);
-            this.groupBox1.Size = new System.Drawing.Size(1038, 68);
+            this.groupBox1.Size = new System.Drawing.Size(1072, 68);
             this.groupBox1.TabIndex = 0;
             this.groupBox1.TabStop = false;
             this.groupBox1.Text = "(Optional) Default Directory to use for selection buttons next to Schedule and Te" +
@@ -83,10 +88,10 @@
             // tbDirectory
             // 
             this.tbDirectory.AllowDrop = true;
-            this.tbDirectory.Location = new System.Drawing.Point(252, 28);
+            this.tbDirectory.Location = new System.Drawing.Point(169, 28);
             this.tbDirectory.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
             this.tbDirectory.Name = "tbDirectory";
-            this.tbDirectory.Size = new System.Drawing.Size(763, 26);
+            this.tbDirectory.Size = new System.Drawing.Size(897, 26);
             this.tbDirectory.TabIndex = 1;
             this.tbDirectory.DragDrop += new System.Windows.Forms.DragEventHandler(this.tbDirectory_DragDrop);
             this.tbDirectory.DragOver += new System.Windows.Forms.DragEventHandler(this.tbDirectory_DragOver);
@@ -96,7 +101,7 @@
             this.btnSelect.Location = new System.Drawing.Point(8, 26);
             this.btnSelect.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
             this.btnSelect.Name = "btnSelect";
-            this.btnSelect.Size = new System.Drawing.Size(207, 32);
+            this.btnSelect.Size = new System.Drawing.Size(155, 32);
             this.btnSelect.TabIndex = 0;
             this.btnSelect.Text = "select folder -->";
             this.btnSelect.UseVisualStyleBackColor = true;
@@ -115,10 +120,10 @@
             // 
             // rtbLogging
             // 
-            this.rtbLogging.Location = new System.Drawing.Point(12, 368);
+            this.rtbLogging.Location = new System.Drawing.Point(17, 416);
             this.rtbLogging.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
             this.rtbLogging.Name = "rtbLogging";
-            this.rtbLogging.Size = new System.Drawing.Size(1033, 353);
+            this.rtbLogging.Size = new System.Drawing.Size(1064, 353);
             this.rtbLogging.TabIndex = 2;
             this.rtbLogging.Text = "";
             // 
@@ -128,7 +133,7 @@
             this.tbSchedule.Location = new System.Drawing.Point(320, 86);
             this.tbSchedule.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
             this.tbSchedule.Name = "tbSchedule";
-            this.tbSchedule.Size = new System.Drawing.Size(670, 26);
+            this.tbSchedule.Size = new System.Drawing.Size(704, 26);
             this.tbSchedule.TabIndex = 3;
             this.tbSchedule.DragDrop += new System.Windows.Forms.DragEventHandler(this.tbSchedule_DragDrop);
             this.tbSchedule.DragOver += new System.Windows.Forms.DragEventHandler(this.tbDirectory_DragOver);
@@ -144,7 +149,7 @@
             // 
             // btnSelectSchedule
             // 
-            this.btnSelectSchedule.Location = new System.Drawing.Point(998, 85);
+            this.btnSelectSchedule.Location = new System.Drawing.Point(1035, 85);
             this.btnSelectSchedule.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
             this.btnSelectSchedule.Name = "btnSelectSchedule";
             this.btnSelectSchedule.Size = new System.Drawing.Size(46, 31);
@@ -173,7 +178,7 @@
             this.tbTextFile.Location = new System.Drawing.Point(320, 125);
             this.tbTextFile.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
             this.tbTextFile.Name = "tbTextFile";
-            this.tbTextFile.Size = new System.Drawing.Size(670, 26);
+            this.tbTextFile.Size = new System.Drawing.Size(704, 26);
             this.tbTextFile.TabIndex = 3;
             this.tbTextFile.DragDrop += new System.Windows.Forms.DragEventHandler(this.tbTextFile_DragDrop);
             this.tbTextFile.DragOver += new System.Windows.Forms.DragEventHandler(this.tbDirectory_DragOver);
@@ -189,7 +194,7 @@
             // 
             // btnSelectTextFile
             // 
-            this.btnSelectTextFile.Location = new System.Drawing.Point(998, 123);
+            this.btnSelectTextFile.Location = new System.Drawing.Point(1035, 123);
             this.btnSelectTextFile.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
             this.btnSelectTextFile.Name = "btnSelectTextFile";
             this.btnSelectTextFile.Size = new System.Drawing.Size(46, 35);
@@ -225,7 +230,7 @@
             this.cbHTMLPage.AutoSize = true;
             this.cbHTMLPage.Checked = true;
             this.cbHTMLPage.CheckState = System.Windows.Forms.CheckState.Checked;
-            this.cbHTMLPage.Location = new System.Drawing.Point(518, 218);
+            this.cbHTMLPage.Location = new System.Drawing.Point(42, 35);
             this.cbHTMLPage.Name = "cbHTMLPage";
             this.cbHTMLPage.Size = new System.Drawing.Size(171, 24);
             this.cbHTMLPage.TabIndex = 9;
@@ -237,18 +242,18 @@
             this.cbOpenHTML.AutoSize = true;
             this.cbOpenHTML.Checked = true;
             this.cbOpenHTML.CheckState = System.Windows.Forms.CheckState.Checked;
-            this.cbOpenHTML.Location = new System.Drawing.Point(694, 218);
+            this.cbOpenHTML.Location = new System.Drawing.Point(229, 35);
             this.cbOpenHTML.Name = "cbOpenHTML";
-            this.cbOpenHTML.Size = new System.Drawing.Size(199, 24);
+            this.cbOpenHTML.Size = new System.Drawing.Size(297, 24);
             this.cbOpenHTML.TabIndex = 9;
-            this.cbOpenHTML.Text = "Open HTML in Browser";
+            this.cbOpenHTML.Text = "Open HTML in Browser after creating";
             this.cbOpenHTML.UseVisualStyleBackColor = true;
             // 
             // cbSaveLog
             // 
-            this.cbSaveLog.Location = new System.Drawing.Point(526, 329);
+            this.cbSaveLog.Location = new System.Drawing.Point(522, 379);
             this.cbSaveLog.Name = "cbSaveLog";
-            this.cbSaveLog.Size = new System.Drawing.Size(274, 32);
+            this.cbSaveLog.Size = new System.Drawing.Size(246, 32);
             this.cbSaveLog.TabIndex = 10;
             this.cbSaveLog.Text = "save log shown below (optional)";
             this.cbSaveLog.UseVisualStyleBackColor = true;
@@ -289,7 +294,7 @@
             // 
             // btnSelectOptTextFile
             // 
-            this.btnSelectOptTextFile.Location = new System.Drawing.Point(998, 172);
+            this.btnSelectOptTextFile.Location = new System.Drawing.Point(1035, 172);
             this.btnSelectOptTextFile.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
             this.btnSelectOptTextFile.Name = "btnSelectOptTextFile";
             this.btnSelectOptTextFile.Size = new System.Drawing.Size(46, 35);
@@ -313,7 +318,7 @@
             this.tbOptTextFile.Location = new System.Drawing.Point(320, 175);
             this.tbOptTextFile.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
             this.tbOptTextFile.Name = "tbOptTextFile";
-            this.tbOptTextFile.Size = new System.Drawing.Size(670, 26);
+            this.tbOptTextFile.Size = new System.Drawing.Size(704, 26);
             this.tbOptTextFile.TabIndex = 11;
             this.tbOptTextFile.DragDrop += new System.Windows.Forms.DragEventHandler(this.tbOptTextFile_DragDrop);
             this.tbOptTextFile.DragOver += new System.Windows.Forms.DragEventHandler(this.tbDirectory_DragOver);
@@ -355,7 +360,7 @@
             this.groupBox2.Controls.Add(this.label4);
             this.groupBox2.Controls.Add(this.nUpDnOffset);
             this.groupBox2.Controls.Add(this.cbConfirm);
-            this.groupBox2.Location = new System.Drawing.Point(506, 249);
+            this.groupBox2.Location = new System.Drawing.Point(22, 70);
             this.groupBox2.Name = "groupBox2";
             this.groupBox2.Size = new System.Drawing.Size(518, 78);
             this.groupBox2.TabIndex = 15;
@@ -364,6 +369,9 @@
             // 
             // groupBox3
             // 
+            this.groupBox3.Controls.Add(this.rbTimeInSchedule);
+            this.groupBox3.Controls.Add(this.rbCorrectSource);
+            this.groupBox3.Controls.Add(this.cbCorrectDate);
             this.groupBox3.Controls.Add(this.cbDontSort);
             this.groupBox3.Controls.Add(this.cbSub);
             this.groupBox3.Controls.Add(this.cbDontCheckLive);
@@ -371,7 +379,7 @@
             this.groupBox3.Controls.Add(this.cbDoubleFrames);
             this.groupBox3.Location = new System.Drawing.Point(24, 214);
             this.groupBox3.Name = "groupBox3";
-            this.groupBox3.Size = new System.Drawing.Size(470, 145);
+            this.groupBox3.Size = new System.Drawing.Size(492, 183);
             this.groupBox3.TabIndex = 16;
             this.groupBox3.TabStop = false;
             this.groupBox3.Text = "BXF Options";
@@ -379,39 +387,81 @@
             // cbDontSort
             // 
             this.cbDontSort.AutoSize = true;
-            this.cbDontSort.Location = new System.Drawing.Point(234, 112);
+            this.cbDontSort.Location = new System.Drawing.Point(309, 85);
             this.cbDontSort.Name = "cbDontSort";
             this.cbDontSort.Size = new System.Drawing.Size(153, 24);
             this.cbDontSort.TabIndex = 10;
             this.cbDontSort.Text = "Don\'t Sort Times";
             this.cbDontSort.UseVisualStyleBackColor = true;
             // 
-            // button1
+            // btnPackAndShip
             // 
-            this.button1.Location = new System.Drawing.Point(921, 218);
-            this.button1.Name = "button1";
-            this.button1.Size = new System.Drawing.Size(123, 33);
-            this.button1.TabIndex = 17;
-            this.button1.Text = "pack && ship";
-            this.button1.UseVisualStyleBackColor = true;
-            this.button1.Click += new System.EventHandler(this.button1_Click);
+            this.btnPackAndShip.Location = new System.Drawing.Point(774, 378);
+            this.btnPackAndShip.Name = "btnPackAndShip";
+            this.btnPackAndShip.Size = new System.Drawing.Size(293, 33);
+            this.btnPackAndShip.TabIndex = 17;
+            this.btnPackAndShip.Text = "move to folder an sip files in select folder";
+            this.btnPackAndShip.UseVisualStyleBackColor = true;
+            this.btnPackAndShip.Click += new System.EventHandler(this.btnPackAndShip_Click);
+            // 
+            // groupBox4
+            // 
+            this.groupBox4.Controls.Add(this.cbHTMLPage);
+            this.groupBox4.Controls.Add(this.cbOpenHTML);
+            this.groupBox4.Controls.Add(this.groupBox2);
+            this.groupBox4.Location = new System.Drawing.Point(527, 222);
+            this.groupBox4.Name = "groupBox4";
+            this.groupBox4.Size = new System.Drawing.Size(554, 151);
+            this.groupBox4.TabIndex = 18;
+            this.groupBox4.TabStop = false;
+            this.groupBox4.Text = "HTML Creation";
+            // 
+            // cbCorrectDate
+            // 
+            this.cbCorrectDate.AutoSize = true;
+            this.cbCorrectDate.Location = new System.Drawing.Point(234, 116);
+            this.cbCorrectDate.Name = "cbCorrectDate";
+            this.cbCorrectDate.Size = new System.Drawing.Size(231, 24);
+            this.cbCorrectDate.TabIndex = 11;
+            this.cbCorrectDate.Text = "Correct Txt File(s) start date";
+            this.cbCorrectDate.UseVisualStyleBackColor = true;
+            // 
+            // rbCorrectSource
+            // 
+            this.rbCorrectSource.AutoSize = true;
+            this.rbCorrectSource.Checked = true;
+            this.rbCorrectSource.Location = new System.Drawing.Point(10, 149);
+            this.rbCorrectSource.Name = "rbCorrectSource";
+            this.rbCorrectSource.Size = new System.Drawing.Size(213, 24);
+            this.rbCorrectSource.TabIndex = 12;
+            this.rbCorrectSource.TabStop = true;
+            this.rbCorrectSource.Text = "First Time in Top Text File";
+            this.rbCorrectSource.UseVisualStyleBackColor = true;
+            // 
+            // rbTimeInSchedule
+            // 
+            this.rbTimeInSchedule.AutoSize = true;
+            this.rbTimeInSchedule.Location = new System.Drawing.Point(242, 149);
+            this.rbTimeInSchedule.Name = "rbTimeInSchedule";
+            this.rbTimeInSchedule.Size = new System.Drawing.Size(236, 24);
+            this.rbTimeInSchedule.TabIndex = 13;
+            this.rbTimeInSchedule.Text = "Schedule Header Start Date";
+            this.rbTimeInSchedule.UseVisualStyleBackColor = true;
             // 
             // Form1
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(9F, 20F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.AutoSize = true;
-            this.ClientSize = new System.Drawing.Size(1059, 732);
-            this.Controls.Add(this.button1);
+            this.ClientSize = new System.Drawing.Size(1093, 780);
+            this.Controls.Add(this.groupBox4);
+            this.Controls.Add(this.btnPackAndShip);
             this.Controls.Add(this.groupBox3);
-            this.Controls.Add(this.groupBox2);
             this.Controls.Add(this.btnClearOpt);
             this.Controls.Add(this.btnSelectOptTextFile);
             this.Controls.Add(this.label5);
             this.Controls.Add(this.tbOptTextFile);
             this.Controls.Add(this.cbSaveLog);
-            this.Controls.Add(this.cbOpenHTML);
-            this.Controls.Add(this.cbHTMLPage);
             this.Controls.Add(this.btnSelectTextFile);
             this.Controls.Add(this.label2);
             this.Controls.Add(this.btnSelectSchedule);
@@ -435,6 +485,8 @@
             this.groupBox2.PerformLayout();
             this.groupBox3.ResumeLayout(false);
             this.groupBox3.PerformLayout();
+            this.groupBox4.ResumeLayout(false);
+            this.groupBox4.PerformLayout();
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -472,7 +524,11 @@
         private System.Windows.Forms.GroupBox groupBox2;
         private System.Windows.Forms.GroupBox groupBox3;
         private System.Windows.Forms.CheckBox cbDontSort;
-        private System.Windows.Forms.Button button1;
+        private System.Windows.Forms.Button btnPackAndShip;
+        private System.Windows.Forms.RadioButton rbTimeInSchedule;
+        private System.Windows.Forms.RadioButton rbCorrectSource;
+        private System.Windows.Forms.CheckBox cbCorrectDate;
+        private System.Windows.Forms.GroupBox groupBox4;
     }
 }
 

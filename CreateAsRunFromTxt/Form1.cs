@@ -35,6 +35,8 @@ namespace CreateAsRunFromTxt
             cbDontCheckLive.Checked = Properties.Settings.Default.blDontLIve;
             cbDontComment.Checked = Properties.Settings.Default.blDontComment;
             cbDontSort.Checked = Properties.Settings.Default.blDontSort;
+            cbCorrectDate.Checked = Properties.Settings.Default.blCorrectDate;
+            rbCorrectSource.Checked = Properties.Settings.Default.blFirstInText;
             log2screen("Program starting");
         }
 
@@ -50,6 +52,8 @@ namespace CreateAsRunFromTxt
             Properties.Settings.Default.blDontLIve = cbDontCheckLive.Checked;
             Properties.Settings.Default.blDontComment = cbDontComment.Checked;
             Properties.Settings.Default.blDontSort = cbDontSort.Checked;
+            Properties.Settings.Default.blCorrectDate = cbCorrectDate.Checked;
+            Properties.Settings.Default.blFirstInText = rbCorrectSource.Checked;
             Properties.Settings.Default.Save();
         }
 
@@ -244,7 +248,7 @@ namespace CreateAsRunFromTxt
         }
         #endregion
 
-        private void button1_Click(object sender, EventArgs e)
+        private void btnPackAndShip_Click(object sender, EventArgs e)
         {
             // Get Results from form
             PackingForm m_PackingF = new PackingForm();

@@ -11,7 +11,6 @@ namespace CreateAsRunFromTxt
     class ParseSched
     {
         // Variables computed when reading header
-        public string headerDate { get; set; }
         public string headerUUID { get; set; }
         public string headerScheduleStart { get; set; }
         public string headerScheduleEnd { get; set; }

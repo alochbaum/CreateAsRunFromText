@@ -133,13 +133,37 @@ namespace CreateAsRunFromTxt.Properties {
         
         [global::System.Configuration.UserScopedSettingAttribute()]
         [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-        [global::System.Configuration.DefaultSettingValueAttribute("False")]
+        [global::System.Configuration.DefaultSettingValueAttribute("True")]
         public bool blDontSort {
             get {
                 return ((bool)(this["blDontSort"]));
             }
             set {
                 this["blDontSort"] = value;
+            }
+        }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("True")]
+        public bool blCorrectDate {
+            get {
+                return ((bool)(this["blCorrectDate"]));
+            }
+            set {
+                this["blCorrectDate"] = value;
+            }
+        }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("True")]
+        public bool blFirstInText {
+            get {
+                return ((bool)(this["blFirstInText"]));
+            }
+            set {
+                this["blFirstInText"] = value;
             }
         }
     }

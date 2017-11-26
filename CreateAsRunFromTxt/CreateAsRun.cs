@@ -39,6 +39,8 @@ namespace CreateAsRunFromTxt
                         return false;
                     }
                     if (myPS.makeTableOfSched(strSchedName, objF)) objF.log2screen("Returned from parsing schedule");
+                    // Added for correcting date schedule
+                    objF.log2screen($"Schedule start date {myPS.headerScheduleStart}");
                     writer.WriteStartDocument();
                     // Start BXF Message, need to add basic namespace here to have it as attribute
                     writer.WriteStartElement("BxfMessage", "http://smpte-ra.org/schemas/2021/2008/BXF"); // Start BXF Message
