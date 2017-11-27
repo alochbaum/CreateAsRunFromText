@@ -400,7 +400,7 @@
             this.btnPackAndShip.Name = "btnPackAndShip";
             this.btnPackAndShip.Size = new System.Drawing.Size(293, 33);
             this.btnPackAndShip.TabIndex = 17;
-            this.btnPackAndShip.Text = "move to folder an sip files in select folder";
+            this.btnPackAndShip.Text = "move to folder an zip files in select folder";
             this.btnPackAndShip.UseVisualStyleBackColor = true;
             this.btnPackAndShip.Click += new System.EventHandler(this.btnPackAndShip_Click);
             // 

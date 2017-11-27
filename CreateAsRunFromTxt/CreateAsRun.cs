@@ -14,6 +14,7 @@ namespace CreateAsRunFromTxt
     {
         // Create new table
         DataTable myTextTable = new DataTable();
+        DateTime myCorrectionDate = new DateTime(2017, 1, 1);
         public string strDateToFind { get; set; }
         public string strLogTxt { get; set; }
         // Create class with no parameters
@@ -22,7 +23,7 @@ namespace CreateAsRunFromTxt
             strDateToFind = DateTime.Now.ToString("M/d/yyy");
         }
 
-        public bool WriteAsRunFile(string strFileName,string strSchedName,string strOptFile,Form1 objF)
+        public bool WriteAsRunFile(string strFileName,string strSchedName,string strOptFile,Form1 objF,mode4time inTimeMode)
         {
             if (File.Exists(strFileName) && File.Exists(strSchedName))
             {
@@ -35,12 +36,13 @@ namespace CreateAsRunFromTxt
                     ParseSched myPS = new ParseSched();
                     if (myPS.openSchedHeader(strSchedName)) objF.log2screen("Succesfully parsed header");
                     else {
-                        objF.log2screen("Error paring header of " + strSchedName);
+                        objF.log2screen("Error paring header of " + strSchedName,1);
                         return false;
                     }
                     if (myPS.makeTableOfSched(strSchedName, objF)) objF.log2screen("Returned from parsing schedule");
                     // Added for correcting date schedule
-                    objF.log2screen($"Schedule start date {myPS.headerScheduleStart}");
+                    //objF.log2screen($"Schedule start date {myPS.headerScheduleStart}");
+                    objF.log2screen($"First Start Date {myPS.firstStartDate}");
                     writer.WriteStartDocument();
                     // Start BXF Message, need to add basic namespace here to have it as attribute
                     writer.WriteStartElement("BxfMessage", "http://smpte-ra.org/schemas/2021/2008/BXF"); // Start BXF Message
@@ -79,8 +81,9 @@ namespace CreateAsRunFromTxt
 
                     // parsing the text log
                     ParseLines myTxtLog = new ParseLines(strFileName, strOptFile,objF);
-                    if (myTxtLog.iCount < 1) objF.log2screen("Error: Low parsing count on Txt file");
+                    if (myTxtLog.iCount < 1) objF.log2screen("Error: Low parsing count on Txt file",1);
                     objF.log2screen("Number of lines with Video Clip or Live in Log: "+myTxtLog.iCount.ToString());
+                  
                     string strTemp = "";
                     string strUUIDHold = "";
                     EventType tmpEventType = EventType.None;
@@ -122,7 +125,8 @@ namespace CreateAsRunFromTxt
                         } else
                         {
                             // Reporting back to screen UUID, Start Date, Start Time if good
-                            objF.log2screen("Writing: " + strUUIDHold + "\t" + myTxtLog.getStartDate(iloop) + "\t" + myTxtLog.getStartTime(iloop));
+                            objF.log2screen("Secondary: " + strUUIDHold + "\t" + myTxtLog.getStartDate(iloop) + "\t" + myTxtLog.getStartTime(iloop));
+                            //objF.log2screen($"Event Time "+ myPS.getStartTime(strUUIDHold));
                         }
 
                         writer.WriteEndElement(); // End EventId

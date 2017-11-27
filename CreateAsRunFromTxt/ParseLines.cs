@@ -79,6 +79,7 @@ namespace CreateAsRunFromTxt
                     objF.log2screen("Error: parsing optional text file " + e.ToString(), 1);
                 }
             }
+            // This is sorting section, I need to put date correction in befort this
             DataView dv = tblLog.DefaultView;
             if(!(objF.getCBDontSort())) dv.Sort = "StartDate, StartTime ASC";
             sortedDT = dv.ToTable();

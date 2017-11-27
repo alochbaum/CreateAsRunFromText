@@ -12,9 +12,16 @@ using System.Windows.Forms;
 
 namespace CreateAsRunFromTxt
 {
+    enum mode4time
+    {
+        None,
+        UseTextFile,
+        UseScheduleHeader,
+    };
     public partial class Form1 : Form
     {
         private bool blFirstTimeRun = true;
+        private mode4time timemode = mode4time.None;
         public Form1()
         {
             InitializeComponent();
@@ -72,7 +79,13 @@ namespace CreateAsRunFromTxt
             CreateAsRun myParseText = new CreateAsRun();
             log2screen("Started Building BXF Log: " + tbSchedule.Text + " with version " +
                 Application.ProductVersion.ToString());
-            if (myParseText.WriteAsRunFile(tbTextFile.Text, tbSchedule.Text, tbOptTextFile.Text, this))
+            if (cbCorrectDate.Checked)
+            {
+                if (rbCorrectSource.Checked) timemode = mode4time.UseTextFile;
+                else timemode = mode4time.UseScheduleHeader;
+            }
+            else timemode = mode4time.None;
+            if (myParseText.WriteAsRunFile(tbTextFile.Text, tbSchedule.Text, tbOptTextFile.Text, this, timemode))
             {
                 log2screen("Writing As Run Returned: True");
                 if (cbHTMLPage.Checked)

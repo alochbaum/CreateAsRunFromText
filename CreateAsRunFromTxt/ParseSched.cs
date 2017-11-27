@@ -22,6 +22,10 @@ namespace CreateAsRunFromTxt
         public string eventBilling { get; set; }
         public string eventHouseNum { get; set; }
         public string eventAlternateId { get; set; }
+        public string eventStartTime { get; set; }
+        public string eventDate { get; set; }
+        public string firstStartDate { get; set; }
+        private bool blDoingFirstDate = true;
         public EventType tblEventType = EventType.None;
         public NonPrimaryEventName tbNonPri = NonPrimaryEventName.None;
         // Here we create a DataTable with four columns to store parsed sechedule
@@ -35,6 +39,7 @@ namespace CreateAsRunFromTxt
             tblSched.Columns.Add("AlternateId", typeof(string));
             tblSched.Columns.Add("EventType", typeof(EventType));
             tblSched.Columns.Add("NonPrimaryEventName", typeof(NonPrimaryEventName));
+            tblSched.Columns.Add("StartTime", typeof(string));
         }
         public bool openSchedHeader(string strSchedName)
         {
@@ -78,15 +83,16 @@ namespace CreateAsRunFromTxt
             using (XmlReader reader = XmlReader.Create(strSchedName))
             {
                 // set these before the reading loop
-                bool blInsideElement = false;  // This is set if inside EventData with attribute of "Primary"
                 bool blInsideEventID = false;
                 bool blBillingReferenceCode = false;
                 bool blHouseNumber = false;
                 bool blAlternateId = false;
                 bool blInsideContent = false;
                 bool blNonPrimaryEvent = false;
+                bool blStartTime = false;
+                bool blSmpteTimeCode = false;
                 // for 2.0 need to add non-primary
-                
+
                 // start are reading loop
                 while (reader.Read())
                 {
@@ -97,61 +103,114 @@ namespace CreateAsRunFromTxt
                         case XmlNodeType.Element:
                             // starting Element, set blInsideElement if EventData and Primary
                            // if (reader.LocalName.Equals("EventData") &&  reader["eventType"] == "Primary" )
-                            if (reader.LocalName.Equals("EventData"))
+                           switch(reader.LocalName)
                             {
+                                case "EventData":
                                     if (reader["eventType"].Length > 3) Enum.TryParse(reader["eventType"].ToString(), out tblEventType);
-                                 blInsideElement = true;
-                            }
-                            if(blInsideElement)
-                            {
-                                if (reader.LocalName.Equals("EventId"))
-                                {
+                                    break;
+                                case "EventId":
                                     // set the blInsideEventID for testing EventId and BillingReferenceCode
-                                    if (!blInsideEventID) blInsideEventID = true;                                
-                                }
-                                if (reader.LocalName.Equals("BillingReferenceCode"))
-                                    if (!blBillingReferenceCode) blBillingReferenceCode = true;
-                            }                
-                            if(reader.LocalName.Equals("Content"))
-                                if (!blInsideContent) blInsideContent = true;
-                            if (reader.LocalName.Equals("HouseNumber")) blHouseNumber = true;
-                            if (reader.LocalName.Equals("NonPrimaryEventName")) blNonPrimaryEvent = true;
+                                    if (!blInsideEventID) blInsideEventID = true;
+                                    break;
+                                case "BillingReferenceCode":
+                                    if (!blInsideEventID && !blBillingReferenceCode) blBillingReferenceCode = true;
+                                    break;
+                                case "Content":
+                                    if (!blInsideContent) blInsideContent = true;
+                                    break;
+                                case "HouseNumber":
+                                    blHouseNumber = true;
+                                    break;
+                                case "NonPrimaryEventName":
+                                    blNonPrimaryEvent = true;
+                                    break;
+                                case "AlternateId":
+                                    // Version 1.0.1 Adding a check for the correct attribute value of "ISCI" after Corus traffic sent <AlternateId idType="SUB"/>
+                                    if (reader.HasAttributes)
+                                    {
+                                        reader.MoveToAttribute(0);
+                                        if (reader.Value.Equals("ISCI"))
+                                            blAlternateId = true;
+                                    }
+                                    break;
+                                case "StartDateTime":
+                                    blStartTime = true;
+                                    break;
+                                case "SmpteTimeCode":
+                                    blSmpteTimeCode = true;
+                                    break;
+                                case "SmpteDateTime":
+                                    if(blStartTime && reader.HasAttributes)
+                                    {
+                                        reader.MoveToAttribute(0);
+                                        if (reader.Name.Equals("broadcastDate"))
+                                        {
+                                            eventDate = reader.Value;
+                                            // sometimes date has Z at end to indicate zulu time.
+                                            eventDate = eventDate.Substring(0, 10);
+                                            if (blDoingFirstDate)
+                                            {
+                                                firstStartDate = eventDate;
+                                                // need to add time
+                                                
+                                            }
+                                        }
+                                    }
 
-                            // Version 1.0.1 Adding a check for the correct attribute value of "ISCI" after Corus traffic sent <AlternateId idType="SUB"/>
-                            if (reader.LocalName.Equals("AlternateId"))
-                            {
-                                if (reader.HasAttributes)
-                                {
-                                    reader.MoveToAttribute(0);
-                                    if(reader.Value.Equals("ISCI"))
-                                    blAlternateId = true;
-                                }
+                                    break;
                             }
                             break;
                         case XmlNodeType.EndElement:
-                            if (reader.LocalName.Equals("EventData")) blInsideElement = false;
-                            if (reader.LocalName.Equals("EventId")) blInsideEventID = false;
-                            if (reader.LocalName.Equals("BillingReferenceCode")) blBillingReferenceCode = false;
-                            if (reader.LocalName.Equals("HouseNumber")) blHouseNumber = false;
-                            if (reader.LocalName.Equals("NonPrimaryEventName")) blNonPrimaryEvent = false;
-                            if (reader.LocalName.Equals("Content")) blInsideContent = false;
-                            if (reader.LocalName.Equals("AlternateId")) blAlternateId = false;
-                            // The House number can be outside of EventData so write out row on ScheduledEvent
-                            if (reader.LocalName.Equals("ScheduledEvent"))
+                            switch(reader.LocalName)
                             {
-
-                                // we get some false rows, don't save them
-                                if (eventID != null && eventID.Length > 3)
-                                {
-                                    tblSched.Rows.Add(eventID, eventBilling, eventHouseNum, eventAlternateId, tblEventType, tbNonPri);
-                                    objF.log2screen("Sched \t" + eventID +
-                                        "\t" + eventBilling + "\t" + eventHouseNum + " - " + tblEventType.ToString() + " " + tbNonPri.ToString());
-                                }
-                                // resetting all the varibles
-                                eventID = eventBilling = eventHouseNum = eventAlternateId = "";
-                                // resetting Enums
-                                tblEventType = EventType.None;
-                                tbNonPri = NonPrimaryEventName.None;
+                                //case "EventData":
+                                //    blInsideElement = false;
+                                //    break;
+                                case "EventId":
+                                    blInsideEventID = false;
+                                    break;
+                                case "BillingReferenceCode":
+                                    blBillingReferenceCode = false;
+                                    break;
+                                case "HouseNumber":
+                                    blHouseNumber = false;
+                                    break;
+                                case "NonPrimaryEventName":
+                                    blNonPrimaryEvent = false;
+                                    break;
+                                case "Content":
+                                    blInsideContent = false;
+                                    break;
+                                case "AlternateId":
+                                    blAlternateId = false;
+                                    break;
+                                case "StartDateTime":
+                                    blStartTime = false;
+                                    break;
+                                case "SmpteTimeCode":
+                                    blSmpteTimeCode = false;
+                                    break;
+                                // The House number can be outside of EventData so write out row on ScheduledEvent
+                                case "ScheduledEvent":
+                                    // we get some false rows, don't save them
+                                    if (eventID != null && eventID.Length > 3)
+                                    {
+                                        tblSched.Rows.Add(eventID, eventBilling, eventHouseNum, eventAlternateId, tblEventType, tbNonPri, 
+                                            $"{eventDate} {eventStartTime}");
+                                        objF.log2screen("Sched \t" + eventID +
+                                            "\t" + eventBilling + "\t" + eventHouseNum + " - " + tblEventType.ToString() + " " + tbNonPri.ToString());
+                                        if (blDoingFirstDate)
+                                        {
+                                            firstStartDate = firstStartDate +" "+ eventStartTime.Substring(0, 2) + ":00:00.00";
+                                            blDoingFirstDate = false;
+                                        }
+                                    }
+                                    // resetting all the varibles
+                                    eventID = eventBilling = eventHouseNum = eventAlternateId = "";
+                                    // resetting Enums
+                                    tblEventType = EventType.None;
+                                    tbNonPri = NonPrimaryEventName.None;
+                                    break;
                             }
                             break;
                         case XmlNodeType.Text:
@@ -163,6 +222,7 @@ namespace CreateAsRunFromTxt
                             if (blHouseNumber) eventHouseNum = reader.Value;
                             if (blNonPrimaryEvent) Enum.TryParse(reader.Value, out tbNonPri);
                             if (blAlternateId) eventAlternateId = reader.Value;
+                            if (blSmpteTimeCode && blStartTime)eventStartTime = reader.Value;
                             break;
                     }
                     
@@ -212,6 +272,13 @@ namespace CreateAsRunFromTxt
             // return the value only if there is one row selected
             if (dr.Length == 1) return dr[0].Field<NonPrimaryEventName>("NonPrimaryEventName");
             return NonPrimaryEventName.None;
+        }
+
+        public string getStartTime(string strEventID)
+        {
+            DataRow[] dr = tblSched.Select($"EventID ='{strEventID}'");
+            if(dr.Length == 1) return dr[0].Field<string>("StartTime");
+            return "";
         }
 
     }
