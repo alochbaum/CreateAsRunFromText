@@ -107,9 +107,12 @@ namespace CreateAsRunFromTxt
                         blDoingOldTime = blIsOldTime(strArray[0]);
                 }
 
-                // Fix the time this will also fix computed date if over 24 hours
+                // Doing Old time converts ss.uuu to ss.ff
                 if (blDoingOldTime) strArray[0] = ConvertOldTime2New(strSubSplit[1]);
                 else strArray[0] = ConvertNewTime(strSubSplit[1]);
+
+                // This is section that converts over 24 hours
+                strArray[0] = ConvertOver24Time(strArray[0]);
 
                 // continue only if type is "Video Clip" or "Live" 1.x series, 
                 // "Comment has new time format so process it later.
@@ -209,7 +212,7 @@ namespace CreateAsRunFromTxt
                 else iTemp = iTemp / (Int64)33;
                 strIn = strConvert[0] + ":" + iTemp.ToString("00");
             }
-            return ConvertOver24Time(strIn);
+            return strIn;
         }
         //
         // This function takes hh:MM:ss.ff converts to hh:MM:ss:ff and calls hour function
@@ -218,7 +221,7 @@ namespace CreateAsRunFromTxt
         {
             // converting time from hh:MM:ss.frame to hh:MM:ss:frame for SMPTE time in XML
             strIn = strIn.Replace('.', ':');
-            return ConvertOver24Time(strIn);
+            return strIn;
         }
         //
         // This function checks for hours over 24 and if it finds that value, it increments date and subtracts 24
