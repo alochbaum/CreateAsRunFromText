@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Data;
+using System.Diagnostics;
 using System.Globalization;
 using System.IO;
 using System.Linq;
@@ -16,13 +17,15 @@ namespace CreateAsRunFromTxt
         private DataTable tblLog = new DataTable();
         private DataTable sortedDT = new DataTable();
         private DataRow dRow;
-        private DateTime dtStartLog = Convert.ToDateTime("09/25/1991 00:00:50.42");
+        private DateTime dtCurrentValue = Convert.ToDateTime("09/25/1991 00:00:50.42");
+        private DateTime dtFirstFromFirstText = Convert.ToDateTime("09/25/1991 00:00:50.42");
         private Form1 myForm1;  // moving around the different functions
         private bool blDontMakeComment = false;  // I'm thinking saving this local will save some speed
         private bool blDoingOldTime = false;  // holds the type of time in native As Run
         private bool blDoubleFrames = false;  // moved this out of parameter string pass
         private bool blFirstLine = true;  // moved this out of subroutine
-        public string strDateToFind { get; set; }
+        private bool blFirstTextFile = true;  //added this to get first value
+        public DateTime getFirstDateTime() { return dtFirstFromFirstText; }
         public int iCount { get; set; }
         public ParseLines(string strFileName, string strOptFileName,  Form1 objF)
         {
@@ -94,17 +97,25 @@ namespace CreateAsRunFromTxt
                 string[] strSubSplit = strArray[0].Split('-');
                 // Not sure if this will work internationally
                 if (!DateTime.TryParseExact(strSubSplit[0], "M/d/yyyy",
-                    CultureInfo.CurrentCulture, DateTimeStyles.None, out dtStartLog))
+                    CultureInfo.CurrentCulture, DateTimeStyles.None, out dtCurrentValue))
                 {
                     // failure to read date break the loop
                     return;
                 }
+                Debug.WriteLine(String.Format("Value {0} === {1}",strSubSplit,strArray[0]));
 
                 // Need to set type of time in text file, but only need to do it once for non-comments
                 if (blFirstLine && strArray[1] != "Comment")
                 {
                         blFirstLine = false;
                         blDoingOldTime = blIsOldTime(strArray[0]);
+                        if(blFirstTextFile)
+                        {
+                            blFirstTextFile = false;
+                            string strTemp = strArray[0].Substring(0, 14) + "00:00";
+                            dtFirstFromFirstText = DateTime.ParseExact(strTemp, "MM/dd/yyyy-hh:mm:ss", CultureInfo.InvariantCulture);
+                        }
+                
                 }
 
                 // Doing Old time converts ss.uuu to ss.ff
@@ -121,7 +132,7 @@ namespace CreateAsRunFromTxt
                     // The final passed type is corrected to "Primary" in the ParseTxtLogs class 2.x series 
                     tblLog.Rows.Add(strArray[7], strArray[2], strArray[3], fixDot(strArray[4]), fixDot(strArray[5]),
                         fixDot(strArray[6]),
-                        dtStartLog.ToString("yyyy-MM-dd"), strArray[0], strArray[1]);
+                        dtCurrentValue.ToString("yyyy-MM-dd"), strArray[0], strArray[1]);
 
                 } // end of "Video Clip" or "live"  processing
                   // for 2.x added Logo and GPI
@@ -129,7 +140,7 @@ namespace CreateAsRunFromTxt
                 {
                     tblLog.Rows.Add(strArray[7], strArray[2], strArray[3], fixDot(strArray[4]), fixDot(strArray[5]),
                         fixDot(strArray[6]),
-                        dtStartLog.ToString("yyyy-MM-dd"), strArray[0], "NonPrimary");
+                        dtCurrentValue.ToString("yyyy-MM-dd"), strArray[0], "NonPrimary");
                 }
                 else
                 {
@@ -141,7 +152,7 @@ namespace CreateAsRunFromTxt
                         // Version 1.1.5 EventID, House number, Name,Duration,SOM,EOM,StartDate,StartTime,Type
                         tblLog.Rows.Add("", "NULL", strArray[7], fixDot(strArray[4]), fixDot(strArray[5]),
                         fixDot(strArray[6]),
-                         dtStartLog.ToString("yyyy-MM-dd"), strArray[0], "Comment");
+                         dtCurrentValue.ToString("yyyy-MM-dd"), strArray[0], "Comment");
                     }
                     else
                         myForm1.log2screen("Text file has non-processed type of: " + strArray[1] + " @ " + strArray[0]);
@@ -233,7 +244,7 @@ namespace CreateAsRunFromTxt
             if (Convert.ToInt16(strSubSubSplit[0]) > 23)
             {
                 // day increament will take care of added hours, now make hours normal
-                dtStartLog = dtStartLog.AddDays(1);
+                dtCurrentValue = dtCurrentValue.AddDays(1);
                 Int64 iTemp = Convert.ToInt64(strSubSubSplit[0]);
                 iTemp -= 24;
                 strSubSubSplit[0] = iTemp.ToString("00");

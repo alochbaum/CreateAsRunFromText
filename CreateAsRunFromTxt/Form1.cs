@@ -271,54 +271,62 @@ namespace CreateAsRunFromTxt
             DialogResult pformResult = m_PackingF.ShowDialog();
             if (pformResult == DialogResult.OK)
             {
-                // Put all bin files in root directory into directory.
-                // ... This is case-insensitive.
-                string[] arrayOfFiles = Directory.GetFiles(tbDirectory.Text, "*.HTM");
-                string strHtmlDir = m_PackingF.getHtml();
-                if (!Directory.Exists(strHtmlDir))
+                // Older versions of this program had errror
+                try
                 {
-                    if (arrayOfFiles.Length > 0)
+                    // Put all bin files in root directory into directory.
+                    // ... This is case-insensitive.
+                    string[] arrayOfFiles = Directory.GetFiles(tbDirectory.Text, "*.HTM");
+                    string strHtmlDir = m_PackingF.getHtml();
+                    if (!Directory.Exists(strHtmlDir))
                     {
-                        Directory.CreateDirectory(strHtmlDir);
-                        foreach (string FileName in arrayOfFiles)
+                        if (arrayOfFiles.Length > 0)
                         {
-                            File.Move(FileName, strHtmlDir + "\\" + Path.GetFileName(FileName));
+                            Directory.CreateDirectory(strHtmlDir);
+                            foreach (string FileName in arrayOfFiles)
+                            {
+                                File.Move(FileName, strHtmlDir + "\\" + Path.GetFileName(FileName));
+                            }
+                            string strZipName = strHtmlDir + ".zip";
+                            ZipFile.CreateFromDirectory(strHtmlDir, strZipName);
+                            log2screen("Created " + strZipName + " with all the html files");
                         }
-                        string strZipName = strHtmlDir + ".zip";
-                        ZipFile.CreateFromDirectory(strHtmlDir, strZipName);
-                        log2screen("Created " + strZipName + " with all the html files");
+                        else log2screen("Didn't find any HTML files");
                     }
-                    else log2screen("Didn't find any HTML files");
-                }
-                else
-                {
-                    log2screen("Didn't create directory, because " +
-                    strHtmlDir + " already exists, or move files to it!");
-                }
-                string[] arrayOfBFiles = Directory.GetFiles(tbDirectory.Text, "BXF_A*.xml");
-
-                string strBXFDir = m_PackingF.getBxf();
-                if (!Directory.Exists(strBXFDir))
-                {
-                    if (arrayOfBFiles.Length > 0)
+                    else
                     {
-                        Directory.CreateDirectory(strBXFDir);
-                        foreach (string FileNameB in arrayOfBFiles)
-                        {
-                            File.Move(FileNameB, strBXFDir + "\\" + Path.GetFileName(FileNameB));
-                        }
-                        string strZipName = tbDirectory.Text + "\\BXF for " +
-                            Path.GetFileNameWithoutExtension(tbTextFile.Text) + ".zip";
-                        ZipFile.CreateFromDirectory(strBXFDir, strZipName);
-
-                        log2screen("Created " + strZipName + " with all the BXF files");
+                        log2screen("Didn't create directory, because " +
+                        strHtmlDir + " already exists, or move files to it!");
                     }
-                    else log2screen("Didn't find any BXF_A*.xml files");
+                    string[] arrayOfBFiles = Directory.GetFiles(tbDirectory.Text, "BXF_A*.xml");
+
+                    string strBXFDir = m_PackingF.getBxf();
+                    if (!Directory.Exists(strBXFDir))
+                    {
+                        if (arrayOfBFiles.Length > 0)
+                        {
+                            Directory.CreateDirectory(strBXFDir);
+                            foreach (string FileNameB in arrayOfBFiles)
+                            {
+                                File.Move(FileNameB, strBXFDir + "\\" + Path.GetFileName(FileNameB));
+                            }
+                            string strZipName = tbDirectory.Text + "\\BXF for " +
+                                Path.GetFileNameWithoutExtension(tbTextFile.Text) + ".zip";
+                            ZipFile.CreateFromDirectory(strBXFDir, strZipName);
+
+                            log2screen("Created " + strZipName + " with all the BXF files");
+                        }
+                        else log2screen("Didn't find any BXF_A*.xml files");
+                    }
+                    else
+                    {
+                        log2screen("Didn't create directory, because " +
+                        strBXFDir + " already exists, or move files to it!");
+                    }
                 }
-                else
+                catch(Exception ex)
                 {
-                    log2screen("Didn't create directory, because " +
-                    strBXFDir + " already exists, or move files to it!");
+                    log2screen($"Error: {ex.Message}", 1);
                 }
             }
         }
