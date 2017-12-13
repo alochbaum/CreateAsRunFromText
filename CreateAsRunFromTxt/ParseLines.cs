@@ -88,77 +88,11 @@ namespace CreateAsRunFromTxt
             sortedDT = dv.ToTable();
             iCount = sortedDT.Rows.Count;
         }
-        private void addrow2table(string strInLine)
+        public void Correct4TimeMode(DateTime dtHourAndDateb4)
         {
-            string[] strArray = strInLine.Split('|');
-            if (strArray.Count() == 9)
-            {
-                // parse the first sub string to get starting date, then hour. 12/45/7890-hh
-                string[] strSubSplit = strArray[0].Split('-');
-                // Not sure if this will work internationally
-                if (!DateTime.TryParseExact(strSubSplit[0], "M/d/yyyy",
-                    CultureInfo.CurrentCulture, DateTimeStyles.None, out dtCurrentValue))
-                {
-                    // failure to read date break the loop
-                    return;
-                }
-                Debug.WriteLine(String.Format("Value {0} === {1}",strSubSplit,strArray[0]));
 
-                // Need to set type of time in text file, but only need to do it once for non-comments
-                if (blFirstLine && strArray[1] != "Comment")
-                {
-                        blFirstLine = false;
-                        blDoingOldTime = blIsOldTime(strArray[0]);
-                        if(blFirstTextFile)
-                        {
-                            blFirstTextFile = false;
-                            string strTemp = strArray[0].Substring(0, 14) + "00:00";
-                            dtFirstFromFirstText = DateTime.ParseExact(strTemp, "MM/dd/yyyy-hh:mm:ss", CultureInfo.InvariantCulture);
-                        }
-                
-                }
-
-                // Doing Old time converts ss.uuu to ss.ff
-                if (blDoingOldTime) strArray[0] = ConvertOldTime2New(strSubSplit[1]);
-                else strArray[0] = ConvertNewTime(strSubSplit[1]);
-
-                // This is section that converts over 24 hours
-                strArray[0] = ConvertOver24Time(strArray[0]);
-
-                // continue only if type is "Video Clip" or "Live" 1.x series, 
-                // "Comment has new time format so process it later.
-                if (strArray[1] == "Video Clip" || strArray[1] == "Live")
-                {
-                    // The final passed type is corrected to "Primary" in the ParseTxtLogs class 2.x series 
-                    tblLog.Rows.Add(strArray[7], strArray[2], strArray[3], fixDot(strArray[4]), fixDot(strArray[5]),
-                        fixDot(strArray[6]),
-                        dtCurrentValue.ToString("yyyy-MM-dd"), strArray[0], strArray[1]);
-
-                } // end of "Video Clip" or "live"  processing
-                  // for 2.x added Logo and GPI
-                else if (strArray[1] == "Logo" || strArray[1] == "GPI")
-                {
-                    tblLog.Rows.Add(strArray[7], strArray[2], strArray[3], fixDot(strArray[4]), fixDot(strArray[5]),
-                        fixDot(strArray[6]),
-                        dtCurrentValue.ToString("yyyy-MM-dd"), strArray[0], "NonPrimary");
-                }
-                else
-                {
-                    if (strArray[1] == "Comment" && !blDontMakeComment)
-                    {
-                        // uuid [7] has comment with ' characters or "
-                        strArray[7] = strArray[7].Replace('\'', '`');
-                        strArray[7] = strArray[7].Replace('"', '`');
-                        // Version 1.1.5 EventID, House number, Name,Duration,SOM,EOM,StartDate,StartTime,Type
-                        tblLog.Rows.Add("", "NULL", strArray[7], fixDot(strArray[4]), fixDot(strArray[5]),
-                        fixDot(strArray[6]),
-                         dtCurrentValue.ToString("yyyy-MM-dd"), strArray[0], "Comment");
-                    }
-                    else
-                        myForm1.log2screen("Text file has non-processed type of: " + strArray[1] + " @ " + strArray[0]);
-                }
-            } // end of if statement on array count
         }
+        #region public Variable functions
         // this is first function called which loads the row data for all the rest of the calls
         public string getEventID(int iRow)
         {
@@ -207,11 +141,84 @@ namespace CreateAsRunFromTxt
             dRow = (DataRow)sortedDT.Rows[iRow];
             return dRow["Type"].ToString();
         }
+        #endregion
         //
         // This function takes in old time format hh:MM:ss.uuu and converts 
         // to new time format of hh:MM:ss.ff where ff is 30 frames per second
         // Then it calls the convert hour function
         //
+        private void addrow2table(string strInLine)
+        {
+            string[] strArray = strInLine.Split('|');
+            if (strArray.Count() == 9)
+            {
+                // parse the first sub string to get starting date, then hour. 12/45/7890-hh
+                string[] strSubSplit = strArray[0].Split('-');
+                // Not sure if this will work internationally
+                if (!DateTime.TryParseExact(strSubSplit[0], "M/d/yyyy",
+                    CultureInfo.CurrentCulture, DateTimeStyles.None, out dtCurrentValue))
+                {
+                    // failure to read date break the loop
+                    return;
+                }
+                Debug.WriteLine(String.Format("Value {0} === {1}", strSubSplit, strArray[0]));
+
+                // Need to set type of time in text file, but only need to do it once for non-comments
+                if (blFirstLine && strArray[1] != "Comment")
+                {
+                    blFirstLine = false;
+                    blDoingOldTime = blIsOldTime(strArray[0]);
+                    if (blFirstTextFile)
+                    {
+                        blFirstTextFile = false;
+                        string strTemp = strArray[0].Substring(0, 14) + "00:00";
+                        dtFirstFromFirstText = DateTime.ParseExact(strTemp, "MM/dd/yyyy-hh:mm:ss", CultureInfo.InvariantCulture);
+                    }
+
+                }
+
+                // Doing Old time converts ss.uuu to ss.ff
+                if (blDoingOldTime) strArray[0] = ConvertOldTime2New(strSubSplit[1]);
+                else strArray[0] = ConvertNewTime(strSubSplit[1]);
+
+                // This is section that converts over 24 hours
+                strArray[0] = ConvertOver24Time(strArray[0]);
+
+                // continue only if type is "Video Clip" or "Live" 1.x series, 
+                // "Comment has new time format so process it later.
+                if (strArray[1] == "Video Clip" || strArray[1] == "Live")
+                {
+                    // The final passed type is corrected to "Primary" in the ParseTxtLogs class 2.x series 
+                    tblLog.Rows.Add(strArray[7], strArray[2], strArray[3], fixDot(strArray[4]), fixDot(strArray[5]),
+                        fixDot(strArray[6]),
+                        dtCurrentValue.ToString("yyyy-MM-dd"), strArray[0], strArray[1]);
+
+                } // end of "Video Clip" or "live"  processing
+                  // for 2.x added Logo and GPI
+                else if (strArray[1] == "Logo" || strArray[1] == "GPI")
+                {
+                    tblLog.Rows.Add(strArray[7], strArray[2], strArray[3], fixDot(strArray[4]), fixDot(strArray[5]),
+                        fixDot(strArray[6]),
+                        dtCurrentValue.ToString("yyyy-MM-dd"), strArray[0], "NonPrimary");
+                }
+                else
+                {
+                    if (strArray[1] == "Comment" && !blDontMakeComment)
+                    {
+                        // uuid [7] has comment with ' characters or "
+                        strArray[7] = strArray[7].Replace('\'', '`');
+                        strArray[7] = strArray[7].Replace('"', '`');
+                        // Version 1.1.5 EventID, House number, Name,Duration,SOM,EOM,StartDate,StartTime,Type
+                        tblLog.Rows.Add("", "NULL", strArray[7], fixDot(strArray[4]), fixDot(strArray[5]),
+                        fixDot(strArray[6]),
+                         dtCurrentValue.ToString("yyyy-MM-dd"), strArray[0], "Comment");
+                    }
+                    else
+                        myForm1.log2screen("Text file has non-processed type of: " + strArray[1] + " @ " + strArray[0]);
+                }
+            } // end of if statement on array count
+        }
+
         private string ConvertOldTime2New(string strIn)
         {
             string[] strConvert = strIn.Split('.');

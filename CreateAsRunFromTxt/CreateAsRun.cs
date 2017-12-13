@@ -7,6 +7,8 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
 using System.Xml;
+using System.Diagnostics;
+using System.Globalization;
 
 namespace CreateAsRunFromTxt
 {
@@ -42,7 +44,7 @@ namespace CreateAsRunFromTxt
                     if (myPS.makeTableOfSched(strSchedName, objF)) objF.log2screen("Returned from parsing schedule");
                     // Added for correcting date schedule
                     //objF.log2screen($"Schedule start date {myPS.headerScheduleStart}");
-                    objF.log2screen($"First Start Date {myPS.firstStartDate}");
+
                     writer.WriteStartDocument();
                     // Start BXF Message, need to add basic namespace here to have it as attribute
                     writer.WriteStartElement("BxfMessage", "http://smpte-ra.org/schemas/2021/2008/BXF"); // Start BXF Message
@@ -83,7 +85,25 @@ namespace CreateAsRunFromTxt
                     ParseLines myTxtLog = new ParseLines(strFileName, strOptFile,objF);
                     if (myTxtLog.iCount < 1) objF.log2screen("Error: Low parsing count on Txt file",1);
                     objF.log2screen("Number of lines with Video Clip or Live in Log: "+myTxtLog.iCount.ToString());
-                  
+
+                    // We now look at the inTimeMode type and if needed process text file rows
+                    Debug.WriteLine($"TimeMode {inTimeMode}");
+                    string strDebug = myTxtLog.getFirstDateTime().ToString();
+                    Debug.WriteLine($"Get time from myTxtLog {strDebug}");
+                    Debug.WriteLine($"First Start Date {myPS.firstStartDate}");
+                    // Get time from myTxtLog 11/20/2017 10:00:00 AM
+                    // First Start Date 2017 - 11 - 20 10:00:00.00
+                    switch(inTimeMode)
+                    {
+                        case mode4time.UseScheduleHeader:
+                            DateTime tempDate = DateTime.ParseExact(myPS.firstStartDate, "yyyy - mm - dd hh:MM:ss.uu", CultureInfo.InvariantCulture);
+                            myTxtLog.Correct4TimeMode(tempDate);
+                            break;
+                        case mode4time.UseTextFile:
+                            myTxtLog.Correct4TimeMode(myTxtLog.getFirstDateTime());
+                            break;
+                    }
+
                     string strTemp = "";
                     string strUUIDHold = "";
                     EventType tmpEventType = EventType.None;
