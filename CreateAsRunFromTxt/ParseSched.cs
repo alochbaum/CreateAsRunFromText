@@ -201,7 +201,13 @@ namespace CreateAsRunFromTxt
                                             "\t" + eventBilling + "\t" + eventHouseNum + " - " + tblEventType.ToString() + " " + tbNonPri.ToString());
                                         if (blDoingFirstDate)
                                         {
-                                            firstStartDate = firstStartDate +" "+ eventStartTime.Substring(0, 2) + ":00:00.00";
+                                            string[] strTempArr = firstStartDate.Split('-');
+                                            if (strTempArr.Count() == 3)
+                                            {
+                                                firstStartDate = strTempArr[1] + @"/" + strTempArr[2]
+                                                    + @"/" + strTempArr[0] + " "
+                                                    + eventStartTime.Substring(0, 2) + ":00:00.00";
+                                            }
                                             blDoingFirstDate = false;
                                         }
                                     }

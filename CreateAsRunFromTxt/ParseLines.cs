@@ -82,7 +82,7 @@ namespace CreateAsRunFromTxt
                     objF.log2screen("Error: parsing optional text file " + e.ToString(), 1);
                 }
             }
-            // This is sorting section, I need to put date correction in befort this
+            // This is sorting section
             DataView dv = tblLog.DefaultView;
             if(!(objF.getCBDontSort())) dv.Sort = "StartDate, StartTime ASC";
             sortedDT = dv.ToTable();
@@ -90,7 +90,12 @@ namespace CreateAsRunFromTxt
         }
         public void Correct4TimeMode(DateTime dtHourAndDateb4)
         {
-
+            int iHour = dtHourAndDateb4.Hour;
+            foreach (DataRow row in sortedDT.Rows)
+            {
+                if(row["StartTime"].ToString().Substring(0,2)=="10")
+                Debug.WriteLine($"Time {row["StartTime"]} and date {row["StartDate"]}");
+            }
         }
         #region public Variable functions
         // this is first function called which loads the row data for all the rest of the calls

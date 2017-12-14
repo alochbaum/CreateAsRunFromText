@@ -87,16 +87,18 @@ namespace CreateAsRunFromTxt
                     objF.log2screen("Number of lines with Video Clip or Live in Log: "+myTxtLog.iCount.ToString());
 
                     // We now look at the inTimeMode type and if needed process text file rows
-                    Debug.WriteLine($"TimeMode {inTimeMode}");
-                    string strDebug = myTxtLog.getFirstDateTime().ToString();
-                    Debug.WriteLine($"Get time from myTxtLog {strDebug}");
-                    Debug.WriteLine($"First Start Date {myPS.firstStartDate}");
+                    //Debug.WriteLine($"TimeMode {inTimeMode}");
+                    //string strDebug = myTxtLog.getFirstDateTime().ToString();
+                    //Debug.WriteLine($"Get time from myTxtLog {strDebug}");
+                    //DateTime tempDateTime = DateTime.Parse(myPS.firstStartDate);
+                    //strDebug = tempDateTime.ToString();
+                    //Debug.WriteLine($"Time Converted from myPS {tempDateTime}");
                     // Get time from myTxtLog 11/20/2017 10:00:00 AM
                     // First Start Date 2017 - 11 - 20 10:00:00.00
                     switch(inTimeMode)
                     {
                         case mode4time.UseScheduleHeader:
-                            DateTime tempDate = DateTime.ParseExact(myPS.firstStartDate, "yyyy - mm - dd hh:MM:ss.uu", CultureInfo.InvariantCulture);
+                            DateTime tempDate = DateTime.Parse(myPS.firstStartDate);
                             myTxtLog.Correct4TimeMode(tempDate);
                             break;
                         case mode4time.UseTextFile:
