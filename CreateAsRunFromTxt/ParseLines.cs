@@ -90,11 +90,31 @@ namespace CreateAsRunFromTxt
         }
         public void Correct4TimeMode(DateTime dtHourAndDateb4)
         {
+            bool blFoundError = false;
+            DateTime dtTemp = Convert.ToDateTime("09/25/4991 00:00:50.42");
             int iHour = dtHourAndDateb4.Hour;
             foreach (DataRow row in sortedDT.Rows)
             {
-                if(row["StartTime"].ToString().Substring(0,2)=="10")
-                Debug.WriteLine($"Time {row["StartTime"]} and date {row["StartDate"]}");
+                if (int.Parse(row["StartTime"].ToString().Substring(0, 2)) < iHour)
+                {
+                    dtTemp = DateTime.Parse(row["StartDate"].ToString());
+                    if (dtHourAndDateb4.Date == dtTemp)
+                    {
+                        blFoundError = true;
+                        dtTemp = dtTemp.AddDays(1);
+                        row["StartDate"] = dtTemp.Date.ToString("yyyy-MM-dd");
+                        Debug.WriteLine($"Time {row["StartTime"]} and date {row["StartDate"]}");
+                    }
+                    else Debug.WriteLine($"Hour {row["StartTime"].ToString()} is OK or wierd");
+                }
+            } //Finished checking rows
+            if(blFoundError)
+            {
+                // This is sorting section
+                DataView dv = sortedDT.DefaultView;
+                dv.Sort = "StartDate, StartTime ASC";
+                sortedDT = dv.ToTable();
+
             }
         }
         #region public Variable functions
