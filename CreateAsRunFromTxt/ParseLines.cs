@@ -196,8 +196,9 @@ namespace CreateAsRunFromTxt
                     if (blFirstTextFile)
                     {
                         blFirstTextFile = false;
-                        string strTemp = strArray[0].Substring(0, 14) + "00:00";
-                        dtFirstFromFirstText = DateTime.ParseExact(strTemp, "MM/dd/yyyy-hh:mm:ss", CultureInfo.InvariantCulture);
+                        // Searching for : to find correct string position to cut.
+                        string strTemp = strArray[0].Substring(0, strArray[0].IndexOf(":")+1) + "00:00";
+                        dtFirstFromFirstText = DateTime.ParseExact(strTemp, "M/d/yyyy-hh:mm:ss", CultureInfo.InvariantCulture);
                     }
 
                 }

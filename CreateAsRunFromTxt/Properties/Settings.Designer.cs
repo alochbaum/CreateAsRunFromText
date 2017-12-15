@@ -85,7 +85,7 @@ namespace CreateAsRunFromTxt.Properties {
         
         [global::System.Configuration.UserScopedSettingAttribute()]
         [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-        [global::System.Configuration.DefaultSettingValueAttribute("True")]
+        [global::System.Configuration.DefaultSettingValueAttribute("False")]
         public bool blDouble {
             get {
                 return ((bool)(this["blDouble"]));
@@ -145,7 +145,7 @@ namespace CreateAsRunFromTxt.Properties {
         
         [global::System.Configuration.UserScopedSettingAttribute()]
         [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-        [global::System.Configuration.DefaultSettingValueAttribute("True")]
+        [global::System.Configuration.DefaultSettingValueAttribute("False")]
         public bool blCorrectDate {
             get {
                 return ((bool)(this["blCorrectDate"]));
