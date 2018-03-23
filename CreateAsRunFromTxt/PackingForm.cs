@@ -53,10 +53,13 @@ namespace CreateAsRunFromTxt
         {
             if (cbWarnNotEmpty.Checked)
             {
-                // Warn if directories aren't empty
-                if (Directory.EnumerateFiles(tbBxfDir.Text).Any())
+
+                // Warn if directories aren't empty, but first check if they exist
+                if(Directory.Exists(tbBxfDir.Text)&&
+                   Directory.EnumerateFiles(tbBxfDir.Text).Any())
                     MessageBox.Show(tbBxfDir.Text + " is not empty");
-                if (Directory.EnumerateFiles(tbHtmlDir.Text).Any())
+                if (Directory.Exists(tbBxfDir.Text) &&
+                    Directory.EnumerateFiles(tbHtmlDir.Text).Any())
                     MessageBox.Show(tbHtmlDir.Text + " is not empty");
             }
         }
