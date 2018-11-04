@@ -6,11 +6,11 @@ using System.Runtime.InteropServices;
 // General Information about an assembly is controlled through the following 
 // set of attributes. Change these attribute values to modify the information
 // associated with an assembly.
-[assembly: AssemblyTitle("CreateAsRunFromTxt")]
+[assembly: AssemblyTitle("EricAsRunFromTxt")]
 [assembly: AssemblyDescription("This creates a BXF As Run log from BXF Schedule and iTX native text logs")]
 [assembly: AssemblyConfiguration("")]
 [assembly: AssemblyCompany("Andrew Lochbaum -Grassvalley.com iTX Support")]
-[assembly: AssemblyProduct("CreateAsRunFromTxt")]
+[assembly: AssemblyProduct("EricAsRunFromTxt")]
 [assembly: AssemblyCopyright("Copyright ©  2017")]
 [assembly: AssemblyTrademark("")]
 [assembly: AssemblyCulture("")]
@@ -21,7 +21,7 @@ using System.Runtime.InteropServices;
 [assembly: ComVisible(false)]
 
 // The following GUID is for the ID of the typelib if this project is exposed to COM
-[assembly: Guid("4d03bc29-e576-4348-a56a-cb2757ea0f1a")]
+[assembly: Guid("4d03bc29-e576-4348-a56a-cb2757ea0f1e")]
 
 // Version information for an assembly consists of the following four values:
 //
