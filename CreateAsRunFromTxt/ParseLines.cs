@@ -196,9 +196,33 @@ namespace CreateAsRunFromTxt
                     if (blFirstTextFile)
                     {
                         blFirstTextFile = false;
-                        // Searching for : to find correct string position to cut.
-                        string strTemp = strArray[0].Substring(0, strArray[0].IndexOf(":")+1) + "00:00";
-                        dtFirstFromFirstText = DateTime.ParseExact(strTemp, "M/d/yyyy-hh:mm:ss", CultureInfo.InvariantCulture);
+                        // Searching for : to find correct string position to cut and converting to hour
+                        // This routine failed when starting hour was > 12 so we need to correct that
+                        string strUp2Colon = strArray[0].Substring(0, strArray[0].IndexOf(":"));
+                        int iHourHolder = strUp2Colon.IndexOf("-")+1;
+                        string strHour = strUp2Colon.Substring(iHourHolder, strUp2Colon.Length - iHourHolder);
+                        iHourHolder = Int32.Parse(strHour);
+                        string strTemp = "";
+                        
+                        if(iHourHolder<=0) // 12 am
+                        {
+                            strTemp = strUp2Colon.Substring(0, strUp2Colon.Length - 2) + "12:00:00 AM";
+                        } else if (iHourHolder < 12) // 1 to 11 am
+                        {
+                            strTemp = strUp2Colon + ":00:00 AM";
+                        } else if (iHourHolder == 12) // 12 pm
+                        {
+                            strTemp = strUp2Colon + ":00:00 PM";
+                        } else if (iHourHolder < 22) // 13 - 21 pm we have to subtract 12 hours
+                        {
+                            iHourHolder -= 12;
+                            strTemp = strUp2Colon.Substring(0, strUp2Colon.Length -2)+"0"+iHourHolder.ToString()+ ":00:00 PM";
+                        } else // 22-23 pm we still have to subtract the hours
+                        {
+                            iHourHolder -= 12;
+                            strTemp = strUp2Colon.Substring(0, strUp2Colon.Length - 2) + iHourHolder.ToString() + ":00:00 PM";
+                        }
+                        dtFirstFromFirstText = DateTime.ParseExact(strTemp, "M/d/yyyy-hh:mm:ss tt", CultureInfo.InvariantCulture);
                     }
 
                 }
