@@ -22,6 +22,7 @@ namespace CreateAsRunFromTxt
     {
         private bool blFirstTimeRun = true;
         private mode4time timemode = mode4time.None;
+        #region Form loading and closing
         public Form1()
         {
             InitializeComponent();
@@ -63,7 +64,19 @@ namespace CreateAsRunFromTxt
             Properties.Settings.Default.blFirstInText = rbCorrectSource.Checked;
             Properties.Settings.Default.Save();
         }
-
+        #endregion
+        #region public functions
+        public bool getCBSub() { return cbSub.Checked; }
+        // added for 2.0 ParseTxtLog check for wiping out UUIDs
+        public bool getCBDont() { return cbDontCheckLive.Checked; }
+        // added for dont comment
+        public bool getCBDontComm() { return cbDontComment.Checked; }
+        // added for parse lines
+        public bool getCBDouble() { return cbDoubleFrames.Checked; }
+        // added for sorting
+        public bool getCBDontSort() { return cbDontSort.Checked; }
+        public bool getCBCreateList() { return cbCreating.Checked; }
+        #endregion
         private void btnBuildAll_Click(object sender, EventArgs e)
         {
             if(blFirstTimeRun&& cbConfirm.Checked)
@@ -77,6 +90,9 @@ namespace CreateAsRunFromTxt
             rtbLogging.Clear();
             log2screen("Button Build All Clicked");
             CreateAsRun myParseText = new CreateAsRun();
+            myParseText.blStopWriting = cbWriteStop.Checked;
+            myParseText.blWriteParsedLines = cbWriteTextParsing.Checked;
+            myParseText.iStopLineNum = (int)numWrite.Value;
             log2screen("Started Building BXF Log: " + tbSchedule.Text + " with version " +
                 Application.ProductVersion.ToString());
             if (cbCorrectDate.Checked)
@@ -123,8 +139,8 @@ namespace CreateAsRunFromTxt
                 rtbLogging.ScrollToCaret();
             }
         }
-
-        private void btnSelect_Click(object sender, EventArgs e)
+        #region modify form text fields
+        private void btnSelectDirectory_Click(object sender, EventArgs e)
         {
             folderBrowserDialog1.SelectedPath = tbDirectory.Text;
             DialogResult result = folderBrowserDialog1.ShowDialog();
@@ -183,7 +199,7 @@ namespace CreateAsRunFromTxt
                 tbOptTextFile.Text = openFileDialog1.FileName;
             }
         }
-
+        #endregion
         private void cbSaveLog_Click(object sender, EventArgs e)
         {
             // Create a SaveFileDialog to request a path and file name to save to.
@@ -202,15 +218,7 @@ namespace CreateAsRunFromTxt
             }
         }
         // added for 2.0 ParseTxtLog check for wiping out UUIDs
-        public bool getCBSub(){ return cbSub.Checked; }
-        // added for 2.0 ParseTxtLog check for wiping out UUIDs
-        public bool getCBDont() { return cbDontCheckLive.Checked; }
-        // added for dont comment
-        public bool getCBDontComm() { return cbDontComment.Checked; }
-        // added for parse lines
-        public bool getCBDouble() { return cbDoubleFrames.Checked; }
-        // added for sorting
-        public bool getCBDontSort() { return cbDontSort.Checked; }
+
 
         #region dragdrop for textboxes
         // this function and DragOver function must be enabled to make this work
@@ -328,6 +336,33 @@ namespace CreateAsRunFromTxt
                 {
                     log2screen($"Error: {ex.Message}", 1);
                 }
+            }
+        }
+        private void Form1_KeyDown(object sender, KeyPressEventArgs e)
+        {
+            //           if(ModifierKeys.HasFlag(Keys.Control)&&e.KeyChar == 'd')
+            if (e.KeyChar == 4)
+            {
+                //log2screen($" Control D ${e.KeyChar.ToString()}");
+                if (cbWriteStop.Visible == true)
+                {
+                    cbWriteStop.Visible = false;
+                    cbWriteTextParsing.Visible = false;
+                    numWrite.Visible = false;
+                    cbCreating.Visible = false;
+                }
+                else
+                {
+                    cbWriteStop.Visible = true;
+                    cbWriteTextParsing.Visible = true;
+                    numWrite.Visible = true;
+                    cbCreating.Visible = true;
+                }
+            }
+            else
+            {
+                //char c = e.KeyChar;
+                //log2screen($" Not expected ${((int)c).ToString()}");
             }
         }
     }

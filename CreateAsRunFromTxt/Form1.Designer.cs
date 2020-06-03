@@ -64,11 +64,16 @@
             this.cbDontSort = new System.Windows.Forms.CheckBox();
             this.btnPackAndShip = new System.Windows.Forms.Button();
             this.groupBox4 = new System.Windows.Forms.GroupBox();
+            this.cbWriteStop = new System.Windows.Forms.CheckBox();
+            this.cbWriteTextParsing = new System.Windows.Forms.CheckBox();
+            this.numWrite = new System.Windows.Forms.NumericUpDown();
+            this.cbCreating = new System.Windows.Forms.CheckBox();
             this.groupBox1.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.nUpDnOffset)).BeginInit();
             this.groupBox2.SuspendLayout();
             this.groupBox3.SuspendLayout();
             this.groupBox4.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.numWrite)).BeginInit();
             this.SuspendLayout();
             // 
             // groupBox1
@@ -79,7 +84,7 @@
             this.groupBox1.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
             this.groupBox1.Name = "groupBox1";
             this.groupBox1.Padding = new System.Windows.Forms.Padding(3, 2, 3, 2);
-            this.groupBox1.Size = new System.Drawing.Size(953, 54);
+            this.groupBox1.Size = new System.Drawing.Size(966, 54);
             this.groupBox1.TabIndex = 0;
             this.groupBox1.TabStop = false;
             this.groupBox1.Text = "(Optional) Default Directory to use for selection buttons next to Schedule and Te" +
@@ -105,11 +110,11 @@
             this.btnSelect.TabIndex = 0;
             this.btnSelect.Text = "select folder -->";
             this.btnSelect.UseVisualStyleBackColor = true;
-            this.btnSelect.Click += new System.EventHandler(this.btnSelect_Click);
+            this.btnSelect.Click += new System.EventHandler(this.btnSelectDirectory_Click);
             // 
             // btnBuildAll
             // 
-            this.btnBuildAll.Location = new System.Drawing.Point(13, 70);
+            this.btnBuildAll.Location = new System.Drawing.Point(12, 71);
             this.btnBuildAll.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
             this.btnBuildAll.Name = "btnBuildAll";
             this.btnBuildAll.Size = new System.Drawing.Size(192, 53);
@@ -313,7 +318,7 @@
             // label5
             // 
             this.label5.AutoSize = true;
-            this.label5.Location = new System.Drawing.Point(18, 142);
+            this.label5.Location = new System.Drawing.Point(18, 144);
             this.label5.Name = "label5";
             this.label5.Size = new System.Drawing.Size(213, 17);
             this.label5.TabIndex = 12;
@@ -389,11 +394,11 @@
             this.groupBox3.Controls.Add(this.cbDontCheckLive);
             this.groupBox3.Controls.Add(this.cbDontComment);
             this.groupBox3.Controls.Add(this.cbDoubleFrames);
-            this.groupBox3.Location = new System.Drawing.Point(21, 171);
+            this.groupBox3.Location = new System.Drawing.Point(8, 171);
             this.groupBox3.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
             this.groupBox3.Name = "groupBox3";
             this.groupBox3.Padding = new System.Windows.Forms.Padding(3, 2, 3, 2);
-            this.groupBox3.Size = new System.Drawing.Size(437, 146);
+            this.groupBox3.Size = new System.Drawing.Size(450, 146);
             this.groupBox3.TabIndex = 16;
             this.groupBox3.TabStop = false;
             this.groupBox3.Text = "BXF Options";
@@ -469,12 +474,72 @@
             this.groupBox4.TabStop = false;
             this.groupBox4.Text = "HTML Creation";
             // 
+            // cbWriteStop
+            // 
+            this.cbWriteStop.AutoSize = true;
+            this.cbWriteStop.Location = new System.Drawing.Point(15, 622);
+            this.cbWriteStop.Name = "cbWriteStop";
+            this.cbWriteStop.Size = new System.Drawing.Size(96, 21);
+            this.cbWriteStop.TabIndex = 19;
+            this.cbWriteStop.Text = "Write Stop";
+            this.cbWriteStop.UseVisualStyleBackColor = true;
+            this.cbWriteStop.Visible = false;
+            // 
+            // cbWriteTextParsing
+            // 
+            this.cbWriteTextParsing.AutoSize = true;
+            this.cbWriteTextParsing.Location = new System.Drawing.Point(265, 622);
+            this.cbWriteTextParsing.Name = "cbWriteTextParsing";
+            this.cbWriteTextParsing.Size = new System.Drawing.Size(309, 21);
+            this.cbWriteTextParsing.TabIndex = 21;
+            this.cbWriteTextParsing.Text = "Debug House # while BXF write to log above";
+            this.cbWriteTextParsing.UseVisualStyleBackColor = true;
+            this.cbWriteTextParsing.Visible = false;
+            // 
+            // numWrite
+            // 
+            this.numWrite.Location = new System.Drawing.Point(126, 621);
+            this.numWrite.Maximum = new decimal(new int[] {
+            1000,
+            0,
+            0,
+            0});
+            this.numWrite.Minimum = new decimal(new int[] {
+            1,
+            0,
+            0,
+            0});
+            this.numWrite.Name = "numWrite";
+            this.numWrite.Size = new System.Drawing.Size(120, 22);
+            this.numWrite.TabIndex = 22;
+            this.numWrite.Value = new decimal(new int[] {
+            1,
+            0,
+            0,
+            0});
+            this.numWrite.Visible = false;
+            // 
+            // cbCreating
+            // 
+            this.cbCreating.AutoSize = true;
+            this.cbCreating.Location = new System.Drawing.Point(580, 622);
+            this.cbCreating.Name = "cbCreating";
+            this.cbCreating.Size = new System.Drawing.Size(275, 21);
+            this.cbCreating.TabIndex = 23;
+            this.cbCreating.Text = "Add to log each line of TXT file parsing";
+            this.cbCreating.UseVisualStyleBackColor = true;
+            this.cbCreating.Visible = false;
+            // 
             // Form1
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 16F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.AutoSize = true;
-            this.ClientSize = new System.Drawing.Size(972, 624);
+            this.ClientSize = new System.Drawing.Size(972, 649);
+            this.Controls.Add(this.cbCreating);
+            this.Controls.Add(this.numWrite);
+            this.Controls.Add(this.cbWriteTextParsing);
+            this.Controls.Add(this.cbWriteStop);
             this.Controls.Add(this.groupBox4);
             this.Controls.Add(this.btnPackAndShip);
             this.Controls.Add(this.groupBox3);
@@ -493,12 +558,14 @@
             this.Controls.Add(this.btnBuildAll);
             this.Controls.Add(this.groupBox1);
             this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
+            this.KeyPreview = true;
             this.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
             this.MaximizeBox = false;
             this.Name = "Form1";
             this.Text = "Create BXF As Run";
             this.FormClosing += new System.Windows.Forms.FormClosingEventHandler(this.Form1_FormClosing);
             this.Load += new System.EventHandler(this.Form1_Load);
+            this.KeyPress += new System.Windows.Forms.KeyPressEventHandler(this.Form1_KeyDown);
             this.groupBox1.ResumeLayout(false);
             this.groupBox1.PerformLayout();
             ((System.ComponentModel.ISupportInitialize)(this.nUpDnOffset)).EndInit();
@@ -508,6 +575,7 @@
             this.groupBox3.PerformLayout();
             this.groupBox4.ResumeLayout(false);
             this.groupBox4.PerformLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.numWrite)).EndInit();
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -550,6 +618,10 @@
         private System.Windows.Forms.RadioButton rbCorrectSource;
         private System.Windows.Forms.CheckBox cbCorrectDate;
         private System.Windows.Forms.GroupBox groupBox4;
+        private System.Windows.Forms.CheckBox cbWriteStop;
+        private System.Windows.Forms.CheckBox cbWriteTextParsing;
+        private System.Windows.Forms.NumericUpDown numWrite;
+        private System.Windows.Forms.CheckBox cbCreating;
     }
 }
 

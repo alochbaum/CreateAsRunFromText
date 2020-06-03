@@ -19,6 +19,10 @@ namespace CreateAsRunFromTxt
         DateTime myCorrectionDate = new DateTime(2017, 1, 1);
         public string strDateToFind { get; set; }
         public string strLogTxt { get; set; }
+        public bool blStopWriting { get; set; }
+        public bool blWriteParsedLines { get; set;}
+        public int iStopLineNum { get; set; }
+        public bool blCreatingList { get; set; }
         // Create class with no parameters
         public CreateAsRun()
         {
@@ -29,13 +33,14 @@ namespace CreateAsRunFromTxt
         {
             if (File.Exists(strFileName) && File.Exists(strSchedName))
             {
+                ParseSched myPS = new ParseSched();
                 string strWriteFile = Path.GetDirectoryName(strFileName) + "\\BXF_Automation_" +
                 Path.GetFileNameWithoutExtension(strSchedName) + ".xml";
                 XmlWriterSettings myXMLsettings = new XmlWriterSettings();
                 myXMLsettings.Indent = true;
                 using (XmlWriter writer = XmlWriter.Create(strWriteFile,myXMLsettings))
                 {
-                    ParseSched myPS = new ParseSched();
+
                     if (myPS.openSchedHeader(strSchedName)) objF.log2screen("Succesfully parsed header");
                     else {
                         objF.log2screen("Error paring header of " + strSchedName,1);
@@ -224,9 +229,11 @@ namespace CreateAsRunFromTxt
                         // |00:12:15.29
                         writer.WriteStartElement("StartDateTime");
                         writer.WriteStartElement("SmpteDateTime");
-                        writer.WriteAttributeString("broadcastDate", myTxtLog.getStartDate(iloop));
+                        strTemp = myTxtLog.getStartDate(iloop);
+                        writer.WriteAttributeString("broadcastDate", strTemp);
                         writer.WriteStartElement("SmpteTimeCode");
-                        writer.WriteString(myTxtLog.getStartTime(iloop));
+                        strTemp = myTxtLog.getStartTime(iloop);
+                        writer.WriteString(strTemp);
                         // End SmpteTimeCode
                         writer.WriteEndElement();
                         // End SmpteDateTime
@@ -247,7 +254,18 @@ namespace CreateAsRunFromTxt
                         writer.WriteEndElement(); 
                         writer.WriteEndElement(); // End BasicAsRun
                         writer.WriteEndElement(); // End AsRun
+                        // This is one of the new debugging routines added
+                        if (blStopWriting&&iloop==iStopLineNum)
+                        {
+                            Debug.WriteLine("breakout");
+                            break;
+                        }
+                        if (blWriteParsedLines)
+                        {
+                            objF.log2screen($"Debug: {iloop} with house {myTxtLog.getHouseNumber(iloop)} ");
+                        }
                     }
+
                     // End looping section
                     writer.WriteEndElement(); // End Schedule
                     writer.WriteEndElement(); // End BXF Data

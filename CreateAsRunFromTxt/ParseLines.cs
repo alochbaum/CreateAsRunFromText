@@ -174,6 +174,9 @@ namespace CreateAsRunFromTxt
         //
         private void addrow2table(string strInLine)
         {
+            // This is adding for debugging creating this file
+            if (myForm1.getCBCreateList())
+                myForm1.log2screen($"{tblLog.Rows.Count} has {strInLine}");
             string[] strArray = strInLine.Split('|');
             if (strArray.Count() == 9)
             {
